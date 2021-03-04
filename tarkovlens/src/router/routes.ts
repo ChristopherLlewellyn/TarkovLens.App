@@ -1,3 +1,4 @@
+import { SimulatorRouteName, SimulatorRoutePath } from 'src/enums/route'
 import { RouteConfig } from 'vue-router'
 
 const routes: RouteConfig[] = [
@@ -6,6 +7,21 @@ const routes: RouteConfig[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') }
+    ]
+  },
+
+  {
+    path: SimulatorRoutePath.List,
+    component: () => import(''),
+    children: [
+      {
+        path: SimulatorRoutePath.PenetrationChance,
+        name: SimulatorRouteName.PenetrationChance,
+        meta: {
+          view: true
+        },
+        component: () => import('')
+      }
     ]
   },
 
