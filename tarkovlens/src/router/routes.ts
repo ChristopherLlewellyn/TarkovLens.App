@@ -12,7 +12,7 @@ const routes: RouteConfig[] = [
 
   {
     path: SimulatorRoutePath.List,
-    component: () => import(''),
+    component: () => import('pages/simulator/List.vue'),
     children: [
       {
         path: SimulatorRoutePath.PenetrationChance,
@@ -20,7 +20,7 @@ const routes: RouteConfig[] = [
         meta: {
           view: true
         },
-        component: () => import('')
+        component: () => import('pages/simulator/PenetrationChance.vue')
       }
     ]
   },
