@@ -1,14 +1,32 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    Hello
+  <q-page padding>
+    <pre>{{ ammunitions }}</pre>
   </q-page>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, onBeforeMount } from '@vue/composition-api'
+import useItemService from 'src/hooks/useItemService'
 
 export default defineComponent({
   name: 'PageIndex',
-  components: { }
+  components: { },
+  setup () {
+    const {
+      ammunitions,
+      getAllAmmunitions
+      // getAllArmors,
+      // getAllTacticalrigs
+    } = useItemService()
+
+    onBeforeMount(async () => {
+      await getAllAmmunitions()
+    })
+
+    return {
+      ammunitions,
+      getAllAmmunitions
+    }
+  }
 })
 </script>
