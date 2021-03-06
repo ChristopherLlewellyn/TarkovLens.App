@@ -11,15 +11,12 @@ const routes: RouteConfig[] = [
   },
 
   {
-    path: SimulatorRoutePath.List,
-    component: () => import('pages/simulator/List.vue'),
+    path: SimulatorRoutePath.PenetrationChance,
+    component: () => import('layouts/MainLayout.vue'),
     children: [
       {
-        path: SimulatorRoutePath.PenetrationChance,
+        path: '',
         name: SimulatorRouteName.PenetrationChance,
-        meta: {
-          view: true
-        },
         component: () => import('pages/simulator/PenetrationChance.vue')
       }
     ]
