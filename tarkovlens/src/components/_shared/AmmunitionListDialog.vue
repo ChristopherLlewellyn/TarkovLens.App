@@ -39,9 +39,13 @@
           <q-tr :props="props" @click="onRowClick(props.row)">
             <q-td key="name" :props="props">
               <!-- <q-avatar size="35px" class="q-mr-xs">
-                <q-img contain loading="lazy" :src="props.row.image" @error="$event.target.src=`${props.row.backupImage}`" />
+                <q-img contain :src="props.row.image" @error="$event.target.src=`${props.row.backupImage}`" />
               </q-avatar> -->
               {{ props.row.shortName }}
+            </q-td>
+
+            <q-td key="caliber" :props="props">
+              {{ formatCellLength(props.row.caliber, 8) }}
             </q-td>
 
             <q-td key="penetration" :props="props">
@@ -93,6 +97,7 @@ export default defineComponent({
         const row = new AmmunitionRow(
           ammunition.id,
           ammunition.shortName,
+          ammunition.caliber,
           ammunition.penetration,
           ammunition.damage,
           ammunition.blightbusterIcon,
@@ -118,19 +123,27 @@ export default defineComponent({
           sortable: true
         },
         {
+          name: 'caliber',
+          required: true,
+          label: 'Caliber',
+          field: 'caliber',
+          align: 'left',
+          sortable: true
+        },
+        {
           name: 'penetration',
           required: true,
-          label: 'Penetration',
+          label: 'Pen',
           field: 'penetration',
-          align: 'center',
+          align: 'left',
           sortable: true
         },
         {
           name: 'damage',
           required: true,
-          label: 'Damage',
+          label: 'Dmg',
           field: 'damage',
-          align: 'center',
+          align: 'left',
           sortable: true
         }
       ],
@@ -141,7 +154,13 @@ export default defineComponent({
       }
     }
 
-    return { props, closeDialog, searchInput, table, onRowClick }
+    function formatCellLength (string: string, maxLength: number): string {
+      let newString = string.substring(0, maxLength)
+      newString = string.length > maxLength ? newString.concat('...') : newString
+      return newString
+    }
+
+    return { props, closeDialog, searchInput, table, onRowClick, formatCellLength }
   }
 })
 </script>

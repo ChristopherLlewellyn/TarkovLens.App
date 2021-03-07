@@ -38,9 +38,9 @@
         <template v-slot:body="props">
           <q-tr :props="props" @click="onRowClick(props.row)">
             <q-td key="name" :props="props">
-              <q-avatar size="35px" class="q-mr-xs">
+              <!-- <q-avatar size="35px" class="q-mr-xs">
                 <q-img contain loading="lazy" :src="props.row.image" @error="$event.target.src=`${props.row.backupImage}`" />
-              </q-avatar>
+              </q-avatar> -->
               {{ props.row.shortName }}
             </q-td>
 

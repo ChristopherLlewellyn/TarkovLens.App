@@ -1,6 +1,6 @@
-import { Item } from './Item'
+import { BaseItem } from './BaseItem'
 import { ArmorProperties } from './_shared'
 
-export interface Tacticalrig extends Item {
-  armor: ArmorProperties;
+export class Tacticalrig extends BaseItem {
+  armor!: ArmorProperties;
 }

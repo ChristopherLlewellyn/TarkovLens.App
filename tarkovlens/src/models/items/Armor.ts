@@ -1,8 +1,8 @@
-import { Item } from './Item'
+import { BaseItem } from './BaseItem'
 import { ArmorProperties } from './_shared'
 
-export interface Armor extends Item {
-  type: string;
-  armor: ArmorProperties;
-  blocking: string[];
+export class Armor extends BaseItem {
+  type!: string;
+  armor!: ArmorProperties;
+  blocking!: string[];
 }

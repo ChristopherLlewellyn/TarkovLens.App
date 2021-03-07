@@ -2,32 +2,44 @@
   <div class="q-pa-md">
     <div class="row justify-center">
       <q-card id="armor-selector" v-ripple.early class="selector q-ma-xs" @click="toggleShowArmor()">
-        <q-img
-          src="https://raw.githubusercontent.com/Blightbuster/EfTIcons/master/uid/5b44d0de86f774503d30cba8.png"
-          :ratio="1"
-          contain
-          class="center item-image"
-        />
+        <template v-if="selectedArmor.id">
+          <q-img
+            :src="selectedArmor.blightbusterIcon"
+            :ratio="1"
+            contain
+            class="center item-image q-mt-xs"
+            @error="$event.target.src = selectedArmor.img"
+          />
+        </template>
+        <template v-else>
+          <q-avatar class="center q-mt-xs" size="100px" icon="mdi-shield-outline" />
+        </template>
 
         <q-card-section>
           <div class="text-center">
-            Gen4 HMK
+            {{ selectedArmor.shortName ? selectedArmor.shortName : 'Select Armor' }}
           </div>
         </q-card-section>
       </q-card>
 
-      <q-card id="ammo-selector" class="selector q-ma-xs" @click="toggleShowAmmunition()">
-        <q-img
-          src="https://raw.githubusercontent.com/Blightbuster/EfTIcons/master/uid/59e690b686f7746c9f75e848.png"
-          :ratio="1"
-          contain
-          style="max-width: 100px"
-          class="center item-image"
-        />
+      <q-card id="ammo-selector" v-ripple.early class="selector q-ma-xs" @click="toggleShowAmmunition()">
+        <template v-if="selectedAmmunition.id">
+          <q-img
+            :src="selectedAmmunition.blightbusterIcon"
+            :ratio="1"
+            contain
+            style="max-width: 100px"
+            class="center item-image q-mt-xs"
+            @error="$event.target.src = selectedAmmunition.img"
+          />
+        </template>
+        <template v-else>
+          <q-avatar class="center q-mt-xs" size="100px" icon="mdi-bullet" />
+        </template>
 
         <q-card-section>
           <div class="text-center">
-            M995
+            {{ selectedAmmunition.shortName ? selectedAmmunition.shortName : 'Select Ammo' }}
           </div>
         </q-card-section>
       </q-card>
@@ -68,6 +80,14 @@ export default defineComponent({
     ammunitions: {
       type: Array as PropType<Ammunition[]>,
       required: true
+    },
+    selectedArmor: {
+      type: Object as PropType<Armor>,
+      required: true
+    },
+    selectedAmmunition: {
+      type: Object as PropType<Ammunition>,
+      required: true
     }
   },
   setup (props, { emit }) {
@@ -85,15 +105,13 @@ export default defineComponent({
     }
 
     function selectArmor (armorRow: ArmorRow) {
-      console.log(armorRow)
       const armor = props.armors.find(x => x.id === armorRow.id) ?? null
-      emit('selectArmor', armor)
+      emit('selectArmor', armor?.id)
     }
 
     function selectAmmunition (ammunitionRow: ArmorRow) {
-      console.log(ammunitionRow)
       const ammunition = props.ammunitions.find(x => x.id === ammunitionRow.id) ?? null
-      emit('selectAmmunition', ammunition)
+      emit('selectAmmunition', ammunition?.id)
     }
 
     return { state, toggleShowArmor, toggleShowAmmunition, selectArmor, selectAmmunition }
