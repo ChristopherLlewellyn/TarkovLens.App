@@ -19,9 +19,11 @@
       </q-toolbar>
 
       <q-card-section>
-        <div class="text-h6">
-          Search bar
-        </div>
+        <q-input v-model="searchInput" label="Search">
+          <template v-slot:prepend>
+            <q-icon name="mdi-magnify" />
+          </template>
+        </q-input>
       </q-card-section>
 
       <q-table
@@ -31,13 +33,13 @@
         :columns="table.columns"
         :pagination.sync="table.pagination"
         :rows-per-page-options="[0]"
-        @row-click="selectRow"
+        :filter="searchInput"
       >
         <template v-slot:body="props">
-          <q-tr :props="props">
+          <q-tr :props="props" @click="onRowClick(props.row)">
             <q-td key="name" :props="props">
-              <q-avatar size="30px" class="q-mr-xs">
-                <img :src="props.row.image" @error="$event.target.src=`${props.row.backupImage}`">
+              <q-avatar size="35px" class="q-mr-xs">
+                <q-img contain loading="lazy" :src="props.row.image" @error="$event.target.src=`${props.row.backupImage}`" />
               </q-avatar>
               {{ props.row.shortName }}
             </q-td>
@@ -57,26 +59,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed } from '@vue/composition-api'
+import { defineComponent, PropType, computed, ref } from '@vue/composition-api'
 import { Armor } from 'src/models/items/Armor'
-
-class ArmorRow {
-  id: string;
-  shortName: string;
-  class: number;
-  maxDurability: number;
-  image: string;
-  backupImage: string;
-
-  constructor (Id: string, ShortName: string, Class: number, MaxDurability: number, Image: string, BackupImage: string) {
-    this.id = Id
-    this.shortName = ShortName
-    this.class = Class
-    this.maxDurability = MaxDurability
-    this.image = Image
-    this.backupImage = BackupImage
-  }
-}
+import { ArmorRow } from 'src/components/_models/ArmorRow'
 
 export default defineComponent({
   name: 'ArmorListDialog',
@@ -95,6 +80,13 @@ export default defineComponent({
       emit('closeDialog')
     }
 
+    const searchInput = ref('')
+
+    function onRowClick (row: ArmorRow) {
+      emit('selectRow', row)
+      emit('closeDialog')
+    }
+
     function createRows (armors: Armor[]): ArmorRow[] {
       const rows: ArmorRow[] = []
       for (const armor of armors) {
@@ -104,16 +96,10 @@ export default defineComponent({
           armor.armor.class,
           armor.armor.durability,
           armor.blightbusterIcon,
-          armor.img)
+          armor.icon)
         rows.push(row)
       }
       return rows
-    }
-
-    function selectRow (evt: any, row: any, index: any) {
-      console.log(evt)
-      console.log(row)
-      console.log(index)
     }
 
     const rows = computed(() => {
@@ -136,7 +122,7 @@ export default defineComponent({
           required: true,
           label: 'Class',
           field: 'class',
-          align: 'left',
+          align: 'center',
           sortable: true
         },
         {
@@ -144,7 +130,7 @@ export default defineComponent({
           required: true,
           label: 'Max Durability',
           field: 'maxDurability',
-          align: 'left',
+          align: 'center',
           sortable: true
         }
       ],
@@ -155,7 +141,7 @@ export default defineComponent({
       }
     }
 
-    return { props, closeDialog, table, selectRow }
+    return { props, closeDialog, searchInput, table, onRowClick }
   }
 })
 </script>

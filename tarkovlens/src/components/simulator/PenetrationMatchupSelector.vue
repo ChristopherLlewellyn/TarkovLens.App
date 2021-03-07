@@ -36,13 +36,15 @@
     <armor-list-dialog
       :armors="armors"
       :show="state.showArmorDialog"
-      @closeDialog="toggleShowArmor()"
+      @closeDialog="toggleShowArmor"
+      @selectRow="selectArmor"
     />
 
     <ammunition-list-dialog
       :ammunitions="ammunitions"
       :show="state.showAmmoDialog"
-      @closeDialog="toggleShowAmmunition()"
+      @closeDialog="toggleShowAmmunition"
+      @selectRow="selectAmmunition"
     />
   </div>
 </template>
@@ -53,6 +55,7 @@ import { Ammunition } from 'src/models/items/Ammunition'
 import { Armor } from 'src/models/items/Armor'
 import ArmorListDialog from 'src/components/_shared/ArmorListDialog.vue'
 import AmmunitionListDialog from 'src/components/_shared/AmmunitionListDialog.vue'
+import { ArmorRow } from 'src/components/_models/ArmorRow'
 
 export default defineComponent({
   name: 'PenetrationMatchupSelector',
@@ -67,7 +70,7 @@ export default defineComponent({
       required: true
     }
   },
-  setup () {
+  setup (props, { emit }) {
     const state = reactive({
       showArmorDialog: false,
       showAmmoDialog: false
@@ -81,7 +84,19 @@ export default defineComponent({
       state.showAmmoDialog = !state.showAmmoDialog
     }
 
-    return { state, toggleShowArmor, toggleShowAmmunition }
+    function selectArmor (armorRow: ArmorRow) {
+      console.log(armorRow)
+      const armor = props.armors.find(x => x.id === armorRow.id) ?? null
+      emit('selectArmor', armor)
+    }
+
+    function selectAmmunition (ammunitionRow: ArmorRow) {
+      console.log(ammunitionRow)
+      const ammunition = props.ammunitions.find(x => x.id === ammunitionRow.id) ?? null
+      emit('selectAmmunition', ammunition)
+    }
+
+    return { state, toggleShowArmor, toggleShowAmmunition, selectArmor, selectAmmunition }
   }
 })
 </script>
