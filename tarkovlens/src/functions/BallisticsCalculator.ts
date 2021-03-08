@@ -17,6 +17,6 @@ export default class BallisticsCalculator {
 
       return chanceToPenetrate
     }
-    return 0
+    return 100
   }
 }

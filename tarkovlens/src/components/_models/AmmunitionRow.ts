@@ -6,8 +6,9 @@ export class AmmunitionRow {
   damage: number;
   image: string;
   backupImage: string;
+  price: number;
 
-  constructor (Id: string, ShortName: string, Caliber: string, Penetration: number, Damage: number, Image: string, BackupImage: string) {
+  constructor (Id: string, ShortName: string, Caliber: string, Penetration: number, Damage: number, Image: string, BackupImage: string, Price: number) {
     this.id = Id
     this.shortName = ShortName
     this.caliber = Caliber
@@ -15,5 +16,6 @@ export class AmmunitionRow {
     this.damage = Damage
     this.image = Image
     this.backupImage = BackupImage
+    this.price = Price
   }
 }

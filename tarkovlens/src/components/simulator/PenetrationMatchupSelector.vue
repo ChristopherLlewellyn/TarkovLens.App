@@ -1,7 +1,25 @@
 <template>
   <div class="q-pa-md">
+    <div class="row justify-center q-mb-xs">
+      <div style="width: 125px">
+        <div v-if="selectedArmor.id" class="text-center">
+          <q-chip class="q-ml-sm q-mr-sm" icon="mdi-shield" color="armor">
+            {{ selectedArmor.armor.class }}
+          </q-chip>
+        </div>
+      </div>
+
+      <div style="width: 125px">
+        <div v-if="selectedAmmunition.id" class="text-center">
+          <q-chip class="q-ml-sm q-mr-sm" icon="mdi-arrow-collapse-right" color="bullet">
+            {{ selectedAmmunition.penetration }}
+          </q-chip>
+        </div>
+      </div>
+    </div>
+
     <div class="row justify-center">
-      <q-card id="armor-selector" v-ripple.early class="selector q-ma-xs" @click="toggleShowArmor()">
+      <q-card id="armor-selector" v-ripple.early class="selector q-ma-xs pointer" @click="toggleShowArmor()">
         <template v-if="selectedArmor.id">
           <q-img
             :src="selectedArmor.blightbusterIcon"
@@ -12,7 +30,7 @@
           />
         </template>
         <template v-else>
-          <q-avatar class="center q-mt-xs" size="100px" icon="mdi-shield-outline" />
+          <q-avatar class="center q-mt-xs" size="75px" icon="mdi-shield-outline" />
         </template>
 
         <q-card-section>
@@ -22,19 +40,18 @@
         </q-card-section>
       </q-card>
 
-      <q-card id="ammo-selector" v-ripple.early class="selector q-ma-xs" @click="toggleShowAmmunition()">
+      <q-card id="ammo-selector" v-ripple.early class="selector q-ma-xs pointer" @click="toggleShowAmmunition()">
         <template v-if="selectedAmmunition.id">
           <q-img
             :src="selectedAmmunition.blightbusterIcon"
             :ratio="1"
             contain
-            style="max-width: 100px"
             class="center item-image q-mt-xs"
             @error="$event.target.src = selectedAmmunition.img"
           />
         </template>
         <template v-else>
-          <q-avatar class="center q-mt-xs" size="100px" icon="mdi-bullet" />
+          <q-avatar class="center q-mt-xs" size="75px" icon="mdi-bullet" />
         </template>
 
         <q-card-section>
@@ -121,12 +138,16 @@ export default defineComponent({
 
 <style scoped lang="scss">
   .item-image {
-    max-height: 100px;
-    max-width: 100px;
+    max-height: 75px;
+    max-width: 75px;
   }
 
   .selector {
-    height: 150px;
-    width: 150px;
+    height: 125px;
+    width: 125px;
+  }
+
+  .pointer {
+    cursor: pointer;
   }
 </style>

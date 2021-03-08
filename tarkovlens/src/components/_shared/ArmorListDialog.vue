@@ -35,13 +35,37 @@
         :rows-per-page-options="[0]"
         :filter="searchInput"
       >
+        <template v-slot:header-cell-name="props">
+          <q-th :props="props">
+            <q-icon name="mdi-lead-pencil" size="xs" color="armor" />
+            {{ props.col.label }}
+          </q-th>
+        </template>
+
+        <template v-slot:header-cell-class="props">
+          <q-th :props="props">
+            <q-icon name="mdi-shield" size="xs" color="armor" />
+            {{ props.col.label }}
+          </q-th>
+        </template>
+
+        <template v-slot:header-cell-maxDurability="props">
+          <q-th :props="props">
+            <q-icon name="mdi-hammer-wrench" size="xs" color="armor" />
+            {{ props.col.label }}
+          </q-th>
+        </template>
+
         <template v-slot:body="props">
           <q-tr :props="props" @click="onRowClick(props.row)">
             <q-td key="name" :props="props">
-              <!-- <q-avatar size="35px" class="q-mr-xs">
-                <q-img contain loading="lazy" :src="props.row.image" @error="$event.target.src=`${props.row.backupImage}`" />
-              </q-avatar> -->
-              {{ props.row.shortName }}
+              <div>{{ props.row.shortName }}</div>
+              <div class="greyed-text">
+                <q-icon name="mdi-tshirt-crew" /><span>{{ props.row.type.charAt(0).toUpperCase() + props.row.type.slice(1) }}</span>
+              </div>
+              <div class="money">
+                <q-icon name="mdi-currency-rub" /><span>{{ props.row.price > 0 ? numberWithCommas(props.row.price) : '?' }}</span>
+              </div>
             </q-td>
 
             <q-td key="class" :props="props">
@@ -93,10 +117,12 @@ export default defineComponent({
         const row = new ArmorRow(
           armor.id,
           armor.shortName,
+          armor.type,
           armor.armor.class,
           armor.armor.durability,
           armor.blightbusterIcon,
-          armor.icon)
+          armor.icon,
+          armor.avg24hPrice)
         rows.push(row)
       }
       return rows
@@ -128,7 +154,7 @@ export default defineComponent({
         {
           name: 'maxDurability',
           required: true,
-          label: 'Max Durability',
+          label: 'Durability',
           field: 'maxDurability',
           align: 'center',
           sortable: true
@@ -141,7 +167,11 @@ export default defineComponent({
       }
     }
 
-    return { props, closeDialog, searchInput, table, onRowClick }
+    function numberWithCommas (x: number): string {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    }
+
+    return { props, closeDialog, searchInput, table, onRowClick, numberWithCommas }
   }
 })
 </script>
@@ -166,5 +196,9 @@ export default defineComponent({
 
   thead tr:first-child th {
     top: 0;
+  }
+
+  tr {
+    cursor: pointer;
   }
 </style>

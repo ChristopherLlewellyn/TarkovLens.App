@@ -35,13 +35,37 @@
         :rows-per-page-options="[0]"
         :filter="searchInput"
       >
+        <template v-slot:header-cell-name="props">
+          <q-th :props="props">
+            <q-icon name="mdi-lead-pencil" size="xs" color="bullet" />
+            {{ props.col.label }}
+          </q-th>
+        </template>
+
+        <template v-slot:header-cell-penetration="props">
+          <q-th :props="props">
+            <q-icon name="mdi-arrow-collapse-right" size="xs" color="bullet" />
+            {{ props.col.label }}
+          </q-th>
+        </template>
+
+        <template v-slot:header-cell-damage="props">
+          <q-th :props="props">
+            <q-icon name="mdi-heart-broken" size="xs" color="bullet" />
+            {{ props.col.label }}
+          </q-th>
+        </template>
+
         <template v-slot:body="props">
           <q-tr :props="props" @click="onRowClick(props.row)">
             <q-td key="name" :props="props">
-              <!-- <q-avatar size="35px" class="q-mr-xs">
-                <q-img contain :src="props.row.image" @error="$event.target.src=`${props.row.backupImage}`" />
-              </q-avatar> -->
-              {{ props.row.shortName }}
+              <div>{{ props.row.shortName }}</div>
+              <div class="greyed-text">
+                <q-icon name="mdi-bullet" /><span>{{ props.row.caliber }}</span>
+              </div>
+              <div class="money">
+                <q-icon name="mdi-currency-rub" /><span>{{ props.row.price > 0 ? numberWithCommas(props.row.price) : '?' }}</span>
+              </div>
             </q-td>
 
             <q-td key="caliber" :props="props">
@@ -101,7 +125,8 @@ export default defineComponent({
           ammunition.penetration,
           ammunition.damage,
           ammunition.blightbusterIcon,
-          ammunition.icon)
+          ammunition.icon,
+          ammunition.avg24hPrice)
         rows.push(row)
       }
       return rows
@@ -123,19 +148,11 @@ export default defineComponent({
           sortable: true
         },
         {
-          name: 'caliber',
-          required: true,
-          label: 'Caliber',
-          field: 'caliber',
-          align: 'left',
-          sortable: true
-        },
-        {
           name: 'penetration',
           required: true,
           label: 'Pen',
           field: 'penetration',
-          align: 'left',
+          align: 'center',
           sortable: true
         },
         {
@@ -143,7 +160,7 @@ export default defineComponent({
           required: true,
           label: 'Dmg',
           field: 'damage',
-          align: 'left',
+          align: 'center',
           sortable: true
         }
       ],
@@ -160,7 +177,11 @@ export default defineComponent({
       return newString
     }
 
-    return { props, closeDialog, searchInput, table, onRowClick, formatCellLength }
+    function numberWithCommas (x: number): string {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    }
+
+    return { props, closeDialog, searchInput, table, onRowClick, formatCellLength, numberWithCommas }
   }
 })
 </script>
@@ -185,5 +206,9 @@ export default defineComponent({
 
   thead tr:first-child th {
     top: 0;
+  }
+
+  tr {
+    cursor: pointer;
   }
 </style>

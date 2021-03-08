@@ -1,6 +1,47 @@
 // app global css in SCSS form
+
+// --- Custom colors ---
+.armor {
+  color: $blue-8;
+}
+.text-armor {
+  color: $blue-8;
+}
+.bg-armor {
+  background: $blue-8;
+}
+
+.bullet {
+  color: $deep-orange;
+}
+.text-bullet {
+  color: $deep-orange;
+}
+.bg-bullet {
+  background: $deep-orange;
+}
+
+.money {
+  color: $teal;
+}
+.text-money {
+  color: $teal;
+}
+.bg-money {
+  background: $teal;
+}
+
+// --- General ---
 .center {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+.greyed-text {
+  color: $grey-7;
+}
+
+.full-width {
+  width: 100%;
 }
