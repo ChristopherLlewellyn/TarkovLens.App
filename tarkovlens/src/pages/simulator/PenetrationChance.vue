@@ -1,37 +1,44 @@
 <template>
   <q-page>
-    <div style="text-align: center; padding-top: 15vh;">
-      <span class="text-h3" :style="{ color: hue }">{{ `${bothSelected ? chanceToPenetrate : '-'}%` }}</span>
-    </div>
-
-    <div class="full-width pin-to-bottom">
-      <penetration-matchup-selector
-        style="margin-bottom: 5vh"
-        :armors="armors"
-        :ammunitions="ammunitions"
-        :selected-armor="state.selectedArmor"
-        :selected-ammunition="state.selectedAmmunition"
-        @selectArmor="setArmor"
-        @selectAmmunition="setAmmunition"
-      />
-
-      <div style="margin-bottom: 10vh">
-        <div class="q-mb-sm" style="text-align: center; margin-bottom: 5vh">
-          Durability <span class="greyed-text">{{ state.selectedArmor.id ? `(${percentageDurability}%)` : '' }}</span>
+    <div class="grid-container">
+      <div class="percentage-chance text-center">
+        <div class="text-h2" :style="{ color: hue }">
+          {{ `${bothSelected ? chanceToPenetrate : '-'}%` }}
         </div>
+        <div class="greyed-text q-mt-sm">
+          ...chance to penetrate
+        </div>
+      </div>
+      <div class="controls">
+        <div class="full-width">
+          <penetration-matchup-selector
+            :armors="armors"
+            :ammunitions="ammunitions"
+            :selected-armor="state.selectedArmor"
+            :selected-ammunition="state.selectedAmmunition"
+            @selectArmor="setArmor"
+            @selectAmmunition="setAmmunition"
+          />
 
-        <q-slider
-          v-model="state.currentDurability"
-          :disable="!state.selectedArmor.id"
-          :min="0"
-          :max="state.selectedArmor.id ? state.selectedArmor.armor.durability : 0"
-          :step="1"
-          label
-          :label-value="state.currentDurability"
-          label-always
-          class="center q-mt-lg"
-          style="width:80%; max-width: 700px;"
-        />
+          <div>
+            <div class="q-mb-sm" style="text-align: center;">
+              Durability <span class="greyed-text">{{ state.selectedArmor.id ? `(${percentageDurability}%)` : '' }}</span>
+            </div>
+
+            <q-slider
+              v-model="state.currentDurability"
+              :disable="!state.selectedArmor.id"
+              :min="0"
+              :max="state.selectedArmor.id ? state.selectedArmor.armor.durability : 0"
+              :step="1"
+              label
+              :label-value="state.currentDurability"
+              label-always
+              class="center q-mt-lg"
+              style="width:80%; max-width: 700px;"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </q-page>
@@ -130,11 +137,21 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-  #container {
-      position: relative;
+  .grid-container {
+    display: grid;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1.1fr 1.1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+      "percentage-chance"
+      "controls";
   }
-  .pin-to-bottom {
-      position: absolute;
-      bottom: 0;
+  .controls {
+    padding-bottom: 15vh;
+    grid-area: controls;
   }
+.percentage-chance { grid-area: percentage-chance; }
 </style>
