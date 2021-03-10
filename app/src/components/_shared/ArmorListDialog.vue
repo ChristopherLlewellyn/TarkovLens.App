@@ -7,7 +7,7 @@
     transition-hide="slide-down"
   >
     <q-card>
-      <q-toolbar class="bg-primary">
+      <q-toolbar class="bg-dark">
         <q-btn dense flat round icon="mdi-arrow-left" class="q-mr-sm"
                @click="closeDialog()"
         >
@@ -38,21 +38,21 @@
       >
         <template #header-cell-name="props">
           <q-th :props="props">
-            <q-icon name="mdi-lead-pencil" size="xs" color="armor" />
+            <q-icon :name="Icon.Armor" size="xs" color="armor" />
             {{ props.col.label }}
           </q-th>
         </template>
 
         <template #header-cell-class="props">
           <q-th :props="props">
-            <q-icon name="mdi-shield" size="xs" color="armor" />
+            <q-icon :name="Icon.Armor" size="xs" color="armor" />
             {{ props.col.label }}
           </q-th>
         </template>
 
         <template #header-cell-maxDurability="props">
           <q-th :props="props">
-            <q-icon name="mdi-hammer-wrench" size="xs" color="armor" />
+            <q-icon :name="Icon.MaxDurability" size="xs" color="armor" />
             {{ props.col.label }}
           </q-th>
         </template>
@@ -62,10 +62,10 @@
             <q-td key="name" :props="props">
               <div>{{ props.row.shortName }}</div>
               <div class="greyed-text">
-                <q-icon name="mdi-tshirt-crew" /><span>{{ props.row.type.charAt(0).toUpperCase() + props.row.type.slice(1) }}</span>
+                <q-icon :name="Icon.ArmorType" /><span>{{ props.row.type.charAt(0).toUpperCase() + props.row.type.slice(1) }}</span>
               </div>
               <div class="money">
-                <q-icon name="mdi-currency-rub" /><span>{{ props.row.price > 0 ? numberWithCommas(props.row.price) : '?' }}</span>
+                <q-icon :name="Icon.MoneyRubles" /><span>{{ props.row.price > 0 ? numberWithCommas(props.row.price) : '?' }}</span>
               </div>
             </q-td>
 
@@ -87,6 +87,7 @@
 import { defineComponent, PropType, computed, ref } from 'vue'
 import { Armor } from 'src/models/items/Armor'
 import { ArmorRow } from 'src/components/_models/ArmorRow'
+import { Icon } from 'src/enums/icon'
 
 export default defineComponent({
   name: 'ArmorListDialog',
@@ -184,7 +185,7 @@ export default defineComponent({
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     }
 
-    return { props, closeDialog, searchInput, table, rows, onRowClick, numberWithCommas }
+    return { props, Icon, closeDialog, searchInput, table, rows, onRowClick, numberWithCommas }
   }
 })
 </script>

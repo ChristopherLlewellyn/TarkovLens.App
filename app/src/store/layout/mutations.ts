@@ -2,8 +2,8 @@ import { MutationTree } from 'vuex';
 import { LayoutState } from './state';
 
 const mutation: MutationTree<LayoutState> = {
-  someMutation (/* state: ExampleStateInterface */) {
-    // your code
+  updateTitle (state, payload: string) {
+    state.title = payload
   }
 };
 

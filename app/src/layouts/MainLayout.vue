@@ -1,29 +1,71 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh Lpr lff">
     <q-header elevated>
-      <q-toolbar>
+      <q-toolbar class="bg-dark text-center">
         <q-btn
+          v-if="$q.screen.lt.sm"
           flat
-          dense
           round
-          icon="menu"
+          icon="mdi-menu"
           aria-label="Menu"
-          @click="toggleLeftDrawer"
+          @click="toggleDrawer"
         />
 
-        <q-toolbar-title>
-          {{ title }}
+        <q-toolbar-title class="text-primary">
+          {{ store.state.layout.title }}
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
     <q-drawer
-      v-model="leftDrawerOpen"
+      v-model="showDrawer"
       show-if-above
+      :mini="miniState"
+      :mini-width="80"
+      :width="250"
+      :breakpoint="500"
       bordered
     >
-      <q-list>
+      <q-list padding>
+        <q-img
+          style="max-height: 150px"
+          fit="contain" 
+          src="https://tarkov-gunsmith.com/img/logo1-transparent-thick.58d66466.svg"
+        />
+
+        <q-separator></q-separator>
+
+        <q-item 
+          v-for="nav in navItems"
+          :key="nav.id"
+          v-ripple 
+          clickable
+          class="primary"
+          :active="activeNav === nav.id"
+          :active-class="nav.activeClass"
+          :to="nav.link"
+          @click="setActiveNav(nav.id)"
+        >
+          <q-item-section avatar>
+            <q-icon :name="nav.icon" />
+          </q-item-section>
+
+          <q-item-section>
+            {{ nav.title }}
+          </q-item-section>
+        </q-item>
       </q-list>
+
+      <div class="absolute" style="top: 15px; right: -17px">
+        <q-btn
+          dense
+          round
+          unelevated
+          color="primary"
+          :icon="chevronIcon"
+          @click="toggleDrawer"
+        />
+      </div>
     </q-drawer>
 
     <q-page-container>
@@ -36,21 +78,72 @@
 import { RootState } from 'src/store/RootState'
 import { defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
+import { useQuasar } from 'quasar'
+import { SimulatorRoutePath } from 'src/enums/route'
+import { Icon } from 'src/enums/icon'
 
 export default defineComponent({
   name: 'MainLayout',
   components: { },
 
   setup () {
-    const leftDrawerOpen = ref(false)
+    const $q = useQuasar()
     const store = useStore<RootState>()
-    const title = ref(store.state.layout.title)
-    return {
-      title,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
+    const showDrawer = ref(false)
+    const chevronIcon = ref('chevron_left')
+    const miniState = ref(false)
+    const activeNav = ref(0)
+
+    const navItems = [
+      {
+        id: 1,
+        title: 'Home',
+        icon: 'mdi-home',
+        activeClass: 'white',
+        link: '/'
+      },
+      {
+        id: 2,
+        title: 'Pen Chance',
+        icon: Icon.Penetration,
+        activeClass: 'white',
+        link: SimulatorRoutePath.PenetrationChance
       }
+    ]
+
+    // example getter method (non-statically typed)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    //console.log(store.getters['layout/getTitle'])
+
+
+    function setActiveNav (navId: number) {
+      activeNav.value = navId
+    }
+
+    function toggleDrawer () {
+      if ($q.screen.lt.sm) {
+        showDrawer.value = !showDrawer.value
+      }
+      else {
+        miniState.value = !miniState.value
+      }
+
+      if (chevronIcon.value == 'chevron_right') {
+        chevronIcon.value = 'chevron_left'
+      } else {
+        chevronIcon.value = 'chevron_right'
+      }
+    }
+
+    return {
+      store,
+      showDrawer,
+      toggleDrawer,
+      chevronIcon,
+      miniState,
+      activeNav,
+      navItems,
+      setActiveNav
     }
   }
 })

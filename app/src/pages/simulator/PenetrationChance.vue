@@ -1,57 +1,62 @@
 <template>
-  <q-page>
-    <div class="grid-container">
-      <div class="percentage-chance text-center">
-        <div class="text-h2" :style="{ color: hue }">
-          {{ `${bothSelected ? chanceToPenetrate : '-'}%` }}
+  <transition appear enter-active-class="animated fadeIn">
+    <q-page key="page">
+      <div class="grid-container">
+        <div class="percentage-chance text-center">
+          <div class="text-h2" :style="{ color: hue }">
+            {{ `${bothSelected ? chanceToPenetrate : '-'}%` }}
+          </div>
+          <div class="greyed-text q-mt-sm">
+            ...chance to penetrate
+          </div>
         </div>
-        <div class="greyed-text q-mt-sm">
-          ...chance to penetrate
-        </div>
-      </div>
-      <div class="controls">
-        <div class="full-width">
-          <penetration-matchup-selector
-            :armors="armors"
-            :ammunitions="ammunitions"
-            :selected-armor="state.selectedArmor"
-            :selected-ammunition="state.selectedAmmunition"
-            @selectArmor="setArmor"
-            @selectAmmunition="setAmmunition"
-          />
-
-          <div>
-            <div class="q-mb-sm" style="text-align: center;">
-              Durability <span class="greyed-text">{{ state.selectedArmor.id ? `(${percentageDurability}%)` : '' }}</span>
-            </div>
-
-            <q-slider
-              v-model="state.currentDurability"
-              :disable="!state.selectedArmor.id"
-              :min="0"
-              :max="state.selectedArmor.id ? state.selectedArmor.armor.durability : 0"
-              :step="1"
-              label
-              :label-value="state.currentDurability"
-              label-always
-              class="center q-mt-lg"
-              style="width:80%; max-width: 700px;"
+        <div class="controls">
+          <div class="full-width">
+            <penetration-matchup-selector
+              :armors="armors"
+              :ammunitions="ammunitions"
+              :selected-armor="state.selectedArmor"
+              :selected-ammunition="state.selectedAmmunition"
+              @selectArmor="setArmor"
+              @selectAmmunition="setAmmunition"
             />
+
+            <div>
+              <div class="q-mb-sm" style="text-align: center;">
+                Durability <span class="greyed-text">{{ state.selectedArmor.id ? `(${percentageDurability}%)` : '' }}</span>
+              </div>
+
+              <q-slider
+                v-model="state.currentDurability"
+                :disable="!state.selectedArmor.id"
+                :min="0"
+                :max="state.selectedArmor.id ? state.selectedArmor.armor.durability : 0"
+                :step="1"
+                label
+                :label-value="state.currentDurability"
+                label-always
+                class="center q-mt-lg"
+                style="width:80%; max-width: 700px;"
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </q-page>
+    </q-page>
+  </transition>
 </template>
 
 <script lang="ts">
 import { defineComponent, onBeforeMount, reactive, computed } from 'vue'
+import { useStore } from 'vuex'
+
 import PenetrationMatchupSelector from 'src/components/simulator/PenetrationMatchupSelector.vue'
 import useItemService from 'src/hooks/useItemService'
 import { Ammunition } from 'src/models/items/Ammunition'
 import { Armor } from 'src/models/items/Armor'
 import BallisticsCalculator from 'src/functions/BallisticsCalculator'
 import Utils from 'src/functions/Utils'
+import { RootState } from 'src/store/RootState'
 
 export default defineComponent({
   name: 'PenetrationChanceSimulator',
@@ -66,11 +71,15 @@ export default defineComponent({
       getAllArmors,
       getAllTacticalrigs
     } = useItemService()
+    
+    const store = useStore<RootState>()
+    store.commit('layout/updateTitle', 'Penetration Chance')
 
     onBeforeMount(async () => {
       await getAllAmmunitions()
       await getAllArmors()
       await getAllTacticalrigs()
+      store
     })
 
     const state = reactive({
@@ -139,7 +148,7 @@ export default defineComponent({
 <style scoped lang="scss">
   .grid-container {
     display: grid;
-    height: 100vh;
+    height: 90vh;
     justify-content: center;
     align-items: center;
     grid-template-columns: 1fr;
@@ -150,7 +159,7 @@ export default defineComponent({
       "controls";
   }
   .controls {
-    padding-bottom: 15vh;
+    margin-bottom: 10vh;
     grid-area: controls;
   }
   .percentage-chance { grid-area: percentage-chance; }

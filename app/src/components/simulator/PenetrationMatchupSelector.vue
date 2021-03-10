@@ -11,7 +11,7 @@
 
       <div style="width: 125px">
         <div v-if="selectedAmmunition.id" class="text-center">
-          <q-chip class="q-ml-sm q-mr-sm" icon="mdi-arrow-collapse-right" color="bullet">
+          <q-chip class="q-ml-sm q-mr-sm" icon="mdi-flash" color="bullet">
             {{ selectedAmmunition.penetration }}
           </q-chip>
         </div>
@@ -24,13 +24,21 @@
           <q-img
             :src="selectedArmor.blightbusterIcon"
             :ratio="1"
-            contain
+            fit="contain"
             class="center item-image q-mt-xs"
-            @error="$event.target.src = selectedArmor.img"
-          />
+          >
+            <template #error>
+              <q-img
+                :src="selectedArmor.img"
+                :ratio="1"
+                fit="contain"
+                class="center item-image q-mt-xs"
+              />
+            </template>
+          </q-img>
         </template>
         <template v-else>
-          <q-avatar class="center q-mt-xs" size="75px" icon="mdi-shield-outline" />
+          <q-avatar class="armor center q-mt-xs" size="75px" icon="mdi-shield" />
         </template>
 
         <q-card-section>
@@ -45,13 +53,21 @@
           <q-img
             :src="selectedAmmunition.blightbusterIcon"
             :ratio="1"
-            contain
+            fit="contain"
             class="center item-image q-mt-xs"
-            @error="$event.target.src = selectedAmmunition.img"
-          />
+          >
+            <template #error>
+              <q-img
+                :src="selectedAmmunition.img"
+                :ratio="1"
+                fit="contain"
+                class="center item-image q-mt-xs"
+              />
+            </template>
+          </q-img>
         </template>
         <template v-else>
-          <q-avatar class="center q-mt-xs" size="75px" icon="mdi-bullet" />
+          <q-avatar class="bullet center q-mt-xs" size="75px" icon="mdi-bullet" />
         </template>
 
         <q-card-section>

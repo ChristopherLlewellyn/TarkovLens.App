@@ -7,7 +7,7 @@
     transition-hide="slide-down"
   >
     <q-card>
-      <q-toolbar class="bg-primary">
+      <q-toolbar class="bg-dark">
         <q-btn dense flat round icon="mdi-arrow-left" class="q-mr-sm"
                @click="closeDialog()"
         >
@@ -38,21 +38,21 @@
       >
         <template #header-cell-name="props">
           <q-th :props="props">
-            <q-icon name="mdi-lead-pencil" size="xs" color="bullet" />
+            <q-icon :name="Icon.Bullet" size="xs" color="bullet" />
             {{ props.col.label }}
           </q-th>
         </template>
 
         <template #header-cell-penetration="props">
           <q-th :props="props">
-            <q-icon name="mdi-arrow-collapse-right" size="xs" color="bullet" />
+            <q-icon :name="Icon.Penetration" size="xs" color="bullet" />
             {{ props.col.label }}
           </q-th>
         </template>
 
         <template #header-cell-damage="props">
           <q-th :props="props">
-            <q-icon name="mdi-heart-broken" size="xs" color="bullet" />
+            <q-icon :name="Icon.Damage" size="xs" color="bullet" />
             {{ props.col.label }}
           </q-th>
         </template>
@@ -62,10 +62,10 @@
             <q-td key="name" :props="props">
               <div>{{ props.row.shortName }}</div>
               <div class="greyed-text">
-                <q-icon name="mdi-bullet" /><span>{{ props.row.caliber }}</span>
+                <q-icon :name="Icon.Bullet" /><span>{{ props.row.caliber }}</span>
               </div>
               <div class="money">
-                <q-icon name="mdi-currency-rub" /><span>{{ props.row.price > 0 ? numberWithCommas(props.row.price) : '?' }}</span>
+                <q-icon :name="Icon.MoneyRubles" /><span>{{ props.row.price > 0 ? numberWithCommas(props.row.price) : '?' }}</span>
               </div>
             </q-td>
 
@@ -87,6 +87,7 @@
 import { defineComponent, PropType, computed, ref } from 'vue'
 import { Ammunition } from 'src/models/items/Ammunition'
 import { AmmunitionRow } from 'src/components/_models/AmmunitionRow'
+import { Icon } from 'src/enums/icon'
 
 export default defineComponent({
   name: 'AmmunitionListDialog',
@@ -192,6 +193,7 @@ export default defineComponent({
 
     return { 
       props, 
+      Icon,
       closeDialog, 
       searchInput, 
       table, 

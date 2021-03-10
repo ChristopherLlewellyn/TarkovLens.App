@@ -4,7 +4,7 @@ export interface LayoutState {
 
 function state(): LayoutState {
   return {
-    title: 'Sample Title'
+    title: 'Overview',
   }
 };
 

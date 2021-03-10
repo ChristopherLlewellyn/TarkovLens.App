@@ -3,8 +3,8 @@ import { RootState } from '../RootState';
 import { LayoutState } from './state';
 
 const getters: GetterTree<LayoutState, RootState> = {
-  someAction (/* context */) {
-    // your code
+  getTitle (state): string {
+    return state.title
   }
 };
 

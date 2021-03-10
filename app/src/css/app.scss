@@ -1,34 +1,44 @@
 // app global css in SCSS form
+.primary {
+  color: $primary;
+}
+
+.white {
+  color: #fff;
+}
 
 // --- Custom colors ---
+$armor: $blue-8;
 .armor {
-  color: $blue-8;
+  color: $armor;
 }
 .text-armor {
-  color: $blue-8;
+  color: $armor;
 }
 .bg-armor {
-  background: $blue-8;
+  background: $armor;
 }
 
+$bullet: $deep-orange;
 .bullet {
-  color: $deep-orange;
+  color: $bullet;
 }
 .text-bullet {
-  color: $deep-orange;
+  color: $bullet;
 }
 .bg-bullet {
-  background: $deep-orange;
+  background: $bullet;
 }
 
+$money: $teal;
 .money {
-  color: $teal;
+  color: $money;
 }
 .text-money {
-  color: $teal;
+  color: $money;
 }
 .bg-money {
-  background: $teal;
+  background: $money;
 }
 
 // --- General ---
