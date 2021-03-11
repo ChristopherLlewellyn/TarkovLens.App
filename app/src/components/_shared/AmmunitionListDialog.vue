@@ -38,7 +38,7 @@
       >
         <template #header-cell-name="props">
           <q-th :props="props">
-            <q-icon :name="Icon.Bullet" size="xs" color="bullet" />
+            <q-icon :name="Icon.Name" size="xs" color="bullet" />
             {{ props.col.label }}
           </q-th>
         </template>
