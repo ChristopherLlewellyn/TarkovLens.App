@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh Lpr lff">
     <q-header elevated>
-      <q-toolbar class="bg-dark text-center">
+      <q-toolbar class="bg-dark" :class="!$q.screen.lt.sm ? 'text-center' : ''">
         <q-btn
           v-if="$q.screen.lt.sm"
           flat
@@ -28,10 +28,19 @@
     >
       <q-list padding>
         <q-img
+          class="q-mb-sm"
           style="max-height: 150px"
           fit="contain" 
           src="https://tarkov-gunsmith.com/img/logo1-transparent-thick.58d66466.svg"
         />
+
+        <div 
+          v-if="!miniState || $q.screen.lt.sm" 
+          class="text-center q-mb-sm primary"
+          style="font-size: 25px"
+        >
+            Tarkov Lens
+        </div>
 
         <q-separator></q-separator>
 
