@@ -1,3 +1,12 @@
+import { Hitbox } from "../characters/Hitbox";
+
+export interface DamageSource {
+  damage: number;
+  penetration: number;
+  armorDamage: number;
+  fragmentation: Fragmentation;
+}
+
 export interface Fragmentation {
   chance: number;
   min: number;
@@ -26,7 +35,7 @@ export interface ArmorProperties {
   durability: number;
   material: Material;
   bluntThroughput: number;
-  zones: string[];
+  zones: Hitbox[];
 }
 
 export enum Kind {

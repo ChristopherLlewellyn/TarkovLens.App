@@ -26,21 +26,3 @@ export enum MapLocation {
   Lighthouse,
   Suburbs
 }
-
-export interface HealthStatus {
-  maxHp: number;
-  currentHp: number;
-  head: BodyPart;
-  thorax: BodyPart;
-  stomach: BodyPart;
-  leftArm: BodyPart;
-  rightArm: BodyPart;
-  leftLeg: BodyPart;
-  rightLeg: BodyPart;
-}
-
-export interface BodyPart {
-  maxHp: number;
-  currentHp: number;
-  isVital: boolean;
-}

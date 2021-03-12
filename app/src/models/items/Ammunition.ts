@@ -1,7 +1,7 @@
 import { BaseItem } from './BaseItem'
-import { Fragmentation, WeaponModifier } from './_shared'
+import { DamageSource, Fragmentation, WeaponModifier } from './_shared'
 
-export class Ammunition extends BaseItem {
+export class Ammunition extends BaseItem implements DamageSource {
   caliber!: string;
   type!: string;
   tracer!: boolean;
