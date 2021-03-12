@@ -19,19 +19,19 @@ export class Combatant implements Character {
   public location: MapLocation;
   public healthStatus: HealthStatus;
   public equipment: Equipment;
-  public alive: boolean;
+  public alive = true;
 
   constructor(
-    id: string,
-    type: CharacterType,
-    name: string,
-    nickname: string,
-    description: string,
-    portrait: string,
-    location: MapLocation,
-    healthStatus: HealthStatus,
-    equipment: Equipment,
-    alive = true) {
+    id = '',
+    type: CharacterType = CharacterType.PMC,
+    name = '',
+    nickname = '',
+    description = '',
+    portrait = '',
+    location = MapLocation.All,
+    healthStatus = new HealthStatus(),
+    equipment = new Equipment(),
+    alive = false) {
     this.id = id
     this.type = type
     this.name = name
@@ -39,8 +39,17 @@ export class Combatant implements Character {
     this.description = description
     this.portrait = portrait
     this.location = location
-    this.healthStatus = healthStatus
-    this.equipment = equipment ?? new Equipment()
+    this.healthStatus = new HealthStatus(
+      healthStatus.maxHp,
+      healthStatus.head,
+      healthStatus.thorax,
+      healthStatus.stomach,
+      healthStatus.leftArm,
+      healthStatus.rightArm,
+      healthStatus.leftLeg,
+      healthStatus.rightLeg
+    )
+    this.equipment = equipment
     this.alive = alive
   }
 
@@ -68,7 +77,7 @@ export class Combatant implements Character {
 
   // This method smells
   private takeDamage(hitbox: Hitbox, damage: number) {
-    let newHp: number
+    let newHp = 0
     switch (hitbox) {
       // HEAD
       case Hitbox.HeadEars:
@@ -185,6 +194,9 @@ export class Combatant implements Character {
           this.healthStatus.rightLeg.currentHp = newHp
         }
         break
+
+      default:
+        //nothing
     }
   }
 
@@ -350,7 +362,7 @@ export class Equipment {
   headwear: EquippedArmor[]
   bodyArmor: EquippedArmor
 
-  constructor(headwear: EquippedArmor[] = [], bodyArmor: EquippedArmor = new EquippedArmor) {
+  constructor(headwear: EquippedArmor[] = [], bodyArmor: EquippedArmor = new EquippedArmor()) {
     this.headwear = headwear
     this.bodyArmor = bodyArmor
   }

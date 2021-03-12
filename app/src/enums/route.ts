@@ -1,7 +1,9 @@
 export enum SimulatorRouteName {
-    PenetrationChance = 'SIMULATOR_PENETRATION_CHANCE'
+    PenetrationChance = 'SIMULATOR_PENETRATION_CHANCE',
+    Damage = 'SIMULATOR_DAMAGE'
 }
 
 export enum SimulatorRoutePath {
-    PenetrationChance = '/penetration-chance'
+    PenetrationChance = '/simulator/penetration-chance',
+    Damage = '/simulator/damage'
 }

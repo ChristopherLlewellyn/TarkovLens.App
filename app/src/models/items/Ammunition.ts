@@ -2,17 +2,17 @@ import { BaseItem } from './BaseItem'
 import { DamageSource, Fragmentation, WeaponModifier } from './_shared'
 
 export class Ammunition extends BaseItem implements DamageSource {
-  caliber!: string;
-  type!: string;
-  tracer!: boolean;
-  tracerColor!: string;
-  subsonic!: boolean;
-  velocity!: number;
-  ballisticCoef!: number;
-  damage!: number;
-  penetration!: number;
-  armorDamage!: number;
-  fragmentation!: Fragmentation;
-  projectiles!: number;
-  weaponModifier!: WeaponModifier;
+  caliber = '';
+  type = '';
+  tracer = false;
+  tracerColor = '';
+  subsonic = false;
+  velocity = 0;
+  ballisticCoef = 0;
+  damage = 0;
+  penetration = 0;
+  armorDamage = 0;
+  fragmentation = new Fragmentation();
+  projectiles = 0;
+  weaponModifier = new WeaponModifier();
 }

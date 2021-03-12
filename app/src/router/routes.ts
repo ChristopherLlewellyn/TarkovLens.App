@@ -22,6 +22,18 @@ const routes: RouteRecordRaw[] = [
     ]
   },
 
+  {
+    path: SimulatorRoutePath.Damage,
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: SimulatorRouteName.Damage,
+        component: () => import('pages/simulator/Damage.vue')
+      }
+    ]
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {

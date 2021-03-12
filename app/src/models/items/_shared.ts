@@ -1,4 +1,4 @@
-import { Hitbox } from "../characters/Hitbox";
+import { Hitbox } from '../characters/Hitbox';
 
 export interface DamageSource {
   damage: number;
@@ -7,15 +7,15 @@ export interface DamageSource {
   fragmentation: Fragmentation;
 }
 
-export interface Fragmentation {
-  chance: number;
-  min: number;
-  max: number;
+export class Fragmentation {
+  chance = 0;
+  min = 0;
+  max = 0;
 }
 
-export interface WeaponModifier {
-  accuracy: number;
-  recoil: number;
+export class WeaponModifier {
+  accuracy = 0;
+  recoil = 0;
 }
 
 export interface Color {
@@ -25,17 +25,35 @@ export interface Color {
   a: number;
 }
 
-export interface Material {
+export class Material {
   name: string;
   destructability: number;
+
+  constructor(name = '', destructability = 0) {
+    this.name = name
+    this.destructability = destructability
+  }
 }
 
-export interface ArmorProperties {
+export class ArmorProperties {
   class: number;
   durability: number;
   material: Material;
   bluntThroughput: number;
   zones: Hitbox[];
+
+  constructor(
+    armorClass = 0, 
+    durability = 0, 
+    material = new Material(), 
+    bluntThroughput = 0, 
+    zones: Hitbox[] = []) {
+    this.class = armorClass
+    this.durability = durability
+    this.material = material
+    this.bluntThroughput = bluntThroughput
+    this.zones = zones
+  }
 }
 
 export enum Kind {
