@@ -210,6 +210,7 @@ export class Combatant implements Character {
       && skip !== Hitbox.HeadEyes
       && skip !== Hitbox.HeadEars) {
       this.healthStatus.head.currentHp -= this.calculateBodyPartDamageFromOverflow(this.healthStatus.head, overflowDamage)
+      this.healthStatus.head.currentHp = Math.max(this.healthStatus.head.currentHp, 0)
       if (this.healthStatus.head.isVital && this.healthStatus.head.currentHp <= 0) {
         this.die()
         return;
@@ -218,6 +219,7 @@ export class Combatant implements Character {
 
     if (this.healthStatus.thorax.currentHp > 0 && skip !== Hitbox.Thorax) {
       this.healthStatus.thorax.currentHp -= this.calculateBodyPartDamageFromOverflow(this.healthStatus.thorax, overflowDamage)
+      this.healthStatus.thorax.currentHp = Math.max(this.healthStatus.thorax.currentHp, 0)
       if (this.healthStatus.thorax.isVital && this.healthStatus.thorax.currentHp <= 0) {
         this.die()
         return;
@@ -226,6 +228,7 @@ export class Combatant implements Character {
 
     if (this.healthStatus.rightArm.currentHp > 0 && skip !== Hitbox.RightArm) {
       this.healthStatus.rightArm.currentHp -= this.calculateBodyPartDamageFromOverflow(this.healthStatus.rightArm, overflowDamage)
+      this.healthStatus.rightArm.currentHp = Math.max(this.healthStatus.rightArm.currentHp, 0)
       if (this.healthStatus.rightArm.isVital && this.healthStatus.rightArm.currentHp <= 0) {
         this.die()
         return;
@@ -234,6 +237,7 @@ export class Combatant implements Character {
 
     if (this.healthStatus.leftArm.currentHp > 0 && skip !== Hitbox.LeftArm) {
       this.healthStatus.leftArm.currentHp -= this.calculateBodyPartDamageFromOverflow(this.healthStatus.leftArm, overflowDamage)
+      this.healthStatus.leftArm.currentHp = Math.max(this.healthStatus.leftArm.currentHp, 0)
       if (this.healthStatus.leftArm.isVital && this.healthStatus.leftArm.currentHp <= 0) {
         this.die()
         return;
@@ -242,6 +246,7 @@ export class Combatant implements Character {
 
     if (this.healthStatus.stomach.currentHp > 0 && skip !== Hitbox.Stomach) {
       this.healthStatus.stomach.currentHp -= this.calculateBodyPartDamageFromOverflow(this.healthStatus.stomach, overflowDamage)
+      this.healthStatus.stomach.currentHp = Math.max(this.healthStatus.stomach.currentHp, 0)
       if (this.healthStatus.stomach.isVital && this.healthStatus.stomach.currentHp <= 0) {
         this.die()
         return;
@@ -250,6 +255,7 @@ export class Combatant implements Character {
 
     if (this.healthStatus.rightLeg.currentHp > 0 && skip !== Hitbox.RightLeg) {
       this.healthStatus.rightLeg.currentHp -= this.calculateBodyPartDamageFromOverflow(this.healthStatus.rightLeg, overflowDamage)
+      this.healthStatus.rightLeg.currentHp = Math.max(this.healthStatus.rightLeg.currentHp, 0)
       if (this.healthStatus.rightLeg.isVital && this.healthStatus.rightLeg.currentHp <= 0) {
         this.die()
         return;
@@ -258,6 +264,7 @@ export class Combatant implements Character {
 
     if (this.healthStatus.leftLeg.currentHp > 0 && skip !== Hitbox.LeftLeg) {
       this.healthStatus.leftLeg.currentHp -= this.calculateBodyPartDamageFromOverflow(this.healthStatus.leftLeg, overflowDamage)
+      this.healthStatus.leftLeg.currentHp = Math.max(this.healthStatus.leftLeg.currentHp, 0)
       if (this.healthStatus.leftLeg.isVital && this.healthStatus.leftLeg.currentHp <= 0) {
         this.die()
         return;
