@@ -34,6 +34,14 @@ export default defineComponent({
         icon: Icon.Penetration,
         iconBackgroundColor: 'bullet',
         link: SimulatorRoutePath.PenetrationChance
+      },
+      {
+        id: 2,
+        title: 'Damage Simulator',
+        description: "Understand how Tarkov's damage model works, and how much damage different characters can take.",
+        icon: Icon.Damage,
+        iconBackgroundColor: 'bullet',
+        link: SimulatorRoutePath.Damage
       }
     ]
     const store = useStore<RootState>()

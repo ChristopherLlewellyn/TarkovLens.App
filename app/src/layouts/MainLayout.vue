@@ -117,6 +117,13 @@ export default defineComponent({
         icon: Icon.Penetration,
         activeClass: 'white',
         link: SimulatorRoutePath.PenetrationChance
+      },
+      {
+        id: 3,
+        title: 'Damage Simulator',
+        icon: Icon.Damage,
+        activeClass: 'white',
+        link: SimulatorRoutePath.Damage
       }
     ]
 

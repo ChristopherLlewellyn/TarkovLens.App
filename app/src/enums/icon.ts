@@ -5,6 +5,7 @@ export enum Icon {
   ArmorType = 'mdi-tshirt-crew',
   Penetration = 'mdi-flash',
   Damage = 'mdi-heart-broken',
+  Boss = 'mdi-skull',
   MaxDurability = 'mdi-hammer-wrench',
   MoneyRubles = 'mdi-currency-rub'
 }
