@@ -1,3 +1,4 @@
+// --- Custom colors ---
 .primary {
   color: $primary;
 }
@@ -6,7 +7,6 @@
   color: #fff;
 }
 
-// --- Custom colors ---
 $armor: $blue-8;
 .armor {
   color: $armor;
@@ -38,6 +38,28 @@ $money: $teal;
 }
 .bg-money {
   background: $money;
+}
+
+$boss: $red;
+.boss {
+  color: $boss;
+}
+.text-boss {
+  color: $boss;
+}
+.bg-boss {
+  background: $boss;
+}
+
+$health-green: $lime-14;
+.health-green {
+  color: $lime-14;
+}
+.text-health-green {
+  color: $lime-14;
+}
+.bg-health-green {
+  background: $lime-14;
 }
 
 // --- General ---

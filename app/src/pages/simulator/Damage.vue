@@ -124,7 +124,7 @@
             "
           >
             <div class="q-ma-sm" style="margin-left: 30px">
-              <q-btn round @click="selectCombatant('PMC')">
+              <q-btn round @click="toggleShowCombatants()">
                 <q-avatar size="70px">
                   <img :src="state.selectedCombatant.portrait" />
                 </q-avatar>
@@ -172,6 +172,13 @@
         </div>
       </div>
 
+      <combatant-list-dialog
+        :combatants="combatants"
+        :show="state.showCombatantDialog"
+        @closeDialog="toggleShowCombatants"
+        @selectRow="selectCombatant"
+      />
+
       <ammunition-list-dialog
         :ammunitions="ammunitions"
         :show="state.showAmmoDialog"
@@ -196,6 +203,7 @@ import { RootState } from 'src/store/RootState';
 import Utils, { RGB } from 'src/functions/Utils';
 import { Icon } from 'src/enums/icon';
 import AmmunitionListDialog from 'src/components/_shared/AmmunitionListDialog.vue';
+import CombatantListDialog from 'src/components/_shared/CombatantListDialog.vue';
 import { AmmunitionRow } from 'src/components/_models/AmmunitionRow';
 
 export default defineComponent({
@@ -203,6 +211,7 @@ export default defineComponent({
   components: {
     BodyPart,
     AmmunitionListDialog,
+    CombatantListDialog
   },
   setup() {
     const store = useStore<RootState>();
@@ -220,6 +229,7 @@ export default defineComponent({
     const state = reactive({
       selectedCombatant: new Combatant(),
       selectedAmmunition: new Ammunition(),
+      showCombatantDialog: false,
       showAmmoDialog: false,
     });
 
@@ -249,13 +259,11 @@ export default defineComponent({
         new Equipment(),
         true
       );
-      console.log(state.selectedCombatant);
     }
 
     function selectAmmunition(row: AmmunitionRow) {
       state.selectedAmmunition =
         ammunitions.value.find((x) => x.id === row.id) ?? new Ammunition();
-      console.log(state.selectedAmmunition);
     }
 
     function resetCombatant() {
@@ -263,10 +271,7 @@ export default defineComponent({
     }
 
     function boom(hitbox: Hitbox) {
-      console.log('BOOM');
       state.selectedCombatant.getHit(hitbox, state.selectedAmmunition);
-      console.log(state.selectedCombatant);
-      console.log(`new hp: ${state.selectedCombatant.healthStatus.currentHp}`);
     }
 
     const rgb = computed<RGB>(() => {
@@ -281,9 +286,14 @@ export default defineComponent({
       state.showAmmoDialog = !state.showAmmoDialog;
     }
 
+    function toggleShowCombatants() {
+      state.showCombatantDialog = !state.showCombatantDialog;
+    }
+
     return {
       state,
       Hitbox,
+      combatants,
       ammunitions,
       selectCombatant,
       selectAmmunition,
@@ -291,7 +301,8 @@ export default defineComponent({
       boom,
       rgb,
       Icon,
-      toggleShowAmmunition,
+      toggleShowCombatants,
+      toggleShowAmmunition
     };
   },
 });

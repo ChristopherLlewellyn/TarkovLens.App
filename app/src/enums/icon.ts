@@ -7,5 +7,10 @@ export enum Icon {
   Damage = 'mdi-heart-broken',
   Boss = 'mdi-skull',
   MaxDurability = 'mdi-hammer-wrench',
-  MoneyRubles = 'mdi-currency-rub'
+  MoneyRubles = 'mdi-currency-rub',
+  Map = 'mdi-map',
+  MapMarker = 'mdi-map-marker-radius',
+  Player = 'mdi-account',
+  Playable = 'mdi-account-check',
+  Health = 'mdi-hospital-box'
 }

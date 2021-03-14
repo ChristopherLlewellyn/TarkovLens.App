@@ -1,11 +1,11 @@
 export enum CharacterType {
-  PMC,
-  Scav,
-  Raider,
-  Boss,
-  BossFollower,
-  Cultist,
-  Trader
+  PMC = 'PMC',
+  Scav = 'Scav',
+  Raider = 'Raider',
+  Boss = 'Boss',
+  BossFollower = 'BossFollower',
+  Cultist = 'Cultist',
+  Trader = 'Trader'
 }
 
 export enum MapLocation {
