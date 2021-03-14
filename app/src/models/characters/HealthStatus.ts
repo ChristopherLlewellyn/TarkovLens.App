@@ -29,7 +29,7 @@ export class HealthStatus {
     this.rightLeg = rightLeg
   }
 
-  public currentHp(): number {
+  get currentHp(): number {
     const currentHp = this.head.currentHp 
       + this.thorax.currentHp + this.stomach.currentHp
       + this.leftArm.currentHp + this.rightArm.currentHp

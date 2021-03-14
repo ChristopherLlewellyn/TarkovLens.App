@@ -4,10 +4,10 @@ export default class Utils {
     return 'hsl(' + hue.toString() + ', 100%, 50%)'
   }
 
-  static percentageToRGB (percentage: number): RGB {
-    const Red = 255 - (255 * (percentage / 100))
-    const Green = 170 * (percentage / 100)
-    const Blue = 0 
+  static percentageToRGB (percentage: number, howGreen = 170, howRed = 255): RGB {
+    const Red = 255 - (howRed * (percentage / 100))
+    const Green = howGreen * (percentage / 100)
+    const Blue = 20 
     return { red: Red, green: Green, blue: Blue}
   }
 

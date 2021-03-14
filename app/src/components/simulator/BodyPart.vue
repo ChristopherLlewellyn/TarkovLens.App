@@ -43,7 +43,6 @@ export default defineComponent({
   },
   setup(props) {
     const rgb = computed<RGB>(() => {
-      // 0 and 120 define the hue range (red to green)
       return Utils.percentageToRGB((props.currentHp / props.maxHp) * 100);
     });
 
