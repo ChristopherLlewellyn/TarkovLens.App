@@ -165,7 +165,7 @@
                 <span v-if="state.selectedAmmunition.id.length > 0">{{
                   state.selectedAmmunition.shortName
                 }}</span>
-                <span v-else class="greyed-text">Ammo</span>
+                <span v-else class="greyed-text">Select</span>
               </q-card>
             </div>
           </div>
