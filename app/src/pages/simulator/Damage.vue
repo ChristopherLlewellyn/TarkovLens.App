@@ -102,7 +102,9 @@
                     color: `rgb(${rgb.red}, ${rgb.green}, ${rgb.blue})`,
                   }"
                 >
-                  {{ state.selectedCombatant.healthStatus.currentHp.toFixed(0) }}
+                  {{
+                    state.selectedCombatant.healthStatus.currentHp.toFixed(0)
+                  }}
                 </span>
                 <span class="small">
                   / {{ state.selectedCombatant.healthStatus.maxHp }}</span
@@ -133,18 +135,49 @@
             </div>
 
             <div class="q-ma-sm">
-              <q-btn round @click="selectAmmunition('ammunitions/75-A')">
-                <q-avatar size="70px" color="black">
-                  <img :src="state.selectedAmmunition.blightbusterIcon" />
+              <q-btn round @click="toggleShowAmmunition()">
+                <q-avatar size="70px" color="dark">
+                  <img
+                    v-if="state.selectedAmmunition.id.length > 0"
+                    :src="
+                      state.selectedAmmunition.id.length > 0
+                        ? state.selectedAmmunition.blightbusterIcon
+                        : ''
+                    "
+                    class="q-pa-sm"
+                    @error="$event.target.src = state.selectedAmmunition.img"
+                  />
+                  <template v-else>
+                    <q-icon :name="Icon.Bullet" color="bullet"></q-icon>
+                  </template>
+                  <q-badge
+                    v-if="state.selectedAmmunition.id.length > 0"
+                    floating
+                    color="bullet"
+                    rounded
+                  >
+                    <q-icon :name="Icon.Damage" size="15px" />
+                    <span>{{ state.selectedAmmunition.damage }}</span>
+                  </q-badge>
                 </q-avatar>
               </q-btn>
               <q-card class="text-center q-mt-xs" style="font-weight: bold">
-                {{ state.selectedAmmunition.shortName }}
+                <span v-if="state.selectedAmmunition.id.length > 0">{{
+                  state.selectedAmmunition.shortName
+                }}</span>
+                <span v-else class="greyed-text">Ammo</span>
               </q-card>
             </div>
           </div>
         </div>
       </div>
+
+      <ammunition-list-dialog
+        :ammunitions="ammunitions"
+        :show="state.showAmmoDialog"
+        @closeDialog="toggleShowAmmunition"
+        @selectRow="selectAmmunition"
+      />
     </q-page>
   </transition>
 </template>
@@ -161,11 +194,15 @@ import { defineComponent, onBeforeMount, reactive, computed } from 'vue';
 import { useStore } from 'vuex';
 import { RootState } from 'src/store/RootState';
 import Utils, { RGB } from 'src/functions/Utils';
+import { Icon } from 'src/enums/icon';
+import AmmunitionListDialog from 'src/components/_shared/AmmunitionListDialog.vue';
+import { AmmunitionRow } from 'src/components/_models/AmmunitionRow';
 
 export default defineComponent({
   name: 'DamageSimulator',
   components: {
     BodyPart,
+    AmmunitionListDialog,
   },
   setup() {
     const store = useStore<RootState>();
@@ -178,12 +215,12 @@ export default defineComponent({
       await getCombatants();
       await getAllAmmunitions();
       selectCombatant('PMC');
-      selectAmmunition('ammunitions/75-A');
     });
 
     const state = reactive({
       selectedCombatant: new Combatant(),
       selectedAmmunition: new Ammunition(),
+      showAmmoDialog: false,
     });
 
     function selectCombatant(name: string) {
@@ -215,9 +252,9 @@ export default defineComponent({
       console.log(state.selectedCombatant);
     }
 
-    function selectAmmunition(id: string) {
+    function selectAmmunition(row: AmmunitionRow) {
       state.selectedAmmunition =
-        ammunitions.value.find((x) => x.id === id) ?? new Ammunition();
+        ammunitions.value.find((x) => x.id === row.id) ?? new Ammunition();
       console.log(state.selectedAmmunition);
     }
 
@@ -240,14 +277,21 @@ export default defineComponent({
       return Utils.percentageToRGB(percentage, 220, 100);
     });
 
+    function toggleShowAmmunition() {
+      state.showAmmoDialog = !state.showAmmoDialog;
+    }
+
     return {
       state,
       Hitbox,
+      ammunitions,
       selectCombatant,
       selectAmmunition,
       resetCombatant,
       boom,
       rgb,
+      Icon,
+      toggleShowAmmunition,
     };
   },
 });
