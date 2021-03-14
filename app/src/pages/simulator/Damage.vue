@@ -116,27 +116,51 @@
         <div class="Controls full-width">
           <div
             class="row"
-            style="
-              max-width: 700px;
-              margin-left: auto;
-              margin-right: auto;
-              align-items: center;
-            "
+            style="max-width: 700px; margin-left: auto; margin-right: auto"
           >
             <div class="q-ma-sm" style="margin-left: 30px">
               <q-btn round @click="toggleShowCombatants()">
-                <q-avatar size="70px">
-                  <img :src="state.selectedCombatant.portrait" />
+                <q-avatar v-ripple.early color="dark" size="10vh">
+                  <q-badge
+                    v-if="state.selectedCombatant.id.length == 0"
+                    rounded
+                    floating
+                    class="attention-pulse"
+                    color="rgba(255, 0, 30, 0.7)"
+                    >&nbsp;</q-badge
+                  >
+                  <img
+                    v-if="state.selectedCombatant.id.length > 0"
+                    :src="
+                      state.selectedCombatant.id.length > 0
+                        ? state.selectedCombatant.portrait
+                        : ''
+                    "
+                  />
+                  <template v-else>
+                    <q-icon :name="Icon.Combatant" color="grey" />
+                  </template>
                 </q-avatar>
               </q-btn>
-              <q-card class="text-center q-mt-xs" style="font-weight: bold">
-                {{ state.selectedCombatant.name }}
-              </q-card>
+              <div class="text-center q-mt-xs" style="font-weight: bold">
+                <span v-if="state.selectedCombatant.id.length > 0">{{
+                  state.selectedCombatant.name
+                }}</span>
+                <span v-else class="greyed-text">Select</span>
+              </div>
             </div>
 
             <div class="q-ma-sm">
               <q-btn round @click="toggleShowAmmunition()">
-                <q-avatar size="70px" color="dark">
+                <q-avatar v-ripple.early size="10vh" color="dark">
+                  <q-badge
+                    v-if="state.selectedAmmunition.id.length == 0"
+                    rounded
+                    floating
+                    class="attention-pulse"
+                    color="rgba(255, 0, 30, 0.7)"
+                    >&nbsp;</q-badge
+                  >
                   <img
                     v-if="state.selectedAmmunition.id.length > 0"
                     :src="
@@ -144,11 +168,10 @@
                         ? state.selectedAmmunition.blightbusterIcon
                         : ''
                     "
-                    class="q-pa-sm"
                     @error="$event.target.src = state.selectedAmmunition.img"
                   />
                   <template v-else>
-                    <q-icon :name="Icon.Bullet" color="bullet"></q-icon>
+                    <q-icon :name="Icon.Bullet" color="grey"></q-icon>
                   </template>
                   <q-badge
                     v-if="state.selectedAmmunition.id.length > 0"
@@ -156,17 +179,17 @@
                     color="bullet"
                     rounded
                   >
-                    <q-icon :name="Icon.Damage" size="15px" />
+                    <q-icon :name="Icon.Damage" size="2vh" />
                     <span>{{ state.selectedAmmunition.damage }}</span>
                   </q-badge>
                 </q-avatar>
               </q-btn>
-              <q-card class="text-center q-mt-xs" style="font-weight: bold">
+              <div class="text-center q-mt-xs" style="font-weight: bold">
                 <span v-if="state.selectedAmmunition.id.length > 0">{{
                   state.selectedAmmunition.shortName
                 }}</span>
                 <span v-else class="greyed-text">Select</span>
-              </q-card>
+              </div>
             </div>
           </div>
         </div>
@@ -211,7 +234,7 @@ export default defineComponent({
   components: {
     BodyPart,
     AmmunitionListDialog,
-    CombatantListDialog
+    CombatantListDialog,
   },
   setup() {
     const store = useStore<RootState>();
@@ -223,7 +246,6 @@ export default defineComponent({
     onBeforeMount(async () => {
       await getCombatants();
       await getAllAmmunitions();
-      selectCombatant('PMC');
     });
 
     const state = reactive({
@@ -302,7 +324,7 @@ export default defineComponent({
       rgb,
       Icon,
       toggleShowCombatants,
-      toggleShowAmmunition
+      toggleShowAmmunition,
     };
   },
 });
@@ -388,6 +410,10 @@ export default defineComponent({
   .small {
     font-size: 2.5vh;
   }
+}
+
+.animate__pulse {
+  --animate-repeat: 20;
 }
 
 .q-img__content > div {

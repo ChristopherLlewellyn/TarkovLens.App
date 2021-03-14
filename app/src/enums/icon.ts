@@ -12,5 +12,6 @@ export enum Icon {
   MapMarker = 'mdi-map-marker-radius',
   Player = 'mdi-account',
   Playable = 'mdi-account-check',
-  Health = 'mdi-hospital-box'
+  Health = 'mdi-hospital-box',
+  Combatant = 'mdi-emoticon-angry'
 }

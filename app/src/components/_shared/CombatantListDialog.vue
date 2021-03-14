@@ -7,7 +7,7 @@
     transition-hide="slide-down"
   >
     <q-card>
-      <q-toolbar class="bg-dark">
+      <q-toolbar class="bg-dark toolbar">
         <q-btn
           dense
           flat
@@ -16,7 +16,7 @@
           class="q-mr-sm"
           @click="closeDialog()"
         >
-          <q-tooltip> Close </q-tooltip>
+          <q-tooltip>Back</q-tooltip>
         </q-btn>
         <span style="font-size: 19px">Select Combatant</span>
       </q-toolbar>
@@ -31,7 +31,7 @@
           @click="onRowClick(combatant)"
         >
           <q-item-section avatar>
-            <q-avatar color="dark" text-color="white">
+            <q-avatar color="dark" text-color="white" size="9vh">
               <img
                 v-if="combatant.portrait.length > 0"
                 :src="combatant.portrait"
@@ -121,35 +121,16 @@ export default defineComponent({
       Icon,
       CharacterType,
       closeDialog,
-      onRowClick
+      onRowClick,
     };
   },
 });
 </script>
 
 <style lang="scss">
-.sticky-header-table {
-  /* height or max-height is important */
-  max-height: 80%;
-}
-
-.q-table__top,
-.q-table__bottom,
-thead tr:first-child th {
-  /* bg color is important for th; just specify one */
-  background-color: $dark;
-}
-
-thead tr th {
+.toolbar {
   position: sticky;
   z-index: 1;
-}
-
-thead tr:first-child th {
   top: 0;
-}
-
-tr {
-  cursor: pointer;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="body-part"
+    class="body-part pointer"
     style="padding: 3px"
     :class="currentHp === 0 ? 'red-border' : ''"
   >

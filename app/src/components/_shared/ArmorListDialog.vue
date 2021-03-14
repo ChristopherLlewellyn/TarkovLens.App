@@ -12,7 +12,7 @@
                @click="closeDialog()"
         >
           <q-tooltip>
-            Close
+            Back
           </q-tooltip>
         </q-btn>
         <span style="font-size: 19px">Select Armor</span>
