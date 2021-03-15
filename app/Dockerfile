@@ -7,6 +7,7 @@ COPY . .
 
 # build stage
 FROM develop-stage as build-stage
+RUN npm install
 RUN quasar build
 
 # production stage
