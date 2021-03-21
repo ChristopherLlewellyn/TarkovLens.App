@@ -9,20 +9,20 @@ export enum CharacterType {
 }
 
 export enum MapLocation {
-  All,
-  Multiple,
-  Unknown,
-  Other,
-  Factory,
-  Customs,
-  Town,
-  StreetsOfTarkov,
-  Terminal,
-  Interchange,
-  Woods,
-  Reserve,
-  Shoreline,
-  TheLab,
-  Lighthouse,
-  Suburbs
+  All = 'All',
+  Multiple = 'Multiple',
+  Unknown = 'Unknown',
+  Other = 'Other',
+  Factory = 'Factory',
+  Customs = 'Customs',
+  Town = 'Town',
+  StreetsOfTarkov = 'Streets of Tarkov',
+  Terminal = 'Terminal',
+  Interchange = 'Interchange',
+  Woods = 'Woods',
+  Reserve = 'Reserve',
+  Shoreline = 'Shoreline',
+  TheLab = 'The Lab',
+  Lighthouse = 'Lighthouse',
+  Suburbs = 'Suburbs'
 }

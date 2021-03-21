@@ -4,10 +4,10 @@ export enum Hitbox {
   HeadEars = 'ears',
   HeadEyes = 'eyes',
   HeadJaws = 'jaws',
-  Thorax = 'thorax',
-  RightArm = 'right arm',
-  LeftArm = 'left arm',
+  Thorax = 'chest',
+  RightArm = 'rightarm',
+  LeftArm = 'leftarm',
   Stomach = 'stomach',
-  RightLeg = 'right leg',
-  LeftLeg = 'left leg'
+  RightLeg = 'rightleg',
+  LeftLeg = 'leftleg'
 }

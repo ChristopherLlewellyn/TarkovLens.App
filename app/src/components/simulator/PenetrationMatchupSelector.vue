@@ -166,8 +166,4 @@ export default defineComponent({
     height: 125px;
     width: 125px;
   }
-
-  .pointer {
-    cursor: pointer;
-  }
 </style>

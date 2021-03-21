@@ -7,6 +7,14 @@
   color: #fff;
 }
 
+$dark-page: #121212;
+.dark-page {
+  color: $dark-page;
+}
+.bg-dark-page {
+  background: $dark-page;
+}
+
 $armor: $blue-8;
 .armor {
   color: $armor;

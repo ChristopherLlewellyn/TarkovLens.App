@@ -54,14 +54,34 @@ export class Combatant implements Character {
   }
 
   public getHit(hitbox: Hitbox, damageSource: DamageSource) {
+    if (damageSource.id.length === 0) {
+      return
+    }
+    if (!this.alive) {
+      return
+    }
+
     const protectiveArmor = this.getHitboxProtection(hitbox);
     if (protectiveArmor !== undefined && protectiveArmor.currentDurability > 0) {
       this.handleHitInArmoredZone(hitbox, protectiveArmor, damageSource);
     }
 
     else {
-      this.takeDamage(hitbox, damageSource.damage)
+      this.takeDamage(hitbox, damageSource.damage * damageSource.projectiles)
     }
+  }
+
+  public reset() {
+    this.healthStatus.head.currentHp = this.healthStatus.head.maxHp
+    this.healthStatus.thorax.currentHp = this.healthStatus.thorax.maxHp
+    this.healthStatus.stomach.currentHp = this.healthStatus.stomach.maxHp
+    this.healthStatus.leftArm.currentHp = this.healthStatus.leftArm.maxHp
+    this.healthStatus.rightArm.currentHp = this.healthStatus.rightArm.maxHp
+    this.healthStatus.leftLeg.currentHp = this.healthStatus.leftLeg.maxHp
+    this.healthStatus.rightLeg.currentHp = this.healthStatus.rightLeg.maxHp
+    this.alive = true
+
+    this.equipment.bodyArmor.currentDurability = this.equipment.bodyArmor.armor.durability
   }
 
   private die() {
@@ -196,7 +216,7 @@ export class Combatant implements Character {
         break
 
       default:
-        //nothing
+      //nothing
     }
   }
 
@@ -272,7 +292,7 @@ export class Combatant implements Character {
     }
   }
 
-  private takeArmorDamage (hitbox: Hitbox, armorDamage: number) {
+  private takeArmorDamage(hitbox: Hitbox, armorDamage: number) {
     const armor = this.getHitboxProtection(hitbox)
     if (armor !== undefined) {
       armor.currentDurability = Math.max(armor.currentDurability - armorDamage, 0)
@@ -304,14 +324,16 @@ export class Combatant implements Character {
   private handleNonPenetrativeHitOnArmor(hitbox: Hitbox, damageSource: DamageSource, protectiveArmor: EquippedArmor) {
     const armorDamage = BallisticsCalculator.calculateDamageToArmorWhenDoesNotPenetrate(
       damageSource.penetration,
+      damageSource.projectiles,
       damageSource.armorDamage,
       protectiveArmor.armor.class,
-      protectiveArmor.armor.material.destructability
+      protectiveArmor.armor.material.destructibility
     );
 
     const damageDealt = BallisticsCalculator.calculateDamageToCombatantWhenDoesNotPenetrate(
       damageSource.damage,
       damageSource.penetration,
+      damageSource.projectiles,
       protectiveArmor.armor.class,
       protectiveArmor.currentDurability,
       protectiveArmor.armor.durability,
@@ -325,14 +347,16 @@ export class Combatant implements Character {
   private handlePenetrativeHitOnArmor(hitbox: Hitbox, damageSource: DamageSource, protectiveArmor: EquippedArmor) {
     const armorDamage = BallisticsCalculator.calculateDamageToArmorWhenPenetrates(
       damageSource.penetration,
+      damageSource.projectiles,
       damageSource.armorDamage,
       protectiveArmor.armor.class,
-      protectiveArmor.armor.material.destructability
+      protectiveArmor.armor.material.destructibility
     );
 
     const damageDealt = BallisticsCalculator.calculateDamageToCombatantWhenPenetrates(
       damageSource.damage,
       damageSource.penetration,
+      damageSource.projectiles,
       protectiveArmor.armor.class,
       protectiveArmor.currentDurability,
       protectiveArmor.armor.durability
@@ -373,13 +397,42 @@ export class Equipment {
     this.headwear = headwear
     this.bodyArmor = bodyArmor
   }
+
+  public equipBodyArmor(armor: Armor): void {
+    this.bodyArmor = new EquippedArmor(armor.armor.durability, armor)
+  }
 }
 
 export class EquippedArmor extends Armor {
   currentDurability: number
 
-  constructor(currentDurability = -1) {
-    super()
+  constructor(currentDurability = -1, armor = new Armor()) {
+    super(
+      armor.type,
+      armor.armor,
+      armor.blocking,
+      armor.id,
+      armor.blightbusterIcon,
+      armor._id,
+      armor.name,
+      armor.shortName,
+      armor.description,
+      armor._kind,
+      armor.weight,
+      armor.price,
+      armor.maxStack,
+      armor.rarity,
+      armor.lastLowestMarketPrice,
+      armor.avg24hPrice,
+      armor.avg7daysPrice,
+      armor.updated,
+      armor.diff24h,
+      armor.diff7days,
+      armor.icon,
+      armor.wikiLink,
+      armor.img,
+      armor.imgBig
+    )
     this.currentDurability = currentDurability >= 0 ? currentDurability : this.armor.durability
   }
 }

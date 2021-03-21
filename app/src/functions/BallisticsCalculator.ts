@@ -8,76 +8,76 @@ export default class BallisticsCalculator {
     bulletPenetrationPower: number
   ) {
     if (armorDurability > 0.0) {
-      const magicNumber = this.calculateMagicNumber(armorClass, armorDurability, armorMaxDurability)
+      const armorResistance = this.calculateArmorResistance(armorClass, armorDurability, armorMaxDurability)
 
-      const chanceToPenetrate = (magicNumber >= bulletPenetrationPower + 15.0) ? 0.0
-        : ((!(magicNumber >= bulletPenetrationPower))
-          ? (100.0 + bulletPenetrationPower / (0.9 * magicNumber - bulletPenetrationPower))
-          : (0.4 * (magicNumber - bulletPenetrationPower - 15.0) * (magicNumber - bulletPenetrationPower - 15.0)))
+      const chanceToPenetrate = (armorResistance >= bulletPenetrationPower + 15.0) ? 0.0
+        : ((!(armorResistance >= bulletPenetrationPower))
+          ? (100.0 + bulletPenetrationPower / (0.9 * armorResistance - bulletPenetrationPower))
+          : (0.4 * (armorResistance - bulletPenetrationPower - 15.0) * (armorResistance - bulletPenetrationPower - 15.0)))
 
       return chanceToPenetrate
     }
     return 100
   }
 
-  static calculateMagicNumber(
+  static calculateArmorResistance(
     armorClass: number,
     armorDurability: number,
     armorMaxDurability: number
   ) {
     const percentageDurability = (armorDurability / armorMaxDurability) * 100.0
-    const resistance = this.getArmorResistance(armorClass)
-    return (121.0 - 5000.0 / (45.0 + percentageDurability * 2.0)) * resistance * 0.01;
-  }
-
-  static getArmorResistance(armorClass: number) {
-    return armorClass * 10
+    return (121.0 - 5000.0 / (45.0 + percentageDurability * 2.0)) * (armorClass * 10) * 0.01;
   }
 
   // --- ARMOR DAMAGE ---
   static calculateDamageToArmorWhenPenetrates(
     penetration: number,
+    projectiles: number,
     armorDamage: number,
     armorClass: number,
     armorDestructability: number
   ) {
-    const resistance = this.getArmorResistance(armorClass)
-    return penetration * armorDamage * Utils.clamp(penetration / resistance, 0.5, 0.9) * armorDestructability
+    const damage = penetration * (armorDamage / 100) * Utils.clamp(penetration / (armorClass * 10), 0.5, 0.9) * armorDestructability
+    return Math.max(1.0, damage) * projectiles
   }
 
   static calculateDamageToArmorWhenDoesNotPenetrate(
     penetration: number,
+    projectiles: number,
     armorDamage: number,
     armorClass: number,
     armorDestructability: number
   ) {
-    const resistance = this.getArmorResistance(armorClass)
-    return penetration * armorDamage * Utils.clamp(penetration / resistance, 0.6, 1.1) * armorDestructability
+    const damage = penetration * (armorDamage / 100) * Utils.clamp(penetration / (armorClass * 10), 0.6, 1.1) * armorDestructability
+    return Math.max(1.0, damage) * projectiles
   }
 
   // --- COMBATANT DAMAGE ---
   static calculateDamageToCombatantWhenPenetrates(
     damage: number,
     penetration: number,
+    projectiles: number,
     armorClass: number,
     armorDurability: number,
     armorMaxDurability: number
   ) {
-    const magicNumber = this.calculateMagicNumber(armorClass, armorDurability, armorMaxDurability)
-    const damageMultiplier = Utils.clamp(penetration / (magicNumber + 12.0), 0.6, 1.0)
-    return damage * damageMultiplier
+    const armorResistance = this.calculateArmorResistance(armorClass, armorDurability, armorMaxDurability)
+    const damageMultiplier = Utils.clamp(penetration / (armorResistance + 12.0), 0.6, 1.0)
+    return damage * damageMultiplier * projectiles
   }
 
+  // (blunt damage)
   static calculateDamageToCombatantWhenDoesNotPenetrate(
     damage: number,
     penetration: number,
+    projectiles: number,
     armorClass: number,
     armorDurability: number,
     armorMaxDurability: number,
     armorBluntThroughput: number
   ) {
-    const magicNumber = this.calculateMagicNumber(armorClass, armorDurability, armorMaxDurability)
-    const damageMultiplier = armorBluntThroughput * Utils.clamp(1.0 - 0.03 * (magicNumber - penetration), 0.2, 1.0);
-    return damage * damageMultiplier
+    const armorResistance = this.calculateArmorResistance(armorClass, armorDurability, armorMaxDurability)
+    const bluntDamageMultiplier = armorBluntThroughput * Utils.clamp(1.0 - 0.03 * (armorResistance - penetration), 0.2, 1.0);
+    return damage * bluntDamageMultiplier * projectiles
   }
 }

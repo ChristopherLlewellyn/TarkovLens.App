@@ -13,5 +13,8 @@ export enum Icon {
   Player = 'mdi-account',
   Playable = 'mdi-account-check',
   Health = 'mdi-hospital-box',
-  Combatant = 'mdi-emoticon-angry'
+  Combatant = 'mdi-emoticon-angry',
+  Visible = 'mdi-eye',
+  Invisible = 'mdi-eye-off',
+  Back = 'mdi-arrow-left'
 }

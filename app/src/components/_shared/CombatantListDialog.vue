@@ -27,10 +27,10 @@
           :key="combatant.id"
           v-ripple
           clickable
-          class="q-pt-md q-pb-md"
+          class="q-pt-md q-pb-md text-center justify-center"
           @click="onRowClick(combatant)"
         >
-          <q-item-section avatar>
+          <q-item-section avatar style="max-width: 250px">
             <q-avatar color="dark" text-color="white" size="9vh">
               <img
                 v-if="combatant.portrait.length > 0"
@@ -40,7 +40,7 @@
             </q-avatar>
           </q-item-section>
 
-          <q-item-section>
+          <q-item-section style="max-width: 250px">
             <q-item-label overline>
               <q-icon
                 v-if="
@@ -69,7 +69,7 @@
             </q-item-label>
           </q-item-section>
 
-          <q-item-section>
+          <q-item-section style="max-width: 250px">
             <q-item-label class="text-center">
               <span class="q-mr-xs">
                 <q-icon :name="Icon.Health" color="health-green" size="20px" />

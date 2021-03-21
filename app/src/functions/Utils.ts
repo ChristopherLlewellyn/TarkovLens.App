@@ -12,12 +12,19 @@ export default class Utils {
   }
 
   static simulateEventGivenPercentageChance (percentageChance: number): boolean {
-    return (Math.random() >= (percentageChance / 100))
+    if (percentageChance === 0) {
+      return false
+    }
+    return (Math.random() <= percentageChance / 100)
   }
 
   static clamp(num: number, a: number, b: number) {
     return Math.max(a, Math.min(b, num)); 
   }
+
+  static truncate(str: string, n: number){
+    return (str.length > n) ? str.substr(0, n-1) + '..' : str;
+  };
 }
 
 export interface RGB {

@@ -1,8 +1,10 @@
 import { Hitbox } from '../characters/Hitbox';
 
 export interface DamageSource {
+  id: string,
   damage: number;
   penetration: number;
+  projectiles: number;
   armorDamage: number;
   fragmentation: Fragmentation;
 }
@@ -27,11 +29,11 @@ export interface Color {
 
 export class Material {
   name: string;
-  destructability: number;
+  destructibility: number;
 
   constructor(name = '', destructability = 0) {
     this.name = name
-    this.destructability = destructability
+    this.destructibility = destructability
   }
 }
 
