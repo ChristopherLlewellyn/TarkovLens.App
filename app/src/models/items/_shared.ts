@@ -1,7 +1,8 @@
 import { Hitbox } from '../characters/Hitbox';
 
 export interface DamageSource {
-  id: string,
+  id: string;
+  shortName: string;
   damage: number;
   penetration: number;
   projectiles: number;

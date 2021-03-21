@@ -16,5 +16,7 @@ export enum Icon {
   Combatant = 'mdi-emoticon-angry',
   Visible = 'mdi-eye',
   Invisible = 'mdi-eye-off',
-  Back = 'mdi-arrow-left'
+  Back = 'mdi-arrow-left',
+  Close = 'mdi-close',
+  Death = 'mdi-skull-crossbones'
 }
