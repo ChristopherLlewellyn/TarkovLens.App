@@ -104,6 +104,7 @@
                 color="armor"
                 class="q-ma-xs"
               >
+                <q-icon :name="Icon.Armor" class="q-mr-xs" />
                 Blocked
               </q-badge>
             </q-item-section>
