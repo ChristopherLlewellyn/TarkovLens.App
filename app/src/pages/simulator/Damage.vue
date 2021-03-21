@@ -10,16 +10,29 @@
               class="center q-mt-md"
               style="max-height: 80vh; max-width: 500px"
             >
-              <q-btn
-                v-if="!state.showArmorSelectionView"
-                class="reset-button pointer all-pointer-events"
-                style="margin-right: 30px"
-                size="20px"
-                round
-                flat
-                icon="mdi-cached"
-                @click="resetCombatant()"
-              />
+              <div v-if="!state.showArmorSelectionView" class="top-left-buttons">
+                <div class="q-ma-xs">
+                  <q-btn
+                    class="pointer all-pointer-events"
+                    size="20px"
+                    round
+                    flat
+                    icon="mdi-cached"
+                    @click="resetCombatant()"
+                  />
+                </div>
+
+                <div>
+                  <q-btn 
+                    outline
+                    color="primary"
+                    class="pointer all-pointer-events"
+                    @click="toggleShowLogsDialog()"
+                  >
+                    Logs
+                  </q-btn>
+                </div>
+              </div>
 
               <body-part
                 v-if="state.showDamageSimulatorView"
@@ -139,7 +152,11 @@
             style="max-width: 700px; margin-left: auto; margin-right: auto"
           >
             <!-- Combatant Selector -->
-            <div v-if="!state.showArmorSelectionView" class="q-ma-sm" style="margin-left: 30px">
+            <div
+              v-if="!state.showArmorSelectionView"
+              class="q-ma-sm"
+              style="margin-left: 30px"
+            >
               <q-btn round @click="toggleShowCombatants()">
                 <q-avatar v-ripple.early color="dark" size="10vh">
                   <q-badge
@@ -215,7 +232,12 @@
             </div>
 
             <!-- View Toggle (between armor selection and damage simulator) -->
-            <div class="text-center q-ma-sm" :style="{ 'margin-left': state.showArmorSelectionView ? '30px' : '' }">
+            <div
+              class="text-center q-ma-sm"
+              :style="{
+                'margin-left': state.showArmorSelectionView ? '30px' : '',
+              }"
+            >
               <div>
                 <q-btn round @click="toggleView()">
                   <q-avatar v-ripple.early size="10vh" color="dark">
@@ -238,6 +260,12 @@
           </div>
         </div>
       </div>
+
+      <damage-events-dialog
+        :damage-events="state.selectedCombatant.eventLogs"
+        :show="state.showDamageEventsDialog"
+        @closeDialog="toggleShowLogsDialog"
+      />
 
       <combatant-list-dialog
         :combatants="combatants"
@@ -287,6 +315,7 @@ import ArmorEquipmentSlot from 'src/components/simulator/ArmorEquipmentSlot.vue'
 import { AmmunitionRow } from 'src/components/_models/AmmunitionRow';
 import { Armor, ArmorType } from 'src/models/items/Armor';
 import { ArmorRow } from 'src/components/_models/ArmorRow';
+import DamageEventsDialog from 'src/components/simulator/DamageEventsDialog.vue';
 
 export default defineComponent({
   name: 'DamageSimulator',
@@ -296,6 +325,7 @@ export default defineComponent({
     CombatantListDialog,
     ArmorListDialog,
     ArmorEquipmentSlot,
+    DamageEventsDialog,
   },
   setup() {
     const store = useStore<RootState>();
@@ -323,6 +353,7 @@ export default defineComponent({
       showBodyArmorDialog: false,
       showDamageSimulatorView: true,
       showArmorSelectionView: false,
+      showDamageEventsDialog: false,
     });
 
     function selectCombatant(name: string) {
@@ -431,6 +462,10 @@ export default defineComponent({
       state.showCombatantDialog = !state.showCombatantDialog;
     }
 
+    function toggleShowLogsDialog() {
+      state.showDamageEventsDialog = !state.showDamageEventsDialog;
+    }
+
     function toggleView() {
       state.showArmorSelectionView = !state.showArmorSelectionView;
       state.showDamageSimulatorView = !state.showDamageSimulatorView;
@@ -458,6 +493,7 @@ export default defineComponent({
       toggleShowAmmunition,
       toggleShowBodyArmorDialog,
       toggleView,
+      toggleShowLogsDialog,
       thoraxArmor,
       stomachArmor,
       leftArmArmor,
@@ -527,7 +563,7 @@ export default defineComponent({
   top: 60%;
 }
 
-.reset-button {
+.top-left-buttons {
   position: absolute;
   left: 9%;
   top: 2%;

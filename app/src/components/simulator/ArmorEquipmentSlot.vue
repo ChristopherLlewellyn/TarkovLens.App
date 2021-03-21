@@ -62,7 +62,7 @@ export default defineComponent({
       default: new EquippedArmor(),
     },
   },
-  setup(props) {
+  setup() {
     return {
       Icon,
       Utils,
