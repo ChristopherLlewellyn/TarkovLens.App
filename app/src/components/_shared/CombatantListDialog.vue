@@ -2,23 +2,38 @@
   <q-dialog
     v-model="props.show"
     persistent
-    :maximized="true"
-    transition-show="slide-up"
-    transition-hide="slide-down"
+    :maximized="$q.screen.lt.sm ? true : false"
+    :transition-show="$q.screen.lt.sm ? 'slide-up' : ''"
+    :transition-hide="$q.screen.lt.sm ? 'slide-down' : ''"
   >
     <q-card>
       <q-toolbar class="bg-dark toolbar">
-        <q-btn
-          dense
-          flat
-          round
-          icon="mdi-arrow-left"
-          class="q-mr-sm"
-          @click="closeDialog()"
-        >
-          <q-tooltip>Back</q-tooltip>
-        </q-btn>
-        <span style="font-size: 19px">Select Combatant</span>
+        <template v-if="$q.screen.lt.sm ? true : false">
+          <q-btn
+            dense
+            flat
+            round
+            :icon="Icon.Back"
+            class="q-mr-sm"
+            @click="closeDialog()"
+          >
+            <q-tooltip>Back</q-tooltip>
+          </q-btn>
+          <span style="font-size: 19px">Select Combatant</span>
+        </template>
+
+        <template v-else>
+          <span style="font-size: 19px">Select Combatant</span>
+          <q-space />
+          <q-btn
+            dense
+            flat
+            round
+            class="q-ml-sm"
+            :icon="Icon.Close"
+            @click="closeDialog()"
+          />
+        </template>
       </q-toolbar>
 
       <q-list bordered separator>
@@ -40,7 +55,7 @@
             </q-avatar>
           </q-item-section>
 
-          <q-item-section style="max-width: 250px">
+          <q-item-section>
             <q-item-label overline>
               <q-icon
                 v-if="
@@ -69,7 +84,7 @@
             </q-item-label>
           </q-item-section>
 
-          <q-item-section style="max-width: 250px">
+          <q-item-section>
             <q-item-label class="text-center">
               <span class="q-mr-xs">
                 <q-icon :name="Icon.Health" color="health-green" size="20px" />
@@ -92,6 +107,7 @@ import { defineComponent, PropType } from 'vue';
 import { Icon } from 'src/enums/icon';
 import { Combatant } from 'src/models/characters/Combatant';
 import { CharacterType } from 'src/models/characters/_shared';
+import { useQuasar } from 'quasar';
 
 export default defineComponent({
   name: 'CombatantListDialog',
@@ -107,6 +123,9 @@ export default defineComponent({
   },
   emits: ['closeDialog', 'selectRow'],
   setup(props, { emit }) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const $q = useQuasar();
+
     const closeDialog = () => {
       emit('closeDialog');
     };

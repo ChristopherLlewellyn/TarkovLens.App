@@ -93,6 +93,22 @@ $health-green: $lime-14;
   cursor: pointer;
 }
 
+// Scrollbar
+@media (min-width: 800px) {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #181818;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #606060;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #404040;
+  }
+}
+
 // --- Animation ---
 .attention-pulse {
 	background: rgba(255, 0, 30, 1);
