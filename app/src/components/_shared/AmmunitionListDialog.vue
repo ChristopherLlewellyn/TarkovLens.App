@@ -2,24 +2,42 @@
   <q-dialog
     v-model="props.show"
     persistent
-    :maximized="true"
-    transition-show="slide-up"
-    transition-hide="slide-down"
+    :maximized="$q.screen.lt.sm ? true : false"
+    :transition-show="$q.screen.lt.sm ? 'slide-up' : ''"
+    :transition-hide="$q.screen.lt.sm ? 'slide-down' : ''"
   >
     <q-card>
       <q-toolbar class="bg-dark">
-        <q-btn dense flat round icon="mdi-arrow-left" class="q-mr-sm"
-               @click="closeDialog()"
-        >
-          <q-tooltip>
-            Back
-          </q-tooltip>
-        </q-btn>
-        <span style="font-size: 19px">Select Ammunition</span>
+        <template v-if="$q.screen.lt.sm ? true : false">
+          <q-btn
+            dense
+            flat
+            round
+            :icon="Icon.Back"
+            class="q-mr-sm"
+            @click="closeDialog()"
+          >
+            <q-tooltip>Back</q-tooltip>
+          </q-btn>
+          <span style="font-size: 19px">Select Ammunition</span>
+        </template>
+
+        <template v-else>
+          <span style="font-size: 19px">Select Ammunition</span>
+          <q-space />
+          <q-btn
+            dense
+            flat
+            round
+            class="q-ml-sm"
+            :icon="Icon.Close"
+            @click="closeDialog()"
+          />
+        </template>
       </q-toolbar>
 
       <q-card-section>
-        <q-input v-model="searchInput" label="Search">
+        <q-input v-model="searchInput" clearable label="Search">
           <template #prepend>
             <q-icon name="mdi-magnify" />
           </template>
@@ -88,6 +106,7 @@ import { defineComponent, PropType, computed, ref } from 'vue'
 import { Ammunition } from 'src/models/items/Ammunition'
 import { AmmunitionRow } from 'src/components/_models/AmmunitionRow'
 import { Icon } from 'src/enums/icon'
+import { useQuasar } from 'quasar';
 
 export default defineComponent({
   name: 'AmmunitionListDialog',
@@ -106,6 +125,9 @@ export default defineComponent({
     'selectRow'
   ],
   setup (props, { emit }) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const $q = useQuasar();
+
     const closeDialog = () => {
       emit('closeDialog')
     }
