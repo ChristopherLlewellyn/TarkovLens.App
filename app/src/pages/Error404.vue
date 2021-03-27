@@ -1,5 +1,5 @@
 <template>
-  <div class="fullscreen bg-blue text-white text-center q-pa-md flex flex-center">
+  <div class="fullscreen bg-dark text-primary text-center q-pa-md flex flex-center">
     <div>
       <div style="font-size: 30vh">
         404
@@ -14,9 +14,9 @@
 
       <q-btn
         class="q-mt-xl"
-        color="white"
-        text-color="blue"
+        color="primary"
         unelevated
+        outline
         to="/"
         label="Go Home"
         no-caps
@@ -27,8 +27,18 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useMeta } from 'quasar'
+import { App } from 'src/enums/app'
+
+const metaData = {
+  title: '404',
+  titleTemplate: (title: string) => `${title} - ${App.AppName}`,
+}
 
 export default defineComponent({
-  name: 'Error404'
+  name: 'Error404',
+  setup() {
+    useMeta(metaData)
+  }
 })
 </script>
