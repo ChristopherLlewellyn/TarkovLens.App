@@ -41,7 +41,7 @@ export default defineComponent({
       {
         id: 1,
         title: 'Penetration Chance Simulator',
-        description: 'Visualize the % chance for different ammunitions to penetrate armor with any amount of remaining durability.',
+        description: 'Visualize the % chance for different ammunition to penetrate armor with varying levels of durability.',
         icon: Icon.Penetration,
         iconBackgroundColor: 'bullet',
         link: SimulatorRoutePath.PenetrationChance
@@ -49,7 +49,7 @@ export default defineComponent({
       {
         id: 2,
         title: 'Damage Simulator',
-        description: "Understand how Tarkov's damage model works. Visualize much damage different characters can take, both with and without armor.",
+        description: "Understand how Tarkov's damage model works. Visualize how much damage different characters can take, both with and without armor.",
         icon: Icon.Damage,
         iconBackgroundColor: 'bullet',
         link: SimulatorRoutePath.Damage

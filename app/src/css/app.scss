@@ -71,6 +71,15 @@ $health-green: $lime-14;
 }
 
 // --- General ---
+@font-face {
+  font-family: Bender;
+  src: url(./fonts/Bender.woff);
+}
+
+body {
+  font-family: 'Bender';
+}
+
 .center {
   display: block;
   margin-left: auto;

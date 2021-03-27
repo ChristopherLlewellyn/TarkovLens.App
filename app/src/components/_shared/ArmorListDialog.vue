@@ -78,6 +78,19 @@
         <template #body="props">
           <q-tr :props="props" @click="onRowClick(props.row)">
             <q-td key="name" :props="props">
+              <q-intersection
+                once
+                transition="scale"
+                class="avatar-intersection"
+              >
+                <q-avatar size="8vh" style="max-height: 100px; max-width: 100px;" rounded>
+                  <img
+                    style="object-fit: contain;"
+                    :src="props.row.image" 
+                    @error="$event.target.src=props.row.backupImage"
+                  />
+                </q-avatar>
+              </q-intersection>
               <div>{{ props.row.shortName }}</div>
               <div class="greyed-text">
                 <q-icon :name="Icon.ArmorType" /><span>{{ props.row.type.charAt(0).toUpperCase() + props.row.type.slice(1) }}</span>
@@ -236,5 +249,12 @@ export default defineComponent({
 
   tr {
     cursor: pointer;
+  }
+
+  .avatar-intersection {
+    height: 8vh;
+    width: 8vh;
+    max-height: 100px;
+    max-width:100px;
   }
 </style>

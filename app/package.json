@@ -1,7 +1,7 @@
 {
   "name": "tarkovlens",
   "version": "0.0.1",
-  "description": "Helping clarify Tarkov.",
+  "description": "A cross-platform app (web, iOS, Android) that helps players understand Escape from Tarkov. Features interactive simulators that help players visualize EFT's damage model and armor penetration mechanics.",
   "productName": "TarkovLens",
   "author": "Chris Llewellyn <chr.llewellyn@gmail.com>",
   "private": true,
