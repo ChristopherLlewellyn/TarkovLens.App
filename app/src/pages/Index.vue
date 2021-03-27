@@ -41,7 +41,7 @@ export default defineComponent({
       {
         id: 1,
         title: 'Penetration Chance Simulator',
-        description: 'Visualize the % chance for different ammunitions to penetrate armor with any amount of remaining durability.',
+        description: 'Visualize the % chance for different ammunitions to penetrate armor with varying levels of durability.',
         icon: Icon.Penetration,
         iconBackgroundColor: 'bullet',
         link: SimulatorRoutePath.PenetrationChance
