@@ -316,6 +316,16 @@ import { AmmunitionRow } from 'src/components/_models/AmmunitionRow';
 import { Armor, ArmorType } from 'src/models/items/Armor';
 import { ArmorRow } from 'src/components/_models/ArmorRow';
 import DamageEventsDialog from 'src/components/simulator/DamageEventsDialog.vue';
+import { App } from 'src/enums/app'
+import { useMeta } from 'quasar'
+
+const metaData = {
+  title: 'Damage Simulator',
+  titleTemplate: (title: string) => `${title} - ${App.AppName}`,
+  meta: {
+    description: { name: "Understand how Tarkov's damage model works. Visualize much damage different characters can take, both with and without armor." }
+  }
+}
 
 export default defineComponent({
   name: 'DamageSimulator',
@@ -328,6 +338,8 @@ export default defineComponent({
     DamageEventsDialog,
   },
   setup() {
+    useMeta(metaData)
+
     const store = useStore<RootState>();
     store.commit('layout/updateTitle', 'Damage Simulator');
 

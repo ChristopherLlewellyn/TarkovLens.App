@@ -31,7 +31,7 @@
           class="q-mb-sm"
           style="max-height: 150px"
           fit="contain" 
-          src="https://tarkov-gunsmith.com/img/logo1-transparent-thick.58d66466.svg"
+          src="tarkovlens-large.png"
         />
 
         <div 
@@ -39,7 +39,7 @@
           class="text-center q-mb-sm primary"
           style="font-size: 25px"
         >
-            Tarkov Lens
+            TarkovLens
         </div>
 
         <q-separator></q-separator>

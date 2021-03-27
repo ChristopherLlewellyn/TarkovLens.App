@@ -21,16 +21,27 @@ import MenuCard from 'src/components/_shared/MenuCard.vue'
 import { SimulatorRoutePath } from 'src/enums/route'
 import { RootState } from 'src/store/RootState'
 import { Icon } from 'src/enums/icon'
+import { App } from 'src/enums/app'
+import { useMeta } from 'quasar'
+
+const metaData = {
+  title: App.AppName,
+  meta: {
+    description: { name: 'Helping players understand Escape from Tarkov, with damage and penetration simulators.' }
+  }
+}
 
 export default defineComponent({
   name: 'PageIndex',
   components: { MenuCard },
   setup() {
+    useMeta(metaData)
+
     const links = [
       {
         id: 1,
         title: 'Penetration Chance Simulator',
-        description: 'Visualise the % chance for any ammunition to penetrate any armor.',
+        description: 'Visualize the % chance for different ammunitions to penetrate armor with any amount of remaining durability.',
         icon: Icon.Penetration,
         iconBackgroundColor: 'bullet',
         link: SimulatorRoutePath.PenetrationChance
@@ -38,7 +49,7 @@ export default defineComponent({
       {
         id: 2,
         title: 'Damage Simulator',
-        description: "Understand how Tarkov's damage model works, and how much damage different characters can take.",
+        description: "Understand how Tarkov's damage model works. Visualize much damage different characters can take, both with and without armor.",
         icon: Icon.Damage,
         iconBackgroundColor: 'bullet',
         link: SimulatorRoutePath.Damage

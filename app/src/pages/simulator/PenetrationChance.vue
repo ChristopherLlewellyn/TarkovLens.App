@@ -57,11 +57,23 @@ import { Armor } from 'src/models/items/Armor'
 import BallisticsCalculator from 'src/functions/BallisticsCalculator'
 import Utils from 'src/functions/Utils'
 import { RootState } from 'src/store/RootState'
+import { App } from 'src/enums/app'
+import { useMeta } from 'quasar'
+
+const metaData = {
+  title: 'Penetration Simulator',
+  titleTemplate: (title: string) => `${title} - ${App.AppName}`,
+  meta: {
+    description: { name: 'Visualize the % chance for different ammunitions to penetrate armor with any amount of remaining durability.' }
+  }
+}
 
 export default defineComponent({
   name: 'PenetrationChanceSimulator',
   components: { PenetrationMatchupSelector },
   setup () {
+    useMeta(metaData)
+
     const {
       ammunitions,
       armors,
