@@ -3,7 +3,7 @@ export enum Icon {
   Bullet = 'mdi-bullet',
   Name = 'mdi-lead-pencil',
   ArmorType = 'mdi-tshirt-crew',
-  Penetration = 'mdi-flash',
+  Penetration = 'svguse:icons/penetration.svg#Layer_1',
   Damage = 'mdi-heart-broken',
   Boss = 'mdi-skull',
   MaxDurability = 'mdi-hammer-wrench',
