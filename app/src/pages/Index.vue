@@ -49,7 +49,7 @@ export default defineComponent({
       {
         id: 2,
         title: 'Damage Simulator',
-        description: "Understand how Tarkov's damage model works. Visualize much damage different characters can take, both with and without armor.",
+        description: "Understand how Tarkov's damage model works. Visualize how much damage different characters can take, both with and without armor.",
         icon: Icon.Damage,
         iconBackgroundColor: 'bullet',
         link: SimulatorRoutePath.Damage
