@@ -113,6 +113,7 @@
                 color="bullet"
                 class="q-ma-xs center"
               >
+                <q-icon :name="Icon.Penetration" class="q-mr-xs" />
                 Penetrated
               </q-badge>
 

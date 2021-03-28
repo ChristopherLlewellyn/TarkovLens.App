@@ -35,12 +35,32 @@ export default class Utils {
   }
 
   static clamp(num: number, a: number, b: number) {
-    return Math.max(a, Math.min(b, num)); 
+    return Math.max(a, Math.min(b, num))
   }
 
-  static truncate(str: string, n: number){
-    return (str.length > n) ? str.substr(0, n-1) + '..' : str;
-  };
+  static truncate(str: string, n: number) {
+    return (str.length > n) ? str.substr(0, n-1) + '..' : str
+  }
+
+  static titleCase(str: string): string {
+    const splitStr = str.toLowerCase().split(' ')
+    for (let i = 0; i < splitStr.length; i++) {
+        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1)
+    }
+    return splitStr.join(' ')
+  }
+
+  static humanizeArmorZones(zones: string[]): string {
+    let str = zones.join(', ')
+    str = str.replace('head', 'Head')
+    str = str.replace('chest', 'Thorax')
+    str = str.replace('leftarm', 'Left arm')
+    str = str.replace('rightarm', 'Right arm')
+    str = str.replace('stomach', 'Stomach')
+    str = str.replace('leftleg', 'Left leg')
+    str = str.replace('rightleg', 'Right leg')
+    return str
+  }
 }
 
 export interface RGB {
