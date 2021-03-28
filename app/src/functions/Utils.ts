@@ -4,11 +4,27 @@ export default class Utils {
     return 'hsl(' + hue.toString() + ', 100%, 50%)'
   }
 
+  static percentageToHslWithIndividualValues (percentage: number, hue0: number, hue1: number): HSL {
+    const hue = (percentage * (hue1 - hue0)) + hue0
+    return { h: hue, s: 100, l: 50 }
+  }
+
   static percentageToRGB (percentage: number, howGreen = 170, howRed = 255): RGB {
     const Red = 255 - (howRed * (percentage / 100))
     const Green = howGreen * (percentage / 100)
     const Blue = 20 
     return { red: Red, green: Green, blue: Blue}
+  }
+
+  static hslToHex(h: number, s: number, l: number) {
+    l /= 100;
+    const a = s * Math.min(l, 1 - l) / 100;
+    const f = (n: number) => {
+      const k = (n + h / 30) % 12;
+      const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+      return Math.round(255 * color).toString(16).padStart(2, '0'); // convert to Hex and prefix "0" if needed
+    };
+    return `#${f(0)}${f(8)}${f(4)}`;
   }
 
   static simulateEventGivenPercentageChance (percentageChance: number): boolean {
@@ -31,4 +47,10 @@ export interface RGB {
   red: number,
   green: number,
   blue: number
+}
+
+export interface HSL {
+  h: number,
+  s: number,
+  l: number
 }

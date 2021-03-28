@@ -67,7 +67,24 @@
             </q-item-section>
 
             <q-item-section side>
-              <div class="q-ma-xs">
+              <q-intersection
+                once
+                transition="scale"
+                class="dmg-model-intersection"
+              >
+                <damage-model-icon 
+                  size="20vh" 
+                  :head-hp-percent="event.headHpPercent" 
+                  :thorax-hp-percent="event.thoraxHpPercent"
+                  :leftarm-hp-percent="event.leftarmHpPercent"
+                  :rightarm-hp-percent="event.rightarmHpPercent"
+                  :stomach-hp-percent="event.stomachHpPercent"
+                  :leftleg-hp-percent="event.leftlegHpPercent"
+                  :rightleg-hp-percent="event.rightlegHpPercent" 
+                />
+              </q-intersection>
+
+              <div class="q-ma-xs center">
                 <span class="q-mr-xs">
                   <q-icon
                     :name="Icon.Health"
@@ -85,7 +102,7 @@
               <q-badge
                 v-if="event.killShot === true"
                 color="boss"
-                class="q-ma-xs"
+                class="q-ma-xs center"
               >
                 <q-icon :name="Icon.Death" class="q-mr-xs" />
                 Kill
@@ -94,7 +111,7 @@
               <q-badge
                 v-if="event.penetrated === true"
                 color="bullet"
-                class="q-ma-xs"
+                class="q-ma-xs center"
               >
                 Penetrated
               </q-badge>
@@ -102,7 +119,7 @@
               <q-badge
                 v-if="event.penetrated === false"
                 color="armor"
-                class="q-ma-xs"
+                class="q-ma-xs center"
               >
                 <q-icon :name="Icon.Armor" class="q-mr-xs" />
                 Blocked
@@ -127,10 +144,12 @@
 import { defineComponent, PropType } from 'vue';
 import { Icon } from 'src/enums/icon';
 import { CombatantDamageEvent } from 'src/models/characters/Combatant';
+import DamageModelIcon from 'src/components/simulator/DamageModelIcon.vue';
 import { useQuasar } from 'quasar';
 
 export default defineComponent({
   name: 'DamageEventsDialog',
+  components: { DamageModelIcon },
   props: {
     show: {
       type: Boolean,
@@ -165,4 +184,9 @@ export default defineComponent({
   z-index: 1;
   top: 0;
 }
+
+.dmg-model-intersection {
+    height: 20vh;
+    width: 20vh;
+  }
 </style>

@@ -62,19 +62,28 @@ export class Combatant implements Character {
       return
     }
 
+    // Create damage log
     const damageEventLog = new CombatantDamageEvent(hitbox, damageSource.shortName)
 
+    // Handle getting shot
     const protectiveArmor = this.getHitboxProtection(hitbox);
     if (protectiveArmor !== undefined && protectiveArmor.currentDurability > 0) {
       this.handleHitInArmoredZone(hitbox, protectiveArmor, damageSource, damageEventLog);
     }
-
     else {
       damageEventLog.penetrated = true
       this.takeDamage(hitbox, damageSource.damage * damageSource.projectiles, damageEventLog)
     }
 
+    // Add post-shot info to the damage log
     damageEventLog.remainingHp = this.healthStatus.currentHp
+    damageEventLog.headHpPercent = (Math.max(this.healthStatus.head.currentHp, 0) / this.healthStatus.head.maxHp)
+    damageEventLog.thoraxHpPercent = (Math.max(this.healthStatus.thorax.currentHp, 0) / this.healthStatus.thorax.maxHp)
+    damageEventLog.leftarmHpPercent = (Math.max(this.healthStatus.leftArm.currentHp, 0) / this.healthStatus.leftArm.maxHp)
+    damageEventLog.rightarmHpPercent = (Math.max(this.healthStatus.rightArm.currentHp, 0) / this.healthStatus.rightArm.maxHp)
+    damageEventLog.stomachHpPercent = (Math.max(this.healthStatus.stomach.currentHp, 0) / this.healthStatus.stomach.maxHp)
+    damageEventLog.leftlegHpPercent = (Math.max(this.healthStatus.leftLeg.currentHp, 0) / this.healthStatus.leftLeg.maxHp)
+    damageEventLog.rightlegHpPercent = (Math.max(this.healthStatus.rightLeg.currentHp, 0) / this.healthStatus.rightLeg.maxHp)
     this.eventLogs.push(damageEventLog)
   }
 
@@ -540,6 +549,13 @@ export class CombatantDamageEvent {
   penetrated = true
   killShot = false
   remainingHp = 0
+  headHpPercent = 0
+  thoraxHpPercent = 0
+  leftarmHpPercent = 0
+  rightarmHpPercent = 0
+  stomachHpPercent = 0
+  leftlegHpPercent = 0
+  rightlegHpPercent = 0
 
   constructor(hitbox: Hitbox, damageSourceName: string) {
     this.hitbox = hitbox
