@@ -46,13 +46,19 @@
           @click="onRowClick(combatant)"
         >
           <q-item-section avatar style="max-width: 250px">
-            <q-avatar color="dark" text-color="white" size="9vh">
-              <img
-                v-if="combatant.portrait.length > 0"
-                :src="combatant.portrait"
-              />
-              <span v-else>{{ combatant.name.charAt(0) }}</span>
-            </q-avatar>
+            <q-intersection
+              once
+              transition="scale"
+              class="avatar-intersection"
+            >
+              <q-avatar color="dark" text-color="white" size="9vh">
+                <img
+                  v-if="combatant.portrait.length > 0"
+                  :src="combatant.portrait"
+                />
+                <span v-else>{{ combatant.name.charAt(0) }}</span>
+              </q-avatar>
+            </q-intersection>
           </q-item-section>
 
           <q-item-section>
@@ -151,5 +157,10 @@ export default defineComponent({
   position: sticky;
   z-index: 1;
   top: 0;
+}
+
+.avatar-intersection {
+  height: 9vh;
+  width: 9vh;
 }
 </style>
