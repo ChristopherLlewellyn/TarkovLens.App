@@ -3,7 +3,7 @@
     <div class="row justify-center q-mb-xs">
       <div style="width: 125px">
         <div v-if="selectedArmor.id" class="text-center">
-          <q-chip class="q-ml-sm q-mr-sm" icon="mdi-shield" color="armor">
+          <q-chip class="q-ml-sm q-mr-sm" :icon="Icon.Armor" color="armor">
             {{ selectedArmor.armor.class }}
           </q-chip>
         </div>
@@ -11,7 +11,7 @@
 
       <div style="width: 125px">
         <div v-if="selectedAmmunition.id" class="text-center">
-          <q-chip class="q-ml-sm q-mr-sm" icon="mdi-flash" color="bullet">
+          <q-chip class="q-ml-sm q-mr-sm" :icon="Icon.Penetration" color="bullet">
             {{ selectedAmmunition.penetration }}
           </q-chip>
         </div>
@@ -38,7 +38,7 @@
           </q-img>
         </template>
         <template v-else>
-          <q-avatar class="armor center q-mt-xs" size="75px" icon="mdi-shield" />
+          <q-avatar class="armor center q-mt-xs" size="75px" :icon="Icon.Armor" />
         </template>
 
         <q-card-section>
@@ -67,7 +67,7 @@
           </q-img>
         </template>
         <template v-else>
-          <q-avatar class="bullet center q-mt-xs" size="75px" icon="mdi-bullet" />
+          <q-avatar class="bullet center q-mt-xs" size="75px" :icon="Icon.Bullet" />
         </template>
 
         <q-card-section>
@@ -101,6 +101,7 @@ import { Armor } from 'src/models/items/Armor'
 import ArmorListDialog from 'src/components/_shared/ArmorListDialog.vue'
 import AmmunitionListDialog from 'src/components/_shared/AmmunitionListDialog.vue'
 import { ArmorRow } from 'src/components/_models/ArmorRow'
+import { Icon } from 'src/enums/icon';
 
 export default defineComponent({
   name: 'PenetrationMatchupSelector',
@@ -151,7 +152,7 @@ export default defineComponent({
       emit('selectAmmunition', ammunition?.id)
     }
 
-    return { state, toggleShowArmor, toggleShowAmmunition, selectArmor, selectAmmunition }
+    return { state, Icon, toggleShowArmor, toggleShowAmmunition, selectArmor, selectAmmunition }
   }
 })
 </script>
