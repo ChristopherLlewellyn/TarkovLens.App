@@ -65,6 +65,17 @@
         </q-item>
       </q-list>
 
+      <div class="patreon-button">
+        <a href="https://www.patreon.com/chrisllewellyn?fan_landing=true" target="__blank">
+          <q-img
+            fit="contain"
+            width="70%"
+            class="center"
+            src="https://c5.patreon.com/external/logo/become_a_patron_button.png"
+          />
+        </a>
+      </div>
+
       <div class="absolute" style="top: 15px; right: -17px">
         <q-btn
           dense
@@ -164,3 +175,9 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped>
+.patreon-button {
+  margin-top: 5vh;
+}
+</style>
