@@ -1,4 +1,4 @@
-import { SimulatorRouteName, SimulatorRoutePath } from 'src/enums/route';
+import { CalculatorRouteName, CalculatorRoutePath, SimulatorRouteName, SimulatorRoutePath } from 'src/enums/route';
 import { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
@@ -30,6 +30,18 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: SimulatorRouteName.Damage,
         component: () => import('pages/simulator/Damage.vue')
+      }
+    ]
+  },
+
+  {
+    path: CalculatorRoutePath.CurrencyConvert,
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: CalculatorRouteName.CurrencyConvert,
+        component: () => import('pages/calculator/CurrencyConverter.vue')
       }
     ]
   },

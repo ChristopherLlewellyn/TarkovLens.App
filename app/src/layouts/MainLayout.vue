@@ -99,7 +99,7 @@ import { RootState } from 'src/store/RootState'
 import { defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useQuasar } from 'quasar'
-import { SimulatorRoutePath } from 'src/enums/route'
+import { CalculatorRoutePath, SimulatorRoutePath } from 'src/enums/route'
 import { Icon } from 'src/enums/icon'
 
 export default defineComponent({
@@ -117,7 +117,7 @@ export default defineComponent({
     const navItems = [
       {
         id: 1,
-        title: 'Home',
+        title: 'Overview',
         icon: 'mdi-home',
         activeClass: 'white',
         link: '/'
@@ -135,6 +135,13 @@ export default defineComponent({
         icon: Icon.Damage,
         activeClass: 'white',
         link: SimulatorRoutePath.Damage
+      },
+      {
+        id: 4,
+        title: 'Currency Converter',
+        icon: Icon.MoneyRubles,
+        activeClass: 'white',
+        link: CalculatorRoutePath.CurrencyConvert
       }
     ]
 

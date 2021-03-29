@@ -8,6 +8,8 @@ export enum Icon {
   Boss = 'mdi-skull',
   MaxDurability = 'mdi-hammer-wrench',
   MoneyRubles = 'mdi-currency-rub',
+  MoneyDollars = 'mdi-currency-usd',
+  MoneyEuro = 'mdi-currency-eur',
   Map = 'mdi-map',
   MapMarker = 'mdi-map-marker-radius',
   Player = 'mdi-account',

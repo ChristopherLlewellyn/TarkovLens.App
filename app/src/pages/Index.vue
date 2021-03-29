@@ -18,7 +18,7 @@
 import { defineComponent } from 'vue'
 import { useStore } from 'vuex'
 import MenuCard from 'src/components/_shared/MenuCard.vue'
-import { SimulatorRoutePath } from 'src/enums/route'
+import { SimulatorRoutePath, CalculatorRoutePath } from 'src/enums/route'
 import { RootState } from 'src/store/RootState'
 import { Icon } from 'src/enums/icon'
 import { App } from 'src/enums/app'
@@ -53,6 +53,14 @@ export default defineComponent({
         icon: Icon.Damage,
         iconBackgroundColor: 'bullet',
         link: SimulatorRoutePath.Damage
+      },
+      {
+        id: 3,
+        title: 'Currency Converter',
+        description: 'Convert the various currencies used in Tarkov.',
+        icon: Icon.MoneyRubles,
+        iconBackgroundColor: 'money',
+        link: CalculatorRoutePath.CurrencyConvert
       }
     ]
     const store = useStore<RootState>()
