@@ -1,7 +1,6 @@
 <template>
   <q-dialog
     v-model="props.show"
-    persistent
     :maximized="$q.screen.lt.sm ? true : false"
     :transition-show="$q.screen.lt.sm ? 'slide-up' : ''"
     :transition-hide="$q.screen.lt.sm ? 'slide-down' : ''"
