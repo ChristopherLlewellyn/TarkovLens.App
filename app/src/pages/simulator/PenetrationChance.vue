@@ -13,7 +13,7 @@
         <div class="controls">
           <div class="full-width">
             <penetration-matchup-selector
-              :armors="armors"
+              :armors="armorsWithArmoredRigs"
               :ammunitions="ammunitions"
               :selected-armor="state.selectedArmor"
               :selected-ammunition="state.selectedAmmunition"
@@ -76,12 +76,10 @@ export default defineComponent({
 
     const {
       ammunitions,
-      armors,
-      tacticalrigs,
+      armorsWithArmoredRigs,
 
       getAllAmmunitions,
-      getAllArmors,
-      getAllTacticalrigs
+      getAllArmorsWithArmoredRigs,
     } = useItemService()
     
     const store = useStore<RootState>()
@@ -89,8 +87,7 @@ export default defineComponent({
 
     onBeforeMount(async () => {
       await getAllAmmunitions()
-      await getAllArmors()
-      await getAllTacticalrigs()
+      await getAllArmorsWithArmoredRigs()
       store
     })
 
@@ -127,7 +124,7 @@ export default defineComponent({
     })
 
     function setArmor (id: string) {
-      state.selectedArmor = armors.value.find(x => x.id === id) ?? new Armor()
+      state.selectedArmor = armorsWithArmoredRigs.value.find(x => x.id === id) ?? new Armor()
       state.currentDurability = state.selectedArmor.armor?.durability
     }
 
@@ -139,17 +136,13 @@ export default defineComponent({
       // Data
       state,
       ammunitions,
-      armors,
-      tacticalrigs,
+      armorsWithArmoredRigs,
       bothSelected,
       percentageDurability,
       chanceToPenetrate,
       hue,
 
       // Functions
-      getAllAmmunitions,
-      getAllArmors,
-      getAllTacticalrigs,
       setArmor,
       setAmmunition
     }

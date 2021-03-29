@@ -1,3 +1,6 @@
+import { Armor, ArmorType } from 'src/models/items/Armor'
+import { Tacticalrig } from 'src/models/items/Tacticalrig'
+
 export default class Utils {
   static percentageToHsl (percentage: number, hue0: number, hue1: number): string {
     const hue = (percentage * (hue1 - hue0)) + hue0
@@ -60,6 +63,42 @@ export default class Utils {
     str = str.replace('leftleg', 'Left leg')
     str = str.replace('rightleg', 'Right leg')
     return str
+  }
+
+  static convertArmoredTacticalRigsToArmors(tacticalrigs: Tacticalrig[]): Armor[] {
+    const armors: Armor[] = []
+    for (const rig of tacticalrigs) {
+      if (rig.armor !== null) {
+        const armor = new Armor(
+          ArmorType.Body,
+          rig.armor,
+          [],
+          rig.id,
+          rig.blightbusterIcon,
+          rig._id,
+          rig.name,
+          rig.shortName,
+          rig.description,
+          rig._kind,
+          rig.weight,
+          rig.price,
+          rig.maxStack,
+          rig.rarity,
+          rig.lastLowestMarketPrice,
+          rig.avg24hPrice,
+          rig.avg7daysPrice,
+          rig.updated,
+          rig.diff24h,
+          rig.diff7days,
+          rig.icon,
+          rig.wikiLink,
+          rig.img,
+          rig.imgBig
+        )
+        armors.push(armor)
+      }
+    }
+    return armors
   }
 }
 

@@ -282,7 +282,7 @@
       />
 
       <armor-list-dialog
-        :armors="armors.filter((x) => x.type === ArmorType.Body)"
+        :armors="armorsWithArmoredRigs.filter((x) => x.type === ArmorType.Body)"
         :show="state.showBodyArmorDialog"
         @closeDialog="toggleShowBodyArmorDialog"
         @selectRow="equipBodyArmor"
@@ -347,14 +347,14 @@ export default defineComponent({
     const {
       getAllAmmunitions,
       ammunitions,
-      getAllArmors,
-      armors,
+      getAllArmorsWithArmoredRigs,
+      armorsWithArmoredRigs,
     } = useItemService();
 
     onBeforeMount(async () => {
       await getCombatants();
       await getAllAmmunitions();
-      await getAllArmors();
+      await getAllArmorsWithArmoredRigs();
     });
 
     const state = reactive({
@@ -403,7 +403,7 @@ export default defineComponent({
 
     function equipBodyArmor(row: ArmorRow) {
       const bodyArmor =
-        armors.value.find((x) => x.id === row.id) ?? new Armor();
+        armorsWithArmoredRigs.value.find((x) => x.id === row.id) ?? new Armor();
       state.selectedCombatant.equipment.bodyArmor = new EquippedArmor(
         bodyArmor.armor.durability,
         bodyArmor
@@ -492,7 +492,7 @@ export default defineComponent({
       Hitbox,
       combatants,
       ammunitions,
-      armors,
+      armorsWithArmoredRigs,
       selectCombatant,
       selectAmmunition,
       equipBodyArmor,
