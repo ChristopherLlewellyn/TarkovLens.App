@@ -9713,57 +9713,70 @@ export default defineComponent({
         0,
         120
       );
-      const head = Utils.hslToHex(headHSL.h, headHSL.s, headHSL.l);
+      const head =
+        props.headHpPercent > 0
+          ? Utils.hslToHex(headHSL.h, headHSL.s, headHSL.l)
+          : '#000000';
 
       const thoraxHSL = Utils.percentageToHslWithIndividualValues(
         props.thoraxHpPercent,
         0,
         120
       );
-      const thorax = Utils.hslToHex(thoraxHSL.h, thoraxHSL.s, thoraxHSL.l);
+      const thorax =
+        props.thoraxHpPercent > 0
+          ? Utils.hslToHex(thoraxHSL.h, thoraxHSL.s, thoraxHSL.l)
+          : '#000000';
 
       const leftarmHSL = Utils.percentageToHslWithIndividualValues(
         props.leftarmHpPercent,
         0,
         120
       );
-      const leftarm = Utils.hslToHex(leftarmHSL.h, leftarmHSL.s, leftarmHSL.l);
+      const leftarm =
+        props.leftarmHpPercent > 0
+          ? Utils.hslToHex(leftarmHSL.h, leftarmHSL.s, leftarmHSL.l)
+          : '#000000';
 
       const rightarmHSL = Utils.percentageToHslWithIndividualValues(
         props.rightarmHpPercent,
         0,
         120
       );
-      const rightarm = Utils.hslToHex(
-        rightarmHSL.h,
-        rightarmHSL.s,
-        rightarmHSL.l
-      );
+      const rightarm =
+        props.rightarmHpPercent > 0
+          ? Utils.hslToHex(rightarmHSL.h, rightarmHSL.s, rightarmHSL.l)
+          : '#000000';
 
       const stomachHSL = Utils.percentageToHslWithIndividualValues(
         props.stomachHpPercent,
         0,
         120
       );
-      const stomach = Utils.hslToHex(stomachHSL.h, stomachHSL.s, stomachHSL.l);
+      const stomach =
+        props.stomachHpPercent > 0
+          ? Utils.hslToHex(stomachHSL.h, stomachHSL.s, stomachHSL.l)
+          : '#000000';
 
       const leftlegHSL = Utils.percentageToHslWithIndividualValues(
         props.leftlegHpPercent,
         0,
         120
       );
-      const leftleg = Utils.hslToHex(leftlegHSL.h, leftlegHSL.s, leftlegHSL.l);
+      const leftleg =
+        props.leftlegHpPercent > 0
+          ? Utils.hslToHex(leftlegHSL.h, leftlegHSL.s, leftlegHSL.l)
+          : '#000000';
 
       const rightlegHSL = Utils.percentageToHslWithIndividualValues(
         props.rightlegHpPercent,
         0,
         120
       );
-      const rightleg = Utils.hslToHex(
-        rightlegHSL.h,
-        rightlegHSL.s,
-        rightlegHSL.l
-      );
+      const rightleg =
+        props.rightlegHpPercent > 0
+          ? Utils.hslToHex(rightlegHSL.h, rightlegHSL.s, rightlegHSL.l)
+          : '#000000';
 
       const icon = new DamageModelIcon(
         head,
