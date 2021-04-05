@@ -72,18 +72,21 @@ export default defineComponent({
     const euro = ref(0);
 
     function handleRublesInput(value: number) {
-      dollars.value = Math.floor(CurrencyConvert.rublesToDollars(value))
-      euro.value = Math.floor(CurrencyConvert.rublesToEuro(value))
+      rubles.value = parseInt(rubles.value.toString(), 10)
+      dollars.value = parseInt(Math.floor(CurrencyConvert.rublesToDollars(value)).toString(), 10)
+      euro.value = parseInt(Math.floor(CurrencyConvert.rublesToEuro(value)).toString(), 10)
     }
 
     function handleDollarsInput(value: number) {
-      rubles.value = Math.floor(CurrencyConvert.dollarsToRubles(value))
-      euro.value = Math.floor(CurrencyConvert.dollarsToEuro(value))
+      dollars.value = parseInt(dollars.value.toString(), 10)
+      rubles.value = parseInt(Math.floor(CurrencyConvert.dollarsToRubles(value)).toString(), 10)
+      euro.value = parseInt(Math.floor(CurrencyConvert.dollarsToEuro(value)).toString(), 10)
     }
 
     function handleEuroInput(value: number) {
-      rubles.value = Math.floor(CurrencyConvert.euroToRubles(value))
-      dollars.value = Math.floor(CurrencyConvert.euroToDollars(value))
+      euro.value = parseInt(euro.value.toString(), 10)
+      rubles.value = parseInt(Math.floor(CurrencyConvert.euroToRubles(value)).toString(), 10)
+      dollars.value = parseInt(Math.floor(CurrencyConvert.euroToDollars(value)).toString(), 10)
     }
 
     return {
