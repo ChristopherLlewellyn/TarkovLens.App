@@ -98,8 +98,8 @@
 import { defineComponent, PropType, reactive } from 'vue'
 import { Ammunition } from 'src/models/items/Ammunition'
 import { Armor } from 'src/models/items/Armor'
-import ArmorListDialog from 'src/components/_shared/ArmorListDialog.vue'
 import AmmunitionListDialog from 'src/components/_shared/AmmunitionListDialog.vue'
+import ArmorListDialog from 'src/components/_shared/ArmorListDialog.vue'
 import { ArmorRow } from 'src/components/_models/ArmorRow'
 import { Icon } from 'src/enums/icon';
 
