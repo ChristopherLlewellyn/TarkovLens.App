@@ -42,7 +42,7 @@ export default class Utils {
   }
 
   static truncate(str: string, n: number) {
-    return (str.length > n) ? str.substr(0, n-1) + '..' : str
+    return (str.length > n) ? str.substr(0, n-1) + '...' : str
   }
 
   static titleCase(str: string): string {
@@ -63,6 +63,17 @@ export default class Utils {
     str = str.replace('leftleg', 'Left leg')
     str = str.replace('rightleg', 'Right leg')
     return str
+  }
+
+  static humanizeItemKind(kind: string): string {
+    if (kind.includes('Modification')) {
+      return kind.replace('Modification', '')
+    }
+    return kind
+  }
+
+  static numberWithCommas (x: number): string {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   }
 
   static convertArmoredTacticalRigsToArmors(tacticalrigs: Tacticalrig[]): Armor[] {

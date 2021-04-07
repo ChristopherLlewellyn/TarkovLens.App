@@ -27,7 +27,7 @@ import { useMeta } from 'quasar'
 const metaData = {
   title: App.AppName,
   meta: {
-    description: { name: 'Helping players understand Escape from Tarkov, with damage and penetration simulators.' }
+    description: { name: 'Helping players understand Escape from Tarkov by providing various damage simulators and calculators.' }
   }
 }
 
@@ -61,6 +61,14 @@ export default defineComponent({
         icon: Icon.MoneyRubles,
         iconBackgroundColor: 'money',
         link: CalculatorRoutePath.CurrencyConvert
+      },
+      {
+        id: 4,
+        title: 'Market Fee Calculator',
+        description: 'Calculate the market fee for listing an item on the flea market.',
+        icon: Icon.Fee,
+        iconBackgroundColor: 'money',
+        link: CalculatorRoutePath.MarketFeeCalculator
       }
     ]
     const store = useStore<RootState>()

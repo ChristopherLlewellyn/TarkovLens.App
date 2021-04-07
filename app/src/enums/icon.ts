@@ -20,5 +20,6 @@ export enum Icon {
   Invisible = 'mdi-eye-off',
   Back = 'mdi-arrow-left',
   Close = 'mdi-close',
-  Death = 'mdi-skull-crossbones'
+  Death = 'mdi-skull-crossbones',
+  Fee = 'mdi-bank'
 }

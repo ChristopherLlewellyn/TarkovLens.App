@@ -142,6 +142,13 @@ export default defineComponent({
         icon: Icon.MoneyRubles,
         activeClass: 'white',
         link: CalculatorRoutePath.CurrencyConvert
+      },
+      {
+        id: 5,
+        title: 'Market Fee',
+        icon: Icon.Fee,
+        activeClass: 'white',
+        link: CalculatorRoutePath.MarketFeeCalculator
       }
     ]
 

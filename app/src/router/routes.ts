@@ -46,6 +46,18 @@ const routes: RouteRecordRaw[] = [
     ]
   },
 
+  {
+    path: CalculatorRoutePath.MarketFeeCalculator,
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: CalculatorRouteName.MarketFeeCalculator,
+        component: () => import('pages/calculator/MarketFee.vue')
+      }
+    ]
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {
