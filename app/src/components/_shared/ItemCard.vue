@@ -26,7 +26,11 @@
               <div class="money">
                 <q-icon :name="Icon.MoneyRubles" />
                 <span>
-                  {{ item.avg24hPrice ? Utils.numberWithCommas(item.avg24hPrice) : '?' }}
+                  {{
+                    item.avg24hPrice
+                      ? Utils.numberWithCommas(item.avg24hPrice)
+                      : '?'
+                  }}
                 </span>
               </div>
             </div>
@@ -40,17 +44,15 @@
       </q-card-section>
 
       <q-card-section class="col-3 flex flex-center">
-        <q-card class="pin-top-right shadow-8">
-          <q-intersection once transition="scale" class="avatar-intersection">
-            <q-avatar class="center q-mt-xs" size="65px" rounded>
-              <img
-                style="object-fit: contain"
-                :src="item.blightbusterIcon"
-                @error="$event.target.src = item.img"
-              />
-            </q-avatar>
-          </q-intersection>
-        </q-card>
+        <q-intersection once transition="scale" class="avatar-intersection">
+          <q-avatar class="center q-mt-xs" size="70px" rounded>
+            <img
+              style="object-fit: contain"
+              :src="item.blightbusterIcon"
+              @error="$event.target.src = item.img"
+            />
+          </q-avatar>
+        </q-intersection>
       </q-card-section>
     </q-card-section>
   </q-card>
@@ -83,12 +85,6 @@ export default defineComponent({
 .item-card-width {
   width: 100%;
   max-width: 350px;
-}
-
-.pin-top-right {
-  position: relative;
-  right: 2%;
-  top: -45%;
 }
 
 .item-info {
