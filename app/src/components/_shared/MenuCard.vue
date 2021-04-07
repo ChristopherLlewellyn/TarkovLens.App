@@ -75,8 +75,8 @@ export default defineComponent({
   
   .pin-top-right {
     position: relative;
-    right: 5px;
-    top: -45px;
+    right: 2%;
+    top: -45%;
   }
 
   .margin {
