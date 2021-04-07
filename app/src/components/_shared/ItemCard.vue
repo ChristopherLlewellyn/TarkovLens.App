@@ -42,7 +42,7 @@
       <q-card-section class="col-3 flex flex-center">
         <q-card class="pin-top-right shadow-8">
           <q-intersection once transition="scale" class="avatar-intersection">
-            <q-avatar class="center q-mt-xs" size="75px" rounded>
+            <q-avatar class="center q-mt-xs" size="65px" rounded>
               <img
                 style="object-fit: contain"
                 :src="item.blightbusterIcon"
