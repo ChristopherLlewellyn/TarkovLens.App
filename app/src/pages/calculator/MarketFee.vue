@@ -9,8 +9,8 @@
         </div>
         <div v-if="selectedItem" class="center" style="margin-top: 40px">
           <div class="row">
-            <item-card :item="selectedItem" class="col-xs-12 col-sm-6" />
-            <div class="col-xs-12 col-sm-6">
+            <item-card :item="selectedItem" class="col-xs-12 col-sm-12 col-md-6" />
+            <div class="col-xs-12 col-sm-12 col-md-6">
               <q-input
                 v-model="listedPrice"
                 type="number"
