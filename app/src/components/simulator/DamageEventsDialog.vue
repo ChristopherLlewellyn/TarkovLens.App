@@ -44,16 +44,14 @@
           >
             <q-item-section>
               <q-item-label overline>
-                <span>Shot {{ index + 1 }} ({{ event.readableHitbox }})</span>
-                (<span class="text-bullet">{{ event.damageSourceName }}</span
-                >)
+                <span>Shot {{ index + 1 }}</span>
+                <span class="text-bullet q-ml-sm">{{ event.damageSourceName }}</span>
               </q-item-label>
 
               <q-item-label caption>
-                <span
-                  >{{ event.chanceToPenetrate.toFixed(1) }}% chance to
-                  penetrate</span
-                >
+                <span>
+                  {{ event.chanceToPenetrate.toFixed(1) }}% chance to penetrate
+                </span>
               </q-item-label>
 
               <q-item-label
@@ -97,6 +95,14 @@
                   >{{ event.remainingHp.toFixed(0) }}</span
                 >
               </div>
+
+              <q-badge
+                color="grey-8"
+                class="q-ma-xs center"
+              >
+                <q-icon :name="Icon.Human" class="q-mr-xs" />
+                {{ event.readableHitbox }}
+              </q-badge>
 
               <q-badge
                 v-if="event.killShot === true"
