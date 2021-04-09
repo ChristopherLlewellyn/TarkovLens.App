@@ -182,7 +182,7 @@
               </q-btn>
               <div class="text-center q-mt-xs" style="font-weight: bold">
                 <span v-if="state.selectedCombatant.id.length > 0">{{
-                  state.selectedCombatant.name
+                  Utils.truncate(state.selectedCombatant.name, 13)
                 }}</span>
                 <span v-else class="greyed-text">Combatant</span>
               </div>
@@ -500,6 +500,7 @@ export default defineComponent({
       boom,
       rgb,
       Icon,
+      Utils,
       ArmorType,
       toggleShowCombatants,
       toggleShowAmmunition,
