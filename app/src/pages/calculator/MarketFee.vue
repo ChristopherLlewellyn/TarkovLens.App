@@ -9,8 +9,23 @@
         </div>
         <div v-if="selectedItem" class="center" style="margin-top: 40px">
           <div class="row">
-            <item-card :item="selectedItem" class="col-xs-12 col-sm-12 col-md-6" />
+            <item-card :item="selectedItem" class="col-xs-12 col-sm-12 col-md-6 q-mb-md" />
             <div class="col-xs-12 col-sm-12 col-md-6">
+              <div class="fee-text text-center">
+                <div class="center">Fee</div>
+                <q-separator class="center" style="width: 70px" color="money" />
+                <span>
+                  {{ fee ? Utils.numberWithCommas(parseInt(fee.toFixed(0))) : '-'}}
+                </span>
+                <q-icon v-if="fee" :name="Icon.MoneyRubles" />
+                <div v-if="profit" class="profit-text" :style="{'color': profit > 0 ? 'green' : 'red'}">
+                  <span>
+                    {{ Utils.numberWithCommas(parseInt(profit.toFixed(0))) }}
+                  </span>
+                  <q-icon :name="Icon.MoneyRubles" class="q-mr-xs" />
+                  <span>{{ profit > 0 ? 'profit' : 'loss'}}</span>
+                </div>
+              </div>
               <q-input
                 v-model="listedPrice"
                 type="number"
@@ -24,21 +39,6 @@
                   <q-icon :name="Icon.MoneyRubles" />
                 </template>
               </q-input>
-              <div class="fee-text text-center">
-                <div class="center">Fee</div>
-                <q-separator class="center" style="width: 70px" color="money" />
-                <span>
-                  {{ fee ? Utils.numberWithCommas(parseInt(fee.toFixed(0))) : '-'}}
-                </span>
-                <q-icon v-if="fee" :name="Icon.MoneyRubles" />
-                <div class="profit-text" :style="{'color': profit && profit > 0 ? 'green' : 'red'}">
-                  <span v-if="profit && profit > 0">+</span>
-                  <span>
-                    {{ profit ? Utils.numberWithCommas(parseInt(profit.toFixed(0))) : '' }}
-                  </span>
-                  <q-icon v-if="profit" :name="Icon.MoneyRubles" />
-                </div>
-              </div>
             </div>
           </div>
         </div>
