@@ -52,7 +52,7 @@
         :pagination="table.pagination"
         :rows-per-page-options="[0]"
         :filter="searchInput"
-        :loading="true"
+        :loading="loading"
       >
         <template #header-cell-name="props">
           <q-th :props="props">
