@@ -17,6 +17,8 @@
               :ammunitions="ammunitions"
               :selected-armor="state.selectedArmor"
               :selected-ammunition="state.selectedAmmunition"
+              :ammunitions-loading="state.ammunitionsLoading"
+              :armors-loading="state.armorsLoading"
               @selectArmor="setArmor"
               @selectAmmunition="setAmmunition"
             />
@@ -86,14 +88,21 @@ export default defineComponent({
     store.commit('layout/updateTitle', 'Penetration Chance')
 
     onBeforeMount(async () => {
+      state.ammunitionsLoading = true
+      state.armorsLoading = true
+
       await getAllAmmunitions()
       await getAllArmorsWithArmoredRigs()
-      store
+      
+      state.ammunitionsLoading = false
+      state.armorsLoading = false
     })
 
     const state = reactive({
       selectedArmor: <Armor>{},
       selectedAmmunition: <Ammunition>{},
+      ammunitionsLoading: false,
+      armorsLoading: false,
       currentDurability: 0
     })
 

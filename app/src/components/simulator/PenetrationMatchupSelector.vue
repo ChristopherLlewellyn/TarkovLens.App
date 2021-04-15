@@ -81,6 +81,7 @@
     <armor-list-dialog
       :armors="armors"
       :show="state.showArmorDialog"
+      :loading="armorsLoading"
       @closeDialog="toggleShowArmor"
       @selectRow="selectArmor"
     />
@@ -88,6 +89,7 @@
     <ammunition-list-dialog
       :ammunitions="ammunitions"
       :show="state.showAmmoDialog"
+      :loading="ammunitionsLoading"
       @closeDialog="toggleShowAmmunition"
       @selectRow="selectAmmunition"
     />
@@ -113,6 +115,14 @@ export default defineComponent({
     },
     ammunitions: {
       type: Array as PropType<Ammunition[]>,
+      required: true
+    },
+    armorsLoading: {
+      type: Boolean,
+      required: true
+    },
+    ammunitionsLoading: {
+      type: Boolean,
       required: true
     },
     selectedArmor: {

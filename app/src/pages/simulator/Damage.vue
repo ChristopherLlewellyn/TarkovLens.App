@@ -270,6 +270,7 @@
       <combatant-list-dialog
         :combatants="combatants"
         :show="state.showCombatantDialog"
+        :loading="state.combatantsLoading"
         @closeDialog="toggleShowCombatants"
         @selectRow="selectCombatant"
       />
@@ -277,6 +278,7 @@
       <ammunition-list-dialog
         :ammunitions="ammunitions"
         :show="state.showAmmoDialog"
+        :loading="state.ammunitionsLoading"
         @closeDialog="toggleShowAmmunition"
         @selectRow="selectAmmunition"
       />
@@ -284,6 +286,7 @@
       <armor-list-dialog
         :armors="armorsWithArmoredRigs.filter((x) => x.type === ArmorType.Body)"
         :show="state.showBodyArmorDialog"
+        :loading="state.armorsLoading"
         @closeDialog="toggleShowBodyArmorDialog"
         @selectRow="equipBodyArmor"
       />
@@ -352,9 +355,17 @@ export default defineComponent({
     } = useItemService();
 
     onBeforeMount(async () => {
+      state.armorsLoading = true
+      state.ammunitionsLoading = true
+      state.combatantsLoading = true
+
       await getCombatants();
       await getAllAmmunitions();
       await getAllArmorsWithArmoredRigs();
+
+      state.armorsLoading = false
+      state.ammunitionsLoading = false
+      state.combatantsLoading = false
     });
 
     const state = reactive({
@@ -366,6 +377,9 @@ export default defineComponent({
       showDamageSimulatorView: true,
       showArmorSelectionView: false,
       showDamageEventsDialog: false,
+      armorsLoading: false,
+      ammunitionsLoading: false,
+      combatantsLoading: false
     });
 
     function selectCombatant(name: string) {

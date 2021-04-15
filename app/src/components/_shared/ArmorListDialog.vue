@@ -52,6 +52,7 @@
         :pagination="table.pagination"
         :rows-per-page-options="[0]"
         :filter="searchInput"
+        :loading="true"
       >
         <template #header-cell-name="props">
           <q-th :props="props">
@@ -108,6 +109,12 @@
             </q-td>
           </q-tr>
         </template>
+
+        <template #loading>
+          <q-inner-loading showing>
+            <q-spinner-gears size="8rem" color="primary" />
+          </q-inner-loading>
+        </template>
       </q-table>
     </q-card>
   </q-dialog>
@@ -129,6 +136,10 @@ export default defineComponent({
     },
     armors: {
       type: Array as PropType<Armor[]>,
+      required: true
+    },
+    loading: {
+      type: Boolean,
       required: true
     }
   },

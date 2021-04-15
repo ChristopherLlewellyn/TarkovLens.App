@@ -102,6 +102,10 @@
             </q-item-label>
           </q-item-section>
         </q-item>
+
+        <q-inner-loading :showing="loading">
+          <q-spinner-gears size="8rem" color="primary" />
+        </q-inner-loading>
       </q-list>
     </q-card>
   </q-dialog>
@@ -123,6 +127,10 @@ export default defineComponent({
     },
     combatants: {
       type: Array as PropType<Combatant[]>,
+      required: true,
+    },
+    loading: {
+      type: Boolean,
       required: true,
     },
   },
