@@ -53,6 +53,7 @@
         :rows-per-page-options="[0]"
         :filter="searchInput"
         :loading="loading"
+        hide-bottom
       >
         <template #header-cell-name="props">
           <q-th :props="props">
@@ -109,13 +110,9 @@
             </q-td>
           </q-tr>
         </template>
-
-        <template #loading>
-          <q-inner-loading showing>
-            <q-spinner-gears size="8rem" color="primary" />
-          </q-inner-loading>
-        </template>
       </q-table>
+
+      <loading-spinner v-if="loading" />
     </q-card>
   </q-dialog>
 </template>
@@ -124,11 +121,13 @@
 import { defineComponent, PropType, computed, ref } from 'vue'
 import { Armor } from 'src/models/items/Armor'
 import { ArmorRow } from 'src/components/_models/ArmorRow'
+import LoadingSpinner from 'src/components/_shared/LoadingSpinner.vue'
 import { Icon } from 'src/enums/icon'
 import { useQuasar } from 'quasar';
 
 export default defineComponent({
   name: 'ArmorListDialog',
+  components: { LoadingSpinner },
   props: {
     show: {
       type: Boolean,

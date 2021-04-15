@@ -102,11 +102,9 @@
             </q-item-label>
           </q-item-section>
         </q-item>
-
-        <q-inner-loading :showing="loading">
-          <q-spinner-gears size="8rem" color="primary" />
-        </q-inner-loading>
       </q-list>
+
+      <loading-spinner v-if="loading" />
     </q-card>
   </q-dialog>
 </template>
@@ -116,10 +114,12 @@ import { defineComponent, PropType } from 'vue';
 import { Icon } from 'src/enums/icon';
 import { Combatant } from 'src/models/characters/Combatant';
 import { CharacterType } from 'src/models/characters/_shared';
+import LoadingSpinner from 'src/components/_shared/LoadingSpinner.vue'
 import { useQuasar } from 'quasar';
 
 export default defineComponent({
   name: 'CombatantListDialog',
+  components: { LoadingSpinner },
   props: {
     show: {
       type: Boolean,
