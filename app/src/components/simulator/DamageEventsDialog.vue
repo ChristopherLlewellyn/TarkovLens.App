@@ -61,6 +61,29 @@
               >
                 <span class="greyed-text">{{ log }}</span>
               </q-item-label>
+
+              <div v-if="event.armorAfterEvent.id.length > 0" class="q-mt-md text-center">
+                <q-img
+                    :src="event.armorAfterEvent.blightbusterIcon"
+                    :ratio="1"
+                    fit="contain"
+                    class="armor-image q-mr-xs"
+                  >
+                    <template #error>
+                      <q-img
+                        :src="event.armorAfterEvent.icon"
+                        :ratio="1"
+                        fit="contain"
+                        class="armor-image q-mr-xs"
+                      />
+                    </template>
+                  </q-img>
+
+                  <q-item-label caption class="q-mt-sm">
+                    <q-icon size="16px" :name="Icon.MaxDurability" color="armor" class="q-mr-xs" />
+                    <span class="armor bold">{{ event.armorAfterEvent.currentDurability.toFixed(1) }} / {{ event.armorAfterEvent.armor.durability }}</span>
+                  </q-item-label>
+              </div>
             </q-item-section>
 
             <q-item-section side>
@@ -155,7 +178,9 @@ import { useQuasar } from 'quasar';
 
 export default defineComponent({
   name: 'DamageEventsDialog',
-  components: { DamageModelIcon },
+  components: { 
+    DamageModelIcon, 
+  },
   props: {
     show: {
       type: Boolean,
@@ -195,4 +220,9 @@ export default defineComponent({
     height: 20vh;
     width: 20vh;
   }
+
+.armor-image {
+  max-height: 10vh;
+  max-width: 10vh;
+}
 </style>
