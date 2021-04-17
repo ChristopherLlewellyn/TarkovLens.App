@@ -140,7 +140,7 @@ export default defineComponent({
       },
       {
         id: 2,
-        title: 'Pen Chance',
+        title: 'Pen Chance Simulator',
         icon: Icon.Penetration,
         activeClass: 'white',
         link: SimulatorRoutePath.PenetrationChance
@@ -161,7 +161,7 @@ export default defineComponent({
       },
       {
         id: 5,
-        title: 'Market Fee',
+        title: 'Market Fee Calculator',
         icon: Icon.Fee,
         activeClass: 'white',
         link: CalculatorRoutePath.MarketFeeCalculator
