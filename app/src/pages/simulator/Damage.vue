@@ -27,7 +27,7 @@
                     outline
                     color="primary"
                     class="pointer all-pointer-events"
-                    @click="toggleShowLogsDialog()"
+                    @click="showLogsDialog()"
                   >
                     Logs
                   </q-btn>
@@ -120,7 +120,7 @@
                 class="body-armor all-pointer-events"
                 :title="'Body Armor'"
                 :equipped-armor="state.selectedCombatant.equipment.bodyArmor"
-                @click="toggleShowBodyArmorDialog()"
+                @click="showBodyArmorDialog()"
               />
 
               <div class="health-display full-width text-center">
@@ -157,7 +157,7 @@
               class="q-ma-sm"
               style="margin-left: 30px"
             >
-              <q-btn round @click="toggleShowCombatants()">
+              <q-btn round @click="showCombatants()">
                 <q-avatar v-ripple.early color="dark" size="10vh">
                   <q-badge
                     v-if="state.selectedCombatant.id.length == 0"
@@ -190,7 +190,7 @@
 
             <!-- Ammo Selector -->
             <div v-if="!state.showArmorSelectionView" class="q-ma-sm">
-              <q-btn round @click="toggleShowAmmunition()">
+              <q-btn round @click="showAmmunition()">
                 <q-avatar v-ripple.early size="10vh" color="dark">
                   <q-badge
                     v-if="state.selectedAmmunition.id.length == 0"
@@ -264,14 +264,14 @@
       <damage-events-dialog
         :damage-events="state.selectedCombatant.eventLogs"
         :show="state.showDamageEventsDialog"
-        @closeDialog="toggleShowLogsDialog"
+        @closeDialog="hideLogsDialog"
       />
 
       <combatant-list-dialog
         :combatants="combatants"
         :show="state.showCombatantDialog"
         :loading="state.combatantsLoading"
-        @closeDialog="toggleShowCombatants"
+        @closeDialog="hideCombatants"
         @selectRow="selectCombatant"
       />
 
@@ -279,7 +279,7 @@
         :ammunitions="ammunitions"
         :show="state.showAmmoDialog"
         :loading="state.ammunitionsLoading"
-        @closeDialog="toggleShowAmmunition"
+        @closeDialog="hideAmmunition"
         @selectRow="selectAmmunition"
       />
 
@@ -287,7 +287,7 @@
         :armors="armorsWithArmoredRigs.filter((x) => x.type === ArmorType.Body)"
         :show="state.showBodyArmorDialog"
         :loading="state.armorsLoading"
-        @closeDialog="toggleShowBodyArmorDialog"
+        @closeDialog="hideBodyArmorDialog"
         @selectRow="equipBodyArmor"
       />
     </q-page>
@@ -480,16 +480,28 @@ export default defineComponent({
       return new EquippedArmor();
     });
 
-    function toggleShowAmmunition() {
-      state.showAmmoDialog = !state.showAmmoDialog;
+    function showAmmunition() {
+      state.showAmmoDialog = true;
     }
 
-    function toggleShowCombatants() {
-      state.showCombatantDialog = !state.showCombatantDialog;
+    function hideAmmunition() {
+      state.showAmmoDialog = false;
     }
 
-    function toggleShowLogsDialog() {
-      state.showDamageEventsDialog = !state.showDamageEventsDialog;
+    function showCombatants() {
+      state.showCombatantDialog = true;
+    }
+
+    function hideCombatants() {
+      state.showCombatantDialog = false;
+    }
+
+    function showLogsDialog() {
+      state.showDamageEventsDialog = true;
+    }
+
+    function hideLogsDialog() {
+      state.showDamageEventsDialog = false;
     }
 
     function toggleView() {
@@ -497,8 +509,12 @@ export default defineComponent({
       state.showDamageSimulatorView = !state.showDamageSimulatorView;
     }
 
-    function toggleShowBodyArmorDialog() {
-      state.showBodyArmorDialog = !state.showBodyArmorDialog;
+    function showBodyArmorDialog() {
+      state.showBodyArmorDialog = true;
+    }
+
+    function hideBodyArmorDialog() {
+      state.showBodyArmorDialog = false;
     }
 
     return {
@@ -516,11 +532,15 @@ export default defineComponent({
       Icon,
       Utils,
       ArmorType,
-      toggleShowCombatants,
-      toggleShowAmmunition,
-      toggleShowBodyArmorDialog,
+      showCombatants,
+      hideCombatants,
+      showAmmunition,
+      hideAmmunition,
+      showBodyArmorDialog,
+      hideBodyArmorDialog,
       toggleView,
-      toggleShowLogsDialog,
+      showLogsDialog,
+      hideLogsDialog,
       thoraxArmor,
       stomachArmor,
       leftArmArmor,
