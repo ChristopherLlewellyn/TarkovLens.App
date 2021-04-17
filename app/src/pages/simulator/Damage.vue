@@ -27,7 +27,7 @@
                     outline
                     color="primary"
                     class="pointer all-pointer-events"
-                    @click="showLogsDialog()"
+                    @click="toggleShowLogsDialog()"
                   >
                     Logs
                   </q-btn>
@@ -120,7 +120,7 @@
                 class="body-armor all-pointer-events"
                 :title="'Body Armor'"
                 :equipped-armor="state.selectedCombatant.equipment.bodyArmor"
-                @click="showBodyArmorDialog()"
+                @click="toggleShowBodyArmorDialog()"
               />
 
               <div class="health-display full-width text-center">
@@ -157,7 +157,7 @@
               class="q-ma-sm"
               style="margin-left: 30px"
             >
-              <q-btn round @click="showCombatants()">
+              <q-btn round @click="toggleShowCombatants()">
                 <q-avatar v-ripple.early color="dark" size="10vh">
                   <q-badge
                     v-if="state.selectedCombatant.id.length == 0"
@@ -190,7 +190,7 @@
 
             <!-- Ammo Selector -->
             <div v-if="!state.showArmorSelectionView" class="q-ma-sm">
-              <q-btn round @click="showAmmunition()">
+              <q-btn round @click="toggleShowAmmunition()">
                 <q-avatar v-ripple.early size="10vh" color="dark">
                   <q-badge
                     v-if="state.selectedAmmunition.id.length == 0"
@@ -264,14 +264,14 @@
       <damage-events-dialog
         :damage-events="state.selectedCombatant.eventLogs"
         :show="state.showDamageEventsDialog"
-        @closeDialog="hideLogsDialog"
+        @closeDialog="toggleShowLogsDialog"
       />
 
       <combatant-list-dialog
         :combatants="combatants"
         :show="state.showCombatantDialog"
         :loading="state.combatantsLoading"
-        @closeDialog="hideCombatants"
+        @closeDialog="toggleShowCombatants"
         @selectRow="selectCombatant"
       />
 
@@ -279,7 +279,7 @@
         :ammunitions="ammunitions"
         :show="state.showAmmoDialog"
         :loading="state.ammunitionsLoading"
-        @closeDialog="hideAmmunition"
+        @closeDialog="toggleShowAmmunition"
         @selectRow="selectAmmunition"
       />
 
@@ -287,7 +287,7 @@
         :armors="armorsWithArmoredRigs.filter((x) => x.type === ArmorType.Body)"
         :show="state.showBodyArmorDialog"
         :loading="state.armorsLoading"
-        @closeDialog="hideBodyArmorDialog"
+        @closeDialog="toggleShowBodyArmorDialog"
         @selectRow="equipBodyArmor"
       />
     </q-page>
@@ -480,31 +480,16 @@ export default defineComponent({
       return new EquippedArmor();
     });
 
-    function showAmmunition() {
-      state.showAmmoDialog = false;
-      state.showAmmoDialog = true;
+    function toggleShowAmmunition() {
+      state.showAmmoDialog = !state.showAmmoDialog;
     }
 
-    function hideAmmunition() {
-      state.showAmmoDialog = false;
+    function toggleShowCombatants() {
+      state.showCombatantDialog = !state.showCombatantDialog;
     }
 
-    function showCombatants() {
-      state.showCombatantDialog = false;
-      state.showCombatantDialog = true;
-    }
-
-    function hideCombatants() {
-      state.showCombatantDialog = false;
-    }
-
-    function showLogsDialog() {
-      state.showDamageEventsDialog = false;
-      state.showDamageEventsDialog = true;
-    }
-
-    function hideLogsDialog() {
-      state.showDamageEventsDialog = false;
+    function toggleShowLogsDialog() {
+      state.showDamageEventsDialog = !state.showDamageEventsDialog;
     }
 
     function toggleView() {
@@ -512,13 +497,8 @@ export default defineComponent({
       state.showDamageSimulatorView = !state.showDamageSimulatorView;
     }
 
-    function showBodyArmorDialog() {
-      state.showBodyArmorDialog = false;
-      state.showBodyArmorDialog = true;
-    }
-
-    function hideBodyArmorDialog() {
-      state.showBodyArmorDialog = false;
+    function toggleShowBodyArmorDialog() {
+      state.showBodyArmorDialog = !state.showBodyArmorDialog;
     }
 
     return {
@@ -536,15 +516,11 @@ export default defineComponent({
       Icon,
       Utils,
       ArmorType,
-      showCombatants,
-      hideCombatants,
-      showAmmunition,
-      hideAmmunition,
-      showBodyArmorDialog,
-      hideBodyArmorDialog,
+      toggleShowCombatants,
+      toggleShowAmmunition,
+      toggleShowBodyArmorDialog,
       toggleView,
-      showLogsDialog,
-      hideLogsDialog,
+      toggleShowLogsDialog,
       thoraxArmor,
       stomachArmor,
       leftArmArmor,

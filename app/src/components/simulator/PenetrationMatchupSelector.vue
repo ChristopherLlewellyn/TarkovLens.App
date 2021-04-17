@@ -19,7 +19,7 @@
     </div>
 
     <div class="row justify-center">
-      <q-card id="armor-selector" v-ripple.early class="selector q-ma-xs pointer" @click="showArmor()">
+      <q-card id="armor-selector" v-ripple.early class="selector q-ma-xs pointer" @click="toggleShowArmor()">
         <template v-if="selectedArmor.id">
           <q-img
             :src="selectedArmor.blightbusterIcon"
@@ -48,7 +48,7 @@
         </q-card-section>
       </q-card>
 
-      <q-card id="ammo-selector" v-ripple.early class="selector q-ma-xs pointer" @click="showAmmunition()">
+      <q-card id="ammo-selector" v-ripple.early class="selector q-ma-xs pointer" @click="toggleShowAmmunition()">
         <template v-if="selectedAmmunition.id">
           <q-img
             :src="selectedAmmunition.blightbusterIcon"
@@ -82,7 +82,7 @@
       :armors="armors"
       :show="state.showArmorDialog"
       :loading="armorsLoading"
-      @closeDialog="hideArmor"
+      @closeDialog="toggleShowArmor"
       @selectRow="selectArmor"
     />
 
@@ -90,7 +90,7 @@
       :ammunitions="ammunitions"
       :show="state.showAmmoDialog"
       :loading="ammunitionsLoading"
-      @closeDialog="hideAmmunition"
+      @closeDialog="toggleShowAmmunition"
       @selectRow="selectAmmunition"
     />
   </div>
@@ -144,20 +144,12 @@ export default defineComponent({
       showAmmoDialog: false
     })
 
-    function hideArmor () {
-      state.showArmorDialog = false
+    function toggleShowArmor () {
+      state.showArmorDialog = !state.showArmorDialog
     }
 
-    function showArmor () {
-      state.showArmorDialog = true
-    }
-
-    function showAmmunition () {
-      state.showAmmoDialog = true
-    }
-
-    function hideAmmunition () {
-      state.showAmmoDialog = false
+    function toggleShowAmmunition () {
+      state.showAmmoDialog = !state.showAmmoDialog
     }
 
     function selectArmor (armorRow: ArmorRow) {
@@ -170,16 +162,7 @@ export default defineComponent({
       emit('selectAmmunition', ammunition?.id)
     }
 
-    return { 
-      state, 
-      Icon, 
-      showArmor,
-      hideArmor, 
-      showAmmunition,
-      hideAmmunition,
-      selectArmor, 
-      selectAmmunition 
-    }
+    return { state, Icon, toggleShowArmor, toggleShowAmmunition, selectArmor, selectAmmunition }
   }
 })
 </script>
