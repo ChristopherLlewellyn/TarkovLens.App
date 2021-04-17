@@ -39,7 +39,7 @@
           class="text-center q-mb-sm primary"
           style="font-size: 25px"
         >
-            Tarkov Simulator
+            TarkovLens
         </div>
 
         <q-separator></q-separator>
@@ -65,15 +65,28 @@
         </q-item>
       </q-list>
 
-      <div class="patreon-button">
-        <a href="https://www.patreon.com/chrisllewellyn?fan_landing=true" target="__blank">
-          <q-img
-            fit="contain"
-            width="70%"
-            class="center"
-            src="https://c5.patreon.com/external/logo/become_a_patron_button.png"
-          />
-        </a>
+      <div class="external-links">
+        <div class="q-mb-md">
+          <a href="https://discord.gg/eKqdgcSZdz" target="__blank">
+            <q-img
+              fit="contain"
+              width="70%"
+              class="center external-link-image"
+              src="join-discord.png"
+            />
+          </a>
+        </div>
+
+        <div>
+          <a href="https://www.patreon.com/chrisllewellyn?fan_landing=true" target="__blank">
+            <q-img
+              fit="contain"
+              width="70%"
+              class="center external-link-image"
+              src="https://c5.patreon.com/external/logo/become_a_patron_button.png"
+            />
+          </a>
+        </div>
       </div>
 
       <div class="absolute" style="top: 15px; right: -17px">
@@ -191,7 +204,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.patreon-button {
+.external-links {
   margin-top: 5vh;
+}
+
+.external-link-image {
+  max-height: 45px;
 }
 </style>
