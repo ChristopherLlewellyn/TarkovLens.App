@@ -481,6 +481,7 @@ export default defineComponent({
     });
 
     function showAmmunition() {
+      state.showAmmoDialog = false;
       state.showAmmoDialog = true;
     }
 
@@ -489,6 +490,7 @@ export default defineComponent({
     }
 
     function showCombatants() {
+      state.showCombatantDialog = false;
       state.showCombatantDialog = true;
     }
 
@@ -497,6 +499,7 @@ export default defineComponent({
     }
 
     function showLogsDialog() {
+      state.showDamageEventsDialog = false;
       state.showDamageEventsDialog = true;
     }
 
@@ -510,6 +513,7 @@ export default defineComponent({
     }
 
     function showBodyArmorDialog() {
+      state.showBodyArmorDialog = false;
       state.showBodyArmorDialog = true;
     }
 
