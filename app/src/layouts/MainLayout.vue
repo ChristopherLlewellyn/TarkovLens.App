@@ -95,14 +95,16 @@
           round
           unelevated
           color="primary"
-          :icon="chevronIcon"
+          icon="chevron_right"
           @click="toggleDrawer"
         />
       </div>
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view 
+        v-touch-swipe.mouse.right="handleSwipeRight" 
+      />
     </q-page-container>
   </q-layout>
 </template>
@@ -115,6 +117,7 @@ import { useQuasar } from 'quasar'
 import { CalculatorRoutePath, SimulatorRoutePath } from 'src/enums/route'
 import { Icon } from 'src/enums/icon'
 import { App } from 'src/enums/app'
+import QSwipeEvent from 'src/models/_quasar/QSwipeEvent'
 
 export default defineComponent({
   name: 'MainLayout',
@@ -124,7 +127,6 @@ export default defineComponent({
     const $q = useQuasar()
     const store = useStore<RootState>()
     const showDrawer = ref(false)
-    const chevronIcon = ref('chevron_left')
     const miniState = ref(false)
     const activeNav = ref(0)
 
@@ -166,11 +168,6 @@ export default defineComponent({
       }
     ]
 
-    // example getter method (non-statically typed)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    //console.log(store.getters['layout/getTitle'])
-
-
     function setActiveNav (navId: number) {
       activeNav.value = navId
     }
@@ -182,11 +179,11 @@ export default defineComponent({
       else {
         miniState.value = !miniState.value
       }
+    }
 
-      if (chevronIcon.value == 'chevron_right') {
-        chevronIcon.value = 'chevron_left'
-      } else {
-        chevronIcon.value = 'chevron_right'
+    function handleSwipeRight (qSwipeEvent: QSwipeEvent) {
+      if (qSwipeEvent.touch && qSwipeEvent.distance.x > 9) {
+        showDrawer.value = true
       }
     }
 
@@ -194,8 +191,8 @@ export default defineComponent({
       store,
       App,
       showDrawer,
+      handleSwipeRight,
       toggleDrawer,
-      chevronIcon,
       miniState,
       activeNav,
       navItems,
