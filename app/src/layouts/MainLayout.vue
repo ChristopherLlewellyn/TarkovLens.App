@@ -39,7 +39,7 @@
           class="text-center q-mb-sm primary"
           style="font-size: 25px"
         >
-            TarkovLens
+            {{ App.AppName }}
         </div>
 
         <q-separator></q-separator>
@@ -114,6 +114,7 @@ import { useStore } from 'vuex'
 import { useQuasar } from 'quasar'
 import { CalculatorRoutePath, SimulatorRoutePath } from 'src/enums/route'
 import { Icon } from 'src/enums/icon'
+import { App } from 'src/enums/app'
 
 export default defineComponent({
   name: 'MainLayout',
@@ -191,6 +192,7 @@ export default defineComponent({
 
     return {
       store,
+      App,
       showDrawer,
       toggleDrawer,
       chevronIcon,
