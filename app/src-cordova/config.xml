@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.chrisllewellyndev.tarkovlens" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>TarkovLens</name>
+<widget id="com.chrisllewellyndev.tarkov-simulator" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Tarkov Simulator</name>
     <description>A cross-platform app (web, iOS, Android) that helps players understand Escape from Tarkov. Features interactive simulators that help players visualize EFT's damage model and armor penetration mechanics.</description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">
         Apache Cordova Team

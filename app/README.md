@@ -1,4 +1,4 @@
-# TarkovLens (tarkovlens)
+# Tarkov Simulator
 
 Helping clarify Tarkov.
 

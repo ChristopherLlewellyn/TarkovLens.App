@@ -39,7 +39,7 @@
           class="text-center q-mb-sm primary"
           style="font-size: 25px"
         >
-            TarkovLens
+            Tarkov Simulator
         </div>
 
         <q-separator></q-separator>
