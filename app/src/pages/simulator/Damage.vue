@@ -239,8 +239,8 @@
               }"
             >
               <div>
-                <q-btn round @click="toggleView()">
-                  <q-avatar v-ripple.early size="10vh" color="dark">
+                <q-btn :ripple="false" round @click="toggleView()">
+                  <q-avatar size="10vh" color="dark">
                     <q-icon
                       :name="
                         state.showArmorSelectionView ? Icon.Back : Icon.Armor
