@@ -1,10 +1,11 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+import ServiceHelpers from 'src/services/_serviceHelpers'
 import { Character } from 'src/models/characters/Character'
 import { Combatant } from 'src/models/characters/Combatant'
 import { CharacterType } from 'src/models/characters/_shared'
 
 const baseConfig: AxiosRequestConfig = {
-  baseURL: process.env.DEV ? 'https://localhost:44350/' : 'https://api.tarkovlens.com/'
+  baseURL: ServiceHelpers.getAPIBaseUrl()
 }
 
 class Characters {
