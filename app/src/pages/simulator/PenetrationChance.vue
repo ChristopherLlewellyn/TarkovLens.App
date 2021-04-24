@@ -27,19 +27,30 @@
               <div class="q-mb-sm" style="text-align: center;">
                 Durability <span class="greyed-text">{{ state.selectedArmor.id ? `(${percentageDurability}%)` : '' }}</span>
               </div>
-
-              <q-slider
-                v-model="state.currentDurability"
-                :disable="!state.selectedArmor.id"
-                :min="0"
-                :max="state.selectedArmor.id ? state.selectedArmor.armor.durability : 0"
-                :step="1"
-                label
-                :label-value="state.currentDurability"
-                label-always
-                class="center q-mt-lg"
-                style="width:80%; max-width: 700px;"
-              />
+              <q-list class="center q-mt-lg" style="width:95%; max-width: 700px;" dense>
+                <q-item>
+                  <q-item-section class="q-mr-sm" avatar>
+                    <q-btn
+                      color="bullet"
+                      label="Shoot"
+                      :disable="!state.selectedAmmunition.id || !state.selectedArmor.id"
+                      @click="shoot()"
+                    />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-slider
+                      v-model="state.currentDurability"
+                      :disable="!state.selectedArmor.id"
+                      :min="0"
+                      :max="state.selectedArmor.id ? state.selectedArmor.armor.durability : 0"
+                      :step="1"
+                      label
+                      :label-value="state.currentDurability.toFixed(0)"
+                      label-always
+                    />
+                  </q-item-section>
+                </q-item>
+              </q-list>
             </div>
           </div>
         </div>
@@ -141,6 +152,20 @@ export default defineComponent({
       state.selectedAmmunition = ammunitions.value.find(x => x.id === id) ?? new Ammunition()
     }
 
+    function shoot () {
+      if (state.selectedArmor.id && state.selectedAmmunition.id) {
+        const armorDamage = BallisticsCalculator.calculateDamageToArmorWhenDoesNotPenetrate(
+          state.selectedAmmunition.penetration,
+          state.selectedAmmunition.projectiles,
+          state.selectedAmmunition.armorDamage,
+          state.selectedArmor.armor.class,
+          state.selectedArmor.armor.material.destructibility
+        )
+
+        state.currentDurability = Math.max(state.currentDurability - armorDamage, 0)
+      }
+    }
+
     return {
       // Data
       state,
@@ -153,7 +178,8 @@ export default defineComponent({
 
       // Functions
       setArmor,
-      setAmmunition
+      setAmmunition,
+      shoot
     }
   }
 })
