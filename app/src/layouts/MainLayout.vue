@@ -89,7 +89,7 @@
         </div>
       </div>
 
-      <div class="absolute" style="top: 15px; right: -17px">
+      <div v-if="!$q.screen.lt.sm" class="absolute" style="top: 15px; right: -17px">
         <q-btn
           dense
           round
