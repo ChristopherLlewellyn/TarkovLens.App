@@ -6,8 +6,11 @@
           <div class="text-h2" :style="{ color: hue }">
             {{ `${bothSelected ? chanceToPenetrate : '-'}%` }}
           </div>
-          <div class="greyed-text q-mt-sm">
+          <div class="q-mt-sm">
             ...chance to penetrate
+          </div>
+          <div class="greyed-text q-mt-sm">
+            {{ shotsToDestroy }} shots to destroy
           </div>
         </div>
         <div class="controls">
@@ -143,6 +146,26 @@ export default defineComponent({
       return color
     })
 
+    const shotsToDestroy = computed<string>(() => {
+      if (!state.selectedArmor.id || !state.selectedAmmunition.id) {
+        return '-'
+      }
+
+      let durability = state.selectedArmor.armor.durability
+      let shots = 0
+      while (durability > 0) {
+        durability -= BallisticsCalculator.calculateDamageToArmorWhenDoesNotPenetrate(
+          state.selectedAmmunition.penetration,
+          state.selectedAmmunition.projectiles,
+          state.selectedAmmunition.armorDamage,
+          state.selectedArmor.armor.class,
+          state.selectedArmor.armor.material.destructibility
+        )
+        shots += 1
+      }
+      return shots.toString()
+    })
+
     function setArmor (id: string) {
       state.selectedArmor = armorsWithArmoredRigs.value.find(x => x.id === id) ?? new Armor()
       state.currentDurability = state.selectedArmor.armor?.durability
@@ -174,6 +197,7 @@ export default defineComponent({
       bothSelected,
       percentageDurability,
       chanceToPenetrate,
+      shotsToDestroy,
       hue,
 
       // Functions
