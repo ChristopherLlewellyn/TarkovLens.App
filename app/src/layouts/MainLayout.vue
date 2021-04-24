@@ -66,17 +66,6 @@
       </q-list>
 
       <div class="external-links">
-        <div class="q-mb-md">
-          <a href="https://discord.gg/eKqdgcSZdz" target="__blank">
-            <q-img
-              fit="contain"
-              width="70%"
-              class="center external-link-image"
-              src="join-discord.png"
-            />
-          </a>
-        </div>
-
         <div>
           <a href="https://www.patreon.com/chrisllewellyn?fan_landing=true" target="__blank">
             <q-img
@@ -84,6 +73,17 @@
               width="70%"
               class="center external-link-image"
               src="https://c5.patreon.com/external/logo/become_a_patron_button.png"
+            />
+          </a>
+        </div>
+
+        <div class="q-mt-md">
+          <a href="https://discord.gg/eKqdgcSZdz" target="__blank">
+            <q-img
+              fit="contain"
+              width="70%"
+              class="center external-link-image"
+              src="join-discord.png"
             />
           </a>
         </div>
@@ -155,14 +155,14 @@ export default defineComponent({
       {
         id: 4,
         title: 'Currency Converter',
-        icon: Icon.MoneyRubles,
+        icon: Icon.Bank,
         activeClass: 'white',
         link: CalculatorRoutePath.CurrencyConvert
       },
       {
         id: 5,
         title: 'Market Fee Calculator',
-        icon: Icon.Fee,
+        icon: Icon.MoneyRubles,
         activeClass: 'white',
         link: CalculatorRoutePath.MarketFeeCalculator
       }

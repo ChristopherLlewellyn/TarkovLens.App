@@ -58,7 +58,7 @@ export default defineComponent({
         id: 3,
         title: 'Currency Converter',
         description: 'Convert the various currencies used in Tarkov.',
-        icon: Icon.MoneyRubles,
+        icon: Icon.Bank,
         iconBackgroundColor: 'money',
         link: CalculatorRoutePath.CurrencyConvert
       },
@@ -66,7 +66,7 @@ export default defineComponent({
         id: 4,
         title: 'Market Fee Calculator',
         description: 'Calculate the market fee for listing an item on the flea market.',
-        icon: Icon.Fee,
+        icon: Icon.MoneyRubles,
         iconBackgroundColor: 'money',
         link: CalculatorRoutePath.MarketFeeCalculator
       }

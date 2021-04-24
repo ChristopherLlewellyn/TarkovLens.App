@@ -1,5 +1,5 @@
 <template>
-  <q-card v-ripple.early class="limit-width margin" flat>
+  <q-card class="limit-width margin" flat>
     <router-link :to="props.link">
       <q-card-section horizontal>
         <q-card-section class="q-pt-xs">
