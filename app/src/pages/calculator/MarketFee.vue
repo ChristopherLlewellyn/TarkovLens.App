@@ -1,7 +1,7 @@
 <template>
   <transition appear enter-active-class="animated fadeIn">
     <q-page key="page" padding>
-      <div class="row center">
+      <div class="row center medium-width">
         <div class="q-mt-md">
           <item-search-select
             @item-selected="onItemSelected"

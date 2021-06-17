@@ -106,6 +106,10 @@ body {
   cursor: pointer;
 }
 
+.medium-width {
+  max-width: 991px;
+}
+
 // Scrollbar
 @media (min-width: 800px) {
   ::-webkit-scrollbar {
