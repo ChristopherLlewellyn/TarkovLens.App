@@ -49,7 +49,7 @@
               </q-item-label>
 
               <q-item-label caption>
-                <span>
+                <span :style="{ color: Utils.percentageToHsl(event.chanceToPenetrate / 100, 0, 120) }">
                   {{ event.chanceToPenetrate.toFixed(1) }}% chance to penetrate
                 </span>
               </q-item-label>
@@ -175,6 +175,7 @@ import { Icon } from 'src/enums/icon';
 import { CombatantDamageEvent } from 'src/models/characters/Combatant';
 import DamageModelIcon from 'src/components/simulator/DamageModelIcon.vue';
 import { useQuasar } from 'quasar';
+import Utils from 'src/functions/Utils';
 
 export default defineComponent({
   name: 'DamageEventsDialog',
@@ -203,6 +204,7 @@ export default defineComponent({
     return {
       props,
       Icon,
+      Utils,
       closeDialog,
     };
   },
