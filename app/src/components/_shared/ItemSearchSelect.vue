@@ -56,11 +56,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import useItemService from 'src/hooks/useItemService';
 import { Item } from 'src/models/items/Item';
 import Utils from 'src/functions/Utils';
 import { Icon } from 'src/enums/icon'
+import { ItemsRoutePath } from 'src/enums/route';
 
 interface Option {
   label: string;
@@ -71,11 +73,19 @@ interface Option {
 
 export default defineComponent({
   name: 'ItemSearchSelect',
+  props: {
+    navigateOnSelect: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
   emits: [
     'itemSelected',
   ],
-  setup(_props, { emit }) {
+  setup(props, { emit }) {
     const { getItemByName } = useItemService();
+    const router = useRouter();
 
     const options = ref<Option[]>([]);
     const fetchedItems = ref<Item[]>([]);
@@ -113,6 +123,11 @@ export default defineComponent({
 
     function onModelChanged(model: Option) {
       const item = fetchedItems.value.find(x => x.id === model.value) ?? undefined
+
+      if (props.navigateOnSelect && item !== undefined) {
+        return router.push(`${ItemsRoutePath.Items}/${item._kind.toLowerCase()}/${item._id}`)
+      } 
+      
       emit('itemSelected', item)
     }
 

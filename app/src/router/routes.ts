@@ -1,4 +1,4 @@
-import { CalculatorRouteName, CalculatorRoutePath, SimulatorRouteName, SimulatorRoutePath } from 'src/enums/route';
+import { CalculatorRouteName, CalculatorRoutePath, ItemsRouteName, ItemsRoutePath, SimulatorRouteName, SimulatorRoutePath } from 'src/enums/route';
 import { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
@@ -55,6 +55,28 @@ const routes: RouteRecordRaw[] = [
         name: CalculatorRouteName.MarketFeeCalculator,
         component: () => import('pages/calculator/MarketFee.vue')
       }
+    ]
+  },
+
+  {
+    path: ItemsRoutePath.Items,
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: ItemsRouteName.Items,
+        component: () => import('pages/items/Items.vue'),
+      },
+      {
+        path: ItemsRoutePath.Kind,
+        name: ItemsRouteName.Kind,
+        component: () => import('pages/items/Kind.vue'),
+      },
+      {
+        path: ItemsRoutePath.Details,
+        name: ItemsRouteName.Details,
+        component: () => import('pages/items/Details.vue'),
+      },
     ]
   },
 

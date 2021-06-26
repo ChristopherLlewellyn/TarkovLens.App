@@ -16,6 +16,8 @@ const tacticalrigs = ref<Tacticalrig[]>([])
 
 const getItemById = async (id: string) => ItemsService.getById<Item>(id)
 
+const getItemByBsgId = async (id: string) => ItemsService.getByBsgId<Item>(id)
+
 const getItemByName = async (query: string) => ItemsService.getByName(query);
 
 const getAllAmmunitions = async () => {
@@ -52,6 +54,7 @@ export default () => ({
   armorsWithArmoredRigs,
   tacticalrigs,
   getItemById,
+  getItemByBsgId,
   getItemByName,
   getAllAmmunitions,
   getAllArmors,

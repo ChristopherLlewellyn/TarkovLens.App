@@ -20,6 +20,12 @@ class Items {
     return data
   }
 
+  // Gets the exact item matching the BsgId
+  public async getByBsgId<T> (id: string): Promise<T> {
+    const { data } = await this.api.get<T>(`item/bsgid/${id}`)
+    return data
+  }
+
   // Gets a list of items that match the provided kind
   public async getByKind<T> (kind: Kind): Promise<T[]> {
     const { data } = await this.api.get<T[]>(`item/kind/${kind}`)
