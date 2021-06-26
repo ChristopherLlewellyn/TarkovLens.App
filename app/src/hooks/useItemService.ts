@@ -5,14 +5,18 @@ import { Item } from 'src/models/items/Item'
 import { Tacticalrig } from 'src/models/items/Tacticalrig'
 import { Kind } from 'src/models/items/_shared'
 import Items from 'src/services/Items'
+import Utils from 'src/functions/Utils'
 
 const ItemsService = new Items({})
 
 const ammunitions = ref<Ammunition[]>([])
 const armors = ref<Armor[]>([])
+const armorsWithArmoredRigs = ref<Armor[]>([])
 const tacticalrigs = ref<Tacticalrig[]>([])
 
 const getItemById = async (id: string) => ItemsService.getById<Item>(id)
+
+const getItemByName = async (query: string) => ItemsService.getByName(query);
 
 const getAllAmmunitions = async () => {
   const tempAmmunitions = await ItemsService.getByKind<Ammunition>(Kind.Ammunition)
@@ -32,12 +36,25 @@ const getAllTacticalrigs = async () => {
   return tempTacticalrigs
 }
 
+const getAllArmorsWithArmoredRigs = async () => {
+  const tempArmors = armors.value.length > 0 ? armors.value : await ItemsService.getByKind<Armor>(Kind.Armor)
+  const tempTacticalrigs = tacticalrigs.value.length > 0 ? tacticalrigs.value : await ItemsService.getByKind<Tacticalrig>(Kind.Tacticalrig)
+  const armoredRigsConvertedToArmors = Utils.convertArmoredTacticalRigsToArmors(tempTacticalrigs)
+
+  const combined = [...tempArmors, ...armoredRigsConvertedToArmors]
+  armorsWithArmoredRigs.value = [...combined]
+  return combined
+}
+
 export default () => ({
   ammunitions,
   armors,
+  armorsWithArmoredRigs,
   tacticalrigs,
   getItemById,
+  getItemByName,
   getAllAmmunitions,
   getAllArmors,
-  getAllTacticalrigs
+  getAllTacticalrigs,
+  getAllArmorsWithArmoredRigs
 })

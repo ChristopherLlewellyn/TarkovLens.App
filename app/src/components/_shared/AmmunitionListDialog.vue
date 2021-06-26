@@ -1,7 +1,6 @@
 <template>
   <q-dialog
     v-model="props.show"
-    persistent
     :maximized="$q.screen.lt.sm ? true : false"
     :transition-show="$q.screen.lt.sm ? 'slide-up' : ''"
     :transition-hide="$q.screen.lt.sm ? 'slide-down' : ''"
@@ -53,6 +52,8 @@
         :pagination="table.pagination"
         :rows-per-page-options="[0]"
         :filter="searchInput"
+        :loading="loading"
+        hide-bottom
       >
         <template #header-cell-name="props">
           <q-th :props="props">
@@ -110,6 +111,8 @@
           </q-tr>
         </template>
       </q-table>
+
+      <loading-spinner v-if="loading" />
     </q-card>
   </q-dialog>
 </template>
@@ -118,11 +121,13 @@
 import { defineComponent, PropType, computed, ref } from 'vue'
 import { Ammunition } from 'src/models/items/Ammunition'
 import { AmmunitionRow } from 'src/components/_models/AmmunitionRow'
+import LoadingSpinner from 'src/components/_shared/LoadingSpinner.vue'
 import { Icon } from 'src/enums/icon'
 import { useQuasar } from 'quasar';
 
 export default defineComponent({
   name: 'AmmunitionListDialog',
+  components: { LoadingSpinner },
   props: {
     show: {
       type: Boolean,
@@ -130,6 +135,10 @@ export default defineComponent({
     },
     ammunitions: {
       type: Array as PropType<Ammunition[]>,
+      required: true
+    },
+    loading: {
+      type: Boolean,
       required: true
     }
   },

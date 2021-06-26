@@ -90,6 +90,10 @@ body {
   color: $grey-7;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 .full-width {
   width: 100%;
 }
@@ -100,6 +104,10 @@ body {
 
 .pointer {
   cursor: pointer;
+}
+
+.medium-width {
+  max-width: 991px;
 }
 
 // Scrollbar

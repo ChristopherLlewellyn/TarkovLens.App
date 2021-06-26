@@ -182,7 +182,7 @@
               </q-btn>
               <div class="text-center q-mt-xs" style="font-weight: bold">
                 <span v-if="state.selectedCombatant.id.length > 0">{{
-                  state.selectedCombatant.name
+                  Utils.truncate(state.selectedCombatant.name, 13)
                 }}</span>
                 <span v-else class="greyed-text">Combatant</span>
               </div>
@@ -239,8 +239,8 @@
               }"
             >
               <div>
-                <q-btn round @click="toggleView()">
-                  <q-avatar v-ripple.early size="10vh" color="dark">
+                <q-btn :ripple="false" round @click="toggleView()">
+                  <q-avatar size="10vh" color="dark">
                     <q-icon
                       :name="
                         state.showArmorSelectionView ? Icon.Back : Icon.Armor
@@ -270,6 +270,7 @@
       <combatant-list-dialog
         :combatants="combatants"
         :show="state.showCombatantDialog"
+        :loading="state.combatantsLoading"
         @closeDialog="toggleShowCombatants"
         @selectRow="selectCombatant"
       />
@@ -277,13 +278,15 @@
       <ammunition-list-dialog
         :ammunitions="ammunitions"
         :show="state.showAmmoDialog"
+        :loading="state.ammunitionsLoading"
         @closeDialog="toggleShowAmmunition"
         @selectRow="selectAmmunition"
       />
 
       <armor-list-dialog
-        :armors="armors.filter((x) => x.type === ArmorType.Body)"
+        :armors="armorsWithArmoredRigs.filter((x) => x.type === ArmorType.Body)"
         :show="state.showBodyArmorDialog"
+        :loading="state.armorsLoading"
         @closeDialog="toggleShowBodyArmorDialog"
         @selectRow="equipBodyArmor"
       />
@@ -347,14 +350,22 @@ export default defineComponent({
     const {
       getAllAmmunitions,
       ammunitions,
-      getAllArmors,
-      armors,
+      getAllArmorsWithArmoredRigs,
+      armorsWithArmoredRigs,
     } = useItemService();
 
     onBeforeMount(async () => {
+      state.armorsLoading = true
+      state.ammunitionsLoading = true
+      state.combatantsLoading = true
+
       await getCombatants();
       await getAllAmmunitions();
-      await getAllArmors();
+      await getAllArmorsWithArmoredRigs();
+
+      state.armorsLoading = false
+      state.ammunitionsLoading = false
+      state.combatantsLoading = false
     });
 
     const state = reactive({
@@ -366,6 +377,9 @@ export default defineComponent({
       showDamageSimulatorView: true,
       showArmorSelectionView: false,
       showDamageEventsDialog: false,
+      armorsLoading: false,
+      ammunitionsLoading: false,
+      combatantsLoading: false
     });
 
     function selectCombatant(name: string) {
@@ -403,7 +417,7 @@ export default defineComponent({
 
     function equipBodyArmor(row: ArmorRow) {
       const bodyArmor =
-        armors.value.find((x) => x.id === row.id) ?? new Armor();
+        armorsWithArmoredRigs.value.find((x) => x.id === row.id) ?? new Armor();
       state.selectedCombatant.equipment.bodyArmor = new EquippedArmor(
         bodyArmor.armor.durability,
         bodyArmor
@@ -492,7 +506,7 @@ export default defineComponent({
       Hitbox,
       combatants,
       ammunitions,
-      armors,
+      armorsWithArmoredRigs,
       selectCombatant,
       selectAmmunition,
       equipBodyArmor,
@@ -500,6 +514,7 @@ export default defineComponent({
       boom,
       rgb,
       Icon,
+      Utils,
       ArmorType,
       toggleShowCombatants,
       toggleShowAmmunition,

@@ -1,5 +1,5 @@
 <template>
-  <q-card v-ripple.early class="limit-width margin" flat>
+  <q-card class="limit-width margin" flat>
     <router-link :to="props.link">
       <q-card-section horizontal>
         <q-card-section class="q-pt-xs">
@@ -75,8 +75,8 @@ export default defineComponent({
   
   .pin-top-right {
     position: relative;
-    right: 5px;
-    top: -45px;
+    right: 2%;
+    top: -45%;
   }
 
   .margin {

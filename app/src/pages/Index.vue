@@ -18,7 +18,7 @@
 import { defineComponent } from 'vue'
 import { useStore } from 'vuex'
 import MenuCard from 'src/components/_shared/MenuCard.vue'
-import { SimulatorRoutePath } from 'src/enums/route'
+import { SimulatorRoutePath, CalculatorRoutePath } from 'src/enums/route'
 import { RootState } from 'src/store/RootState'
 import { Icon } from 'src/enums/icon'
 import { App } from 'src/enums/app'
@@ -27,7 +27,7 @@ import { useMeta } from 'quasar'
 const metaData = {
   title: App.AppName,
   meta: {
-    description: { name: 'Helping players understand Escape from Tarkov, with damage and penetration simulators.' }
+    description: { name: 'Helping players understand Escape from Tarkov by providing various damage simulators and calculators.' }
   }
 }
 
@@ -53,6 +53,22 @@ export default defineComponent({
         icon: Icon.Damage,
         iconBackgroundColor: 'bullet',
         link: SimulatorRoutePath.Damage
+      },
+      {
+        id: 3,
+        title: 'Currency Converter',
+        description: 'Convert the various currencies used in Tarkov.',
+        icon: Icon.Bank,
+        iconBackgroundColor: 'money',
+        link: CalculatorRoutePath.CurrencyConvert
+      },
+      {
+        id: 4,
+        title: 'Market Fee Calculator',
+        description: 'Calculate the market fee for listing an item on the flea market.',
+        icon: Icon.MoneyRubles,
+        iconBackgroundColor: 'money',
+        link: CalculatorRoutePath.MarketFeeCalculator
       }
     ]
     const store = useStore<RootState>()

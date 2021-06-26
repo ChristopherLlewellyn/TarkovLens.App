@@ -1,7 +1,6 @@
 <template>
   <q-dialog
     v-model="props.show"
-    persistent
     :maximized="$q.screen.lt.sm ? true : false"
     :transition-show="$q.screen.lt.sm ? 'slide-up' : ''"
     :transition-hide="$q.screen.lt.sm ? 'slide-down' : ''"
@@ -46,13 +45,19 @@
           @click="onRowClick(combatant)"
         >
           <q-item-section avatar style="max-width: 250px">
-            <q-avatar color="dark" text-color="white" size="9vh">
-              <img
-                v-if="combatant.portrait.length > 0"
-                :src="combatant.portrait"
-              />
-              <span v-else>{{ combatant.name.charAt(0) }}</span>
-            </q-avatar>
+            <q-intersection
+              once
+              transition="scale"
+              class="avatar-intersection"
+            >
+              <q-avatar color="dark" text-color="white" size="9vh">
+                <img
+                  v-if="combatant.portrait.length > 0"
+                  :src="combatant.portrait"
+                />
+                <span v-else>{{ combatant.name.charAt(0) }}</span>
+              </q-avatar>
+            </q-intersection>
           </q-item-section>
 
           <q-item-section>
@@ -98,6 +103,8 @@
           </q-item-section>
         </q-item>
       </q-list>
+
+      <loading-spinner v-if="loading" />
     </q-card>
   </q-dialog>
 </template>
@@ -107,10 +114,12 @@ import { defineComponent, PropType } from 'vue';
 import { Icon } from 'src/enums/icon';
 import { Combatant } from 'src/models/characters/Combatant';
 import { CharacterType } from 'src/models/characters/_shared';
+import LoadingSpinner from 'src/components/_shared/LoadingSpinner.vue'
 import { useQuasar } from 'quasar';
 
 export default defineComponent({
   name: 'CombatantListDialog',
+  components: { LoadingSpinner },
   props: {
     show: {
       type: Boolean,
@@ -118,6 +127,10 @@ export default defineComponent({
     },
     combatants: {
       type: Array as PropType<Combatant[]>,
+      required: true,
+    },
+    loading: {
+      type: Boolean,
       required: true,
     },
   },
@@ -151,5 +164,10 @@ export default defineComponent({
   position: sticky;
   z-index: 1;
   top: 0;
+}
+
+.avatar-intersection {
+  height: 9vh;
+  width: 9vh;
 }
 </style>

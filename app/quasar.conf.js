@@ -129,8 +129,8 @@ module.exports = configure(function (/* ctx */) {
       },
 
       manifest: {
-        name: 'TarkovLens',
-        short_name: 'TarkovLens',
+        name: 'Tarkov Simulator',
+        short_name: 'Tarkov Simulator',
         description: 'Helping clarify Tarkov.',
         display: 'standalone',
         orientation: 'portrait',
@@ -196,7 +196,7 @@ module.exports = configure(function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'tarkovlens'
+        appId: 'tarkov-simulator'
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain

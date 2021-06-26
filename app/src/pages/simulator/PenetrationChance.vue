@@ -6,17 +6,22 @@
           <div class="text-h2" :style="{ color: hue }">
             {{ `${bothSelected ? chanceToPenetrate : '-'}%` }}
           </div>
-          <div class="greyed-text q-mt-sm">
+          <div class="q-mt-sm">
             ...chance to penetrate
+          </div>
+          <div class="greyed-text q-mt-sm">
+            {{ shotsToDestroy }} shots to destroy
           </div>
         </div>
         <div class="controls">
           <div class="full-width">
             <penetration-matchup-selector
-              :armors="armors"
+              :armors="armorsWithArmoredRigs"
               :ammunitions="ammunitions"
               :selected-armor="state.selectedArmor"
               :selected-ammunition="state.selectedAmmunition"
+              :ammunitions-loading="state.ammunitionsLoading"
+              :armors-loading="state.armorsLoading"
               @selectArmor="setArmor"
               @selectAmmunition="setAmmunition"
             />
@@ -25,19 +30,30 @@
               <div class="q-mb-sm" style="text-align: center;">
                 Durability <span class="greyed-text">{{ state.selectedArmor.id ? `(${percentageDurability}%)` : '' }}</span>
               </div>
-
-              <q-slider
-                v-model="state.currentDurability"
-                :disable="!state.selectedArmor.id"
-                :min="0"
-                :max="state.selectedArmor.id ? state.selectedArmor.armor.durability : 0"
-                :step="1"
-                label
-                :label-value="state.currentDurability"
-                label-always
-                class="center q-mt-lg"
-                style="width:80%; max-width: 700px;"
-              />
+              <q-list class="center q-mt-lg" style="width:95%; max-width: 700px;" dense>
+                <q-item>
+                  <q-item-section class="q-mr-sm" avatar>
+                    <q-btn
+                      color="bullet"
+                      label="Shoot"
+                      :disable="!state.selectedAmmunition.id || !state.selectedArmor.id"
+                      @click="shoot()"
+                    />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-slider
+                      v-model="state.currentDurability"
+                      :disable="!state.selectedArmor.id"
+                      :min="0"
+                      :max="state.selectedArmor.id ? state.selectedArmor.armor.durability : 0"
+                      :step="1"
+                      label
+                      :label-value="state.currentDurability.toFixed(0)"
+                      label-always
+                    />
+                  </q-item-section>
+                </q-item>
+              </q-list>
             </div>
           </div>
         </div>
@@ -76,27 +92,31 @@ export default defineComponent({
 
     const {
       ammunitions,
-      armors,
-      tacticalrigs,
+      armorsWithArmoredRigs,
 
       getAllAmmunitions,
-      getAllArmors,
-      getAllTacticalrigs
+      getAllArmorsWithArmoredRigs,
     } = useItemService()
     
     const store = useStore<RootState>()
     store.commit('layout/updateTitle', 'Penetration Chance')
 
     onBeforeMount(async () => {
+      state.ammunitionsLoading = true
+      state.armorsLoading = true
+
       await getAllAmmunitions()
-      await getAllArmors()
-      await getAllTacticalrigs()
-      store
+      await getAllArmorsWithArmoredRigs()
+      
+      state.ammunitionsLoading = false
+      state.armorsLoading = false
     })
 
     const state = reactive({
       selectedArmor: <Armor>{},
       selectedAmmunition: <Ammunition>{},
+      ammunitionsLoading: false,
+      armorsLoading: false,
       currentDurability: 0
     })
 
@@ -126,8 +146,28 @@ export default defineComponent({
       return color
     })
 
+    const shotsToDestroy = computed<string>(() => {
+      if (!state.selectedArmor.id || !state.selectedAmmunition.id) {
+        return '-'
+      }
+
+      let durability = state.selectedArmor.armor.durability
+      let shots = 0
+      while (durability > 0) {
+        durability -= BallisticsCalculator.calculateDamageToArmorWhenDoesNotPenetrate(
+          state.selectedAmmunition.penetration,
+          state.selectedAmmunition.projectiles,
+          state.selectedAmmunition.armorDamage,
+          state.selectedArmor.armor.class,
+          state.selectedArmor.armor.material.destructibility
+        )
+        shots += 1
+      }
+      return shots.toString()
+    })
+
     function setArmor (id: string) {
-      state.selectedArmor = armors.value.find(x => x.id === id) ?? new Armor()
+      state.selectedArmor = armorsWithArmoredRigs.value.find(x => x.id === id) ?? new Armor()
       state.currentDurability = state.selectedArmor.armor?.durability
     }
 
@@ -135,23 +175,35 @@ export default defineComponent({
       state.selectedAmmunition = ammunitions.value.find(x => x.id === id) ?? new Ammunition()
     }
 
+    function shoot () {
+      if (state.selectedArmor.id && state.selectedAmmunition.id) {
+        const armorDamage = BallisticsCalculator.calculateDamageToArmorWhenDoesNotPenetrate(
+          state.selectedAmmunition.penetration,
+          state.selectedAmmunition.projectiles,
+          state.selectedAmmunition.armorDamage,
+          state.selectedArmor.armor.class,
+          state.selectedArmor.armor.material.destructibility
+        )
+
+        state.currentDurability = Math.max(state.currentDurability - armorDamage, 0)
+      }
+    }
+
     return {
       // Data
       state,
       ammunitions,
-      armors,
-      tacticalrigs,
+      armorsWithArmoredRigs,
       bothSelected,
       percentageDurability,
       chanceToPenetrate,
+      shotsToDestroy,
       hue,
 
       // Functions
-      getAllAmmunitions,
-      getAllArmors,
-      getAllTacticalrigs,
       setArmor,
-      setAmmunition
+      setAmmunition,
+      shoot
     }
   }
 })

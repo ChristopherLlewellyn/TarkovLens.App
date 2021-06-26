@@ -62,19 +62,29 @@ export class Combatant implements Character {
       return
     }
 
+    // Create damage log
     const damageEventLog = new CombatantDamageEvent(hitbox, damageSource.shortName)
 
+    // Handle getting shot
     const protectiveArmor = this.getHitboxProtection(hitbox);
     if (protectiveArmor !== undefined && protectiveArmor.currentDurability > 0) {
       this.handleHitInArmoredZone(hitbox, protectiveArmor, damageSource, damageEventLog);
+      damageEventLog.armorAfterEvent = new EquippedArmor(protectiveArmor.currentDurability, protectiveArmor)
     }
-
     else {
       damageEventLog.penetrated = true
       this.takeDamage(hitbox, damageSource.damage * damageSource.projectiles, damageEventLog)
     }
 
+    // Add post-shot info to the damage log
     damageEventLog.remainingHp = this.healthStatus.currentHp
+    damageEventLog.headHpPercent = (Math.max(this.healthStatus.head.currentHp, 0) / this.healthStatus.head.maxHp)
+    damageEventLog.thoraxHpPercent = (Math.max(this.healthStatus.thorax.currentHp, 0) / this.healthStatus.thorax.maxHp)
+    damageEventLog.leftarmHpPercent = (Math.max(this.healthStatus.leftArm.currentHp, 0) / this.healthStatus.leftArm.maxHp)
+    damageEventLog.rightarmHpPercent = (Math.max(this.healthStatus.rightArm.currentHp, 0) / this.healthStatus.rightArm.maxHp)
+    damageEventLog.stomachHpPercent = (Math.max(this.healthStatus.stomach.currentHp, 0) / this.healthStatus.stomach.maxHp)
+    damageEventLog.leftlegHpPercent = (Math.max(this.healthStatus.leftLeg.currentHp, 0) / this.healthStatus.leftLeg.maxHp)
+    damageEventLog.rightlegHpPercent = (Math.max(this.healthStatus.rightLeg.currentHp, 0) / this.healthStatus.rightLeg.maxHp)
     this.eventLogs.push(damageEventLog)
   }
 
@@ -121,18 +131,18 @@ export class Combatant implements Character {
         oldHp = this.healthStatus.head.currentHp
         newHp = this.healthStatus.head.currentHp - damage
         if (newHp <= 0 && this.healthStatus.head.isVital) {
-          damageEventLog.damageLogs.push(`Head took ${(damage).toFixed(1)} damage (0 rem.)`)
+          damageEventLog.damageLogs.push(`Head took ${(damage).toFixed(1)} damage (0 left)`)
           this.die(damageEventLog);
         }
         else if (newHp < 0) {
           overflowDamage = Math.abs(newHp) * BodyPartDamageMultiplier.Head
-          damageEventLog.damageLogs.push(`Head took ${(oldHp).toFixed(1)} damage (0 rem.) and passed on ${overflowDamage.toFixed(1)} overflow damage`)
+          damageEventLog.damageLogs.push(`Head took ${(oldHp).toFixed(1)} damage (0 left) and passed on ${overflowDamage.toFixed(1)} overflow damage`)
           this.healthStatus.head.currentHp = 0
           this.takeOverflowDamage(overflowDamage, hitbox, damageEventLog)
         }
         else {
           this.healthStatus.head.currentHp = newHp
-          damageEventLog.damageLogs.push(`Head took ${damage.toFixed(1)} damage (${this.healthStatus.head.currentHp.toFixed(1)} rem.)`)
+          damageEventLog.damageLogs.push(`Head took ${damage.toFixed(1)} damage (${this.healthStatus.head.currentHp.toFixed(1)} left)`)
         }
         break
 
@@ -141,18 +151,18 @@ export class Combatant implements Character {
         oldHp = this.healthStatus.thorax.currentHp
         newHp = this.healthStatus.thorax.currentHp - damage
         if (newHp <= 0 && this.healthStatus.thorax.isVital) {
-          damageEventLog.damageLogs.push(`Thorax took ${(damage).toFixed(1)} damage (0 rem.)`)
+          damageEventLog.damageLogs.push(`Thorax took ${(damage).toFixed(1)} damage (0 left)`)
           this.die(damageEventLog);
         }
         else if (newHp < 0) {
           overflowDamage = Math.abs(newHp) * BodyPartDamageMultiplier.Thorax
-          damageEventLog.damageLogs.push(`Thorax took ${(oldHp).toFixed(1)} damage (0 rem.) and passed on ${overflowDamage.toFixed(1)} overflow damage`)
+          damageEventLog.damageLogs.push(`Thorax took ${(oldHp).toFixed(1)} damage (0 left) and passed on ${overflowDamage.toFixed(1)} overflow damage`)
           this.healthStatus.thorax.currentHp = 0
           this.takeOverflowDamage(overflowDamage, hitbox, damageEventLog)
         }
         else {
           this.healthStatus.thorax.currentHp = newHp
-          damageEventLog.damageLogs.push(`Thorax took ${(damage).toFixed(1)} damage (${this.healthStatus.thorax.currentHp.toFixed(1)} rem.)`)
+          damageEventLog.damageLogs.push(`Thorax took ${(damage).toFixed(1)} damage (${this.healthStatus.thorax.currentHp.toFixed(1)} left)`)
         }
         break
 
@@ -161,18 +171,18 @@ export class Combatant implements Character {
         oldHp = this.healthStatus.stomach.currentHp
         newHp = this.healthStatus.stomach.currentHp - damage
         if (newHp <= 0 && this.healthStatus.stomach.isVital) {
-          damageEventLog.damageLogs.push(`Stomach took ${(damage).toFixed(1)} damage (0 rem.)`)
+          damageEventLog.damageLogs.push(`Stomach took ${(damage).toFixed(1)} damage (0 left)`)
           this.die(damageEventLog);
         }
         else if (newHp < 0) {
           overflowDamage = Math.abs(newHp) * BodyPartDamageMultiplier.Stomach
-          damageEventLog.damageLogs.push(`Stomach took ${(oldHp).toFixed(1)} damage (0 rem.) and passed on ${overflowDamage.toFixed(1)} overflow damage`)
+          damageEventLog.damageLogs.push(`Stomach took ${(oldHp).toFixed(1)} damage (0 left) and passed on ${overflowDamage.toFixed(1)} overflow damage`)
           this.healthStatus.stomach.currentHp = 0
           this.takeOverflowDamage(overflowDamage, hitbox, damageEventLog)
         }
         else {
           this.healthStatus.stomach.currentHp = newHp
-          damageEventLog.damageLogs.push(`Stomach took ${(damage).toFixed(1)} damage (${this.healthStatus.stomach.currentHp.toFixed(1)} rem.)`)
+          damageEventLog.damageLogs.push(`Stomach took ${(damage).toFixed(1)} damage (${this.healthStatus.stomach.currentHp.toFixed(1)} left)`)
         }
         break
 
@@ -181,18 +191,18 @@ export class Combatant implements Character {
         oldHp = this.healthStatus.rightArm.currentHp
         newHp = this.healthStatus.rightArm.currentHp - damage
         if (newHp <= 0 && this.healthStatus.rightArm.isVital) {
-          damageEventLog.damageLogs.push(`Right Arm took ${(damage).toFixed(1)} damage (0 rem.)`)
+          damageEventLog.damageLogs.push(`Right Arm took ${(damage).toFixed(1)} damage (0 left)`)
           this.die(damageEventLog);
         }
         else if (newHp < 0) {
           overflowDamage = Math.abs(newHp) * BodyPartDamageMultiplier.Arm
-          damageEventLog.damageLogs.push(`Right Arm took ${(damage).toFixed(1)} damage (0 rem.) and passed on ${overflowDamage.toFixed(1)} overflow damage`)
+          damageEventLog.damageLogs.push(`Right Arm took ${(damage).toFixed(1)} damage (0 left) and passed on ${overflowDamage.toFixed(1)} overflow damage`)
           this.healthStatus.rightArm.currentHp = 0
           this.takeOverflowDamage(overflowDamage, hitbox, damageEventLog)
         }
         else {
           this.healthStatus.rightArm.currentHp = newHp
-          damageEventLog.damageLogs.push(`Right Arm took ${(damage).toFixed(1)} damage (${this.healthStatus.rightArm.currentHp.toFixed(1)} rem.)`)
+          damageEventLog.damageLogs.push(`Right Arm took ${(damage).toFixed(1)} damage (${this.healthStatus.rightArm.currentHp.toFixed(1)} left)`)
         }
         break
 
@@ -201,18 +211,18 @@ export class Combatant implements Character {
         oldHp = this.healthStatus.leftArm.currentHp
         newHp = this.healthStatus.leftArm.currentHp - damage
         if (newHp <= 0 && this.healthStatus.leftArm.isVital) {
-          damageEventLog.damageLogs.push(`Left Arm took ${(damage).toFixed(1)} damage (0 rem.)`)
+          damageEventLog.damageLogs.push(`Left Arm took ${(damage).toFixed(1)} damage (0 left)`)
           this.die(damageEventLog);
         }
         else if (newHp < 0) {
           overflowDamage = Math.abs(newHp) * BodyPartDamageMultiplier.Arm
-          damageEventLog.damageLogs.push(`Left Arm took ${(oldHp).toFixed(1)} damage (0 rem.) and passed on ${overflowDamage.toFixed(1)} overflow damage`)
+          damageEventLog.damageLogs.push(`Left Arm took ${(oldHp).toFixed(1)} damage (0 left) and passed on ${overflowDamage.toFixed(1)} overflow damage`)
           this.healthStatus.leftArm.currentHp = 0
           this.takeOverflowDamage(overflowDamage, hitbox, damageEventLog)
         }
         else {
           this.healthStatus.leftArm.currentHp = newHp
-          damageEventLog.damageLogs.push(`Left Arm took ${(damage).toFixed(1)} damage (${this.healthStatus.leftArm.currentHp.toFixed(1)} rem.)`)
+          damageEventLog.damageLogs.push(`Left Arm took ${(damage).toFixed(1)} damage (${this.healthStatus.leftArm.currentHp.toFixed(1)} left)`)
         }
         break
 
@@ -221,18 +231,18 @@ export class Combatant implements Character {
         oldHp = this.healthStatus.leftLeg.currentHp
         newHp = this.healthStatus.leftLeg.currentHp - damage
         if (newHp <= 0 && this.healthStatus.leftLeg.isVital) {
-          damageEventLog.damageLogs.push(`Left Leg took ${(damage).toFixed(1)} damage (0 rem.)`)
+          damageEventLog.damageLogs.push(`Left Leg took ${(damage).toFixed(1)} damage (0 left)`)
           this.die(damageEventLog);
         }
         else if (newHp < 0) {
           overflowDamage = Math.abs(newHp) * BodyPartDamageMultiplier.Leg
-          damageEventLog.damageLogs.push(`Left Leg took ${(oldHp).toFixed(1)} damage (0 rem.) and passed on ${overflowDamage.toFixed(1)} overflow damage`)
+          damageEventLog.damageLogs.push(`Left Leg took ${(oldHp).toFixed(1)} damage (0 left) and passed on ${overflowDamage.toFixed(1)} overflow damage`)
           this.healthStatus.leftLeg.currentHp = 0
           this.takeOverflowDamage(overflowDamage, hitbox, damageEventLog)
         }
         else {
           this.healthStatus.leftLeg.currentHp = newHp
-          damageEventLog.damageLogs.push(`Left Leg took ${(damage).toFixed(1)} damage (${this.healthStatus.leftLeg.currentHp.toFixed(1)} rem.)`)
+          damageEventLog.damageLogs.push(`Left Leg took ${(damage).toFixed(1)} damage (${this.healthStatus.leftLeg.currentHp.toFixed(1)} left)`)
         }
         break
 
@@ -241,18 +251,18 @@ export class Combatant implements Character {
         oldHp = this.healthStatus.rightLeg.currentHp
         newHp = this.healthStatus.rightLeg.currentHp - damage
         if (newHp <= 0 && this.healthStatus.rightLeg.isVital) {
-          damageEventLog.damageLogs.push(`Right Leg took ${(damage).toFixed(1)} damage (0 rem.)`)
+          damageEventLog.damageLogs.push(`Right Leg took ${(damage).toFixed(1)} damage (0 left)`)
           this.die(damageEventLog);
         }
         else if (newHp < 0) {
           overflowDamage = Math.abs(newHp) * BodyPartDamageMultiplier.Leg
-          damageEventLog.damageLogs.push(`Right Leg took ${(oldHp).toFixed(1)} damage (0 rem.) and passed on ${overflowDamage.toFixed(1)} overflow damage`)
+          damageEventLog.damageLogs.push(`Right Leg took ${(oldHp).toFixed(1)} damage (0 left) and passed on ${overflowDamage.toFixed(1)} overflow damage`)
           this.healthStatus.rightLeg.currentHp = 0
           this.takeOverflowDamage(overflowDamage, hitbox, damageEventLog)
         }
         else {
           this.healthStatus.rightLeg.currentHp = newHp
-          damageEventLog.damageLogs.push(`Right Leg took ${(damage).toFixed(1)} damage (${this.healthStatus.rightLeg.currentHp.toFixed(1)} rem.)`)
+          damageEventLog.damageLogs.push(`Right Leg took ${(damage).toFixed(1)} damage (${this.healthStatus.rightLeg.currentHp.toFixed(1)} left)`)
         }
         break
 
@@ -274,7 +284,7 @@ export class Combatant implements Character {
       this.healthStatus.head.currentHp = Math.max(this.healthStatus.head.currentHp, 0)
 
       if (damage > 0) {
-        damageEventLog.damageLogs.push(`Head took ${damage.toFixed(1)} overflow damage (${this.healthStatus.head.currentHp.toFixed(1)} rem.)`)
+        damageEventLog.damageLogs.push(`Head took ${damage.toFixed(1)} overflow damage (${this.healthStatus.head.currentHp.toFixed(1)} left)`)
       }
 
       if (this.healthStatus.head.isVital && this.healthStatus.head.currentHp <= 0) {
@@ -289,7 +299,7 @@ export class Combatant implements Character {
       this.healthStatus.thorax.currentHp = Math.max(this.healthStatus.thorax.currentHp, 0)
 
       if (damage > 0) {
-        damageEventLog.damageLogs.push(`Thorax took ${damage.toFixed(1)} overflow damage (${this.healthStatus.thorax.currentHp.toFixed(1)} rem.)`)
+        damageEventLog.damageLogs.push(`Thorax took ${damage.toFixed(1)} overflow damage (${this.healthStatus.thorax.currentHp.toFixed(1)} left)`)
       }
 
       if (this.healthStatus.thorax.isVital && this.healthStatus.thorax.currentHp <= 0) {
@@ -304,7 +314,7 @@ export class Combatant implements Character {
       this.healthStatus.rightArm.currentHp = Math.max(this.healthStatus.rightArm.currentHp, 0)
 
       if (damage > 0) {
-        damageEventLog.damageLogs.push(`Right Arm took ${damage.toFixed(1)} overflow damage (${this.healthStatus.rightArm.currentHp.toFixed(1)} rem.)`)
+        damageEventLog.damageLogs.push(`Right Arm took ${damage.toFixed(1)} overflow damage (${this.healthStatus.rightArm.currentHp.toFixed(1)} left)`)
       }
 
       if (this.healthStatus.rightArm.isVital && this.healthStatus.rightArm.currentHp <= 0) {
@@ -319,7 +329,7 @@ export class Combatant implements Character {
       this.healthStatus.leftArm.currentHp = Math.max(this.healthStatus.leftArm.currentHp, 0)
 
       if (damage > 0) {
-        damageEventLog.damageLogs.push(`Left Arm took ${damage.toFixed(1)} overflow damage (${this.healthStatus.leftArm.currentHp.toFixed(1)} rem.)`)
+        damageEventLog.damageLogs.push(`Left Arm took ${damage.toFixed(1)} overflow damage (${this.healthStatus.leftArm.currentHp.toFixed(1)} left)`)
       }
 
       if (this.healthStatus.leftArm.isVital && this.healthStatus.leftArm.currentHp <= 0) {
@@ -334,7 +344,7 @@ export class Combatant implements Character {
       this.healthStatus.stomach.currentHp = Math.max(this.healthStatus.stomach.currentHp, 0)
 
       if (damage > 0) {
-        damageEventLog.damageLogs.push(`Stomach took ${damage.toFixed(1)} overflow damage (${this.healthStatus.stomach.currentHp.toFixed(1)} rem.)`)
+        damageEventLog.damageLogs.push(`Stomach took ${damage.toFixed(1)} overflow damage (${this.healthStatus.stomach.currentHp.toFixed(1)} left)`)
       }
 
       if (this.healthStatus.stomach.isVital && this.healthStatus.stomach.currentHp <= 0) {
@@ -349,7 +359,7 @@ export class Combatant implements Character {
       this.healthStatus.rightLeg.currentHp = Math.max(this.healthStatus.rightLeg.currentHp, 0)
 
       if (damage > 0) {
-        damageEventLog.damageLogs.push(`Right Leg took ${damage.toFixed(1)} overflow damage (${this.healthStatus.rightLeg.currentHp.toFixed(1)} rem.)`)
+        damageEventLog.damageLogs.push(`Right Leg took ${damage.toFixed(1)} overflow damage (${this.healthStatus.rightLeg.currentHp.toFixed(1)} left)`)
       }
 
       if (this.healthStatus.rightLeg.isVital && this.healthStatus.rightLeg.currentHp <= 0) {
@@ -364,7 +374,7 @@ export class Combatant implements Character {
       this.healthStatus.leftLeg.currentHp = Math.max(this.healthStatus.leftLeg.currentHp, 0)
 
       if (damage > 0) {
-        damageEventLog.damageLogs.push(`Left Leg took ${damage.toFixed(1)} overflow damage (${this.healthStatus.leftLeg.currentHp.toFixed(1)} rem.)`)
+        damageEventLog.damageLogs.push(`Left Leg took ${damage.toFixed(1)} overflow damage (${this.healthStatus.leftLeg.currentHp.toFixed(1)} left)`)
       }
 
       if (this.healthStatus.leftLeg.isVital && this.healthStatus.leftLeg.currentHp <= 0) {
@@ -378,7 +388,7 @@ export class Combatant implements Character {
     const armor = this.getHitboxProtection(hitbox)
     if (armor !== undefined) {
       armor.currentDurability = Math.max(armor.currentDurability - armorDamage, 0)
-      damageEventLog.damageLogs.push(`Armor took ${armorDamage.toFixed(1)} damage (${armor.currentDurability.toFixed(1)} rem.)`)
+      damageEventLog.damageLogs.push(`Armor took ${armorDamage.toFixed(1)} damage (${armor.currentDurability.toFixed(1)} left)`)
     }
   }
 
@@ -540,6 +550,14 @@ export class CombatantDamageEvent {
   penetrated = true
   killShot = false
   remainingHp = 0
+  headHpPercent = 0
+  thoraxHpPercent = 0
+  leftarmHpPercent = 0
+  rightarmHpPercent = 0
+  stomachHpPercent = 0
+  leftlegHpPercent = 0
+  rightlegHpPercent = 0
+  armorAfterEvent = new EquippedArmor()
 
   constructor(hitbox: Hitbox, damageSourceName: string) {
     this.hitbox = hitbox

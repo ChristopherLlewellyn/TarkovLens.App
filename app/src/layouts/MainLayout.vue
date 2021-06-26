@@ -39,7 +39,7 @@
           class="text-center q-mb-sm primary"
           style="font-size: 25px"
         >
-            TarkovLens
+            {{ App.AppName }}
         </div>
 
         <q-separator></q-separator>
@@ -65,20 +65,46 @@
         </q-item>
       </q-list>
 
-      <div class="absolute" style="top: 15px; right: -17px">
+      <div class="external-links">
+        <div>
+          <a href="https://www.patreon.com/chrisllewellyn?fan_landing=true" target="__blank">
+            <q-img
+              fit="contain"
+              width="70%"
+              class="center external-link-image"
+              src="https://c5.patreon.com/external/logo/become_a_patron_button.png"
+            />
+          </a>
+        </div>
+
+        <div class="q-mt-md">
+          <a href="https://discord.gg/eKqdgcSZdz" target="__blank">
+            <q-img
+              fit="contain"
+              width="70%"
+              class="center external-link-image"
+              src="join-discord.png"
+            />
+          </a>
+        </div>
+      </div>
+
+      <div v-if="!$q.screen.lt.sm" class="absolute" style="top: 15px; right: -17px">
         <q-btn
           dense
           round
           unelevated
           color="primary"
-          :icon="chevronIcon"
+          icon="chevron_right"
           @click="toggleDrawer"
         />
       </div>
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view 
+        v-touch-swipe.mouse.right="handleSwipeRight" 
+      />
     </q-page-container>
   </q-layout>
 </template>
@@ -88,8 +114,10 @@ import { RootState } from 'src/store/RootState'
 import { defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useQuasar } from 'quasar'
-import { SimulatorRoutePath } from 'src/enums/route'
+import { CalculatorRoutePath, SimulatorRoutePath } from 'src/enums/route'
 import { Icon } from 'src/enums/icon'
+import { App } from 'src/enums/app'
+import QSwipeEvent from 'src/models/_quasar/QSwipeEvent'
 
 export default defineComponent({
   name: 'MainLayout',
@@ -99,21 +127,20 @@ export default defineComponent({
     const $q = useQuasar()
     const store = useStore<RootState>()
     const showDrawer = ref(false)
-    const chevronIcon = ref('chevron_left')
     const miniState = ref(false)
     const activeNav = ref(0)
 
     const navItems = [
       {
         id: 1,
-        title: 'Home',
+        title: 'Overview',
         icon: 'mdi-home',
         activeClass: 'white',
         link: '/'
       },
       {
         id: 2,
-        title: 'Pen Chance',
+        title: 'Pen Chance Simulator',
         icon: Icon.Penetration,
         activeClass: 'white',
         link: SimulatorRoutePath.PenetrationChance
@@ -124,13 +151,22 @@ export default defineComponent({
         icon: Icon.Damage,
         activeClass: 'white',
         link: SimulatorRoutePath.Damage
+      },
+      {
+        id: 4,
+        title: 'Currency Converter',
+        icon: Icon.Bank,
+        activeClass: 'white',
+        link: CalculatorRoutePath.CurrencyConvert
+      },
+      {
+        id: 5,
+        title: 'Market Fee Calculator',
+        icon: Icon.MoneyRubles,
+        activeClass: 'white',
+        link: CalculatorRoutePath.MarketFeeCalculator
       }
     ]
-
-    // example getter method (non-statically typed)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    //console.log(store.getters['layout/getTitle'])
-
 
     function setActiveNav (navId: number) {
       activeNav.value = navId
@@ -143,19 +179,20 @@ export default defineComponent({
       else {
         miniState.value = !miniState.value
       }
+    }
 
-      if (chevronIcon.value == 'chevron_right') {
-        chevronIcon.value = 'chevron_left'
-      } else {
-        chevronIcon.value = 'chevron_right'
+    function handleSwipeRight (qSwipeEvent: QSwipeEvent) {
+      if (qSwipeEvent.touch && qSwipeEvent.distance.x > 9) {
+        showDrawer.value = true
       }
     }
 
     return {
       store,
+      App,
       showDrawer,
+      handleSwipeRight,
       toggleDrawer,
-      chevronIcon,
       miniState,
       activeNav,
       navItems,
@@ -164,3 +201,13 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped>
+.external-links {
+  margin-top: 5vh;
+}
+
+.external-link-image {
+  max-height: 45px;
+}
+</style>

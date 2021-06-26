@@ -29,9 +29,9 @@
         </q-img>
       </div>
       <div class="text">
-        <span>Protects:</span>
+        <span>Protects</span>
         <div class="text-armor">
-          {{ equippedArmor.armor.zones.join(', ') }}
+          {{ Utils.humanizeArmorZones(equippedArmor.armor.zones) }}
         </div>
       </div>
     </div>
