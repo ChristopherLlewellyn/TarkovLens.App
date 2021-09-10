@@ -14,9 +14,9 @@ const armors = ref<Armor[]>([])
 const armorsWithArmoredRigs = ref<Armor[]>([])
 const tacticalrigs = ref<Tacticalrig[]>([])
 
-const getItemById = async (id: string) => ItemsService.getById<Item>(id)
+const getItemById = async <T extends Item>(id: string) => ItemsService.getById<T>(id)
 
-const getItemByBsgId = async (id: string) => ItemsService.getByBsgId<Item>(id)
+const getItemByBsgId = async <T extends Item>(id: string) => ItemsService.getByBsgId<T>(id)
 
 const getItemByName = async (query: string) => ItemsService.getByName(query);
 

@@ -59,6 +59,20 @@ export class ArmorProperties {
   }
 }
 
+export class Penalties {
+  mouse = 0;
+  speed = 0;
+  ergonomics = 0;
+  deafness = '';
+}
+
+export class StorageGrid {
+  id = '';
+  height = 0;
+  width = 0;
+  maxWeight = 0;
+}
+
 export enum Kind {
   Ammunition = 'Ammunition',
   Armor = 'Armor',

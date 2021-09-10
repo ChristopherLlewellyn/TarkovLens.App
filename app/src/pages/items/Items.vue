@@ -4,7 +4,7 @@
       <div class="row center medium-width">
         <div class="q-mt-md">
           <item-search-select
-            :navigateOnSelect="true"
+            :navigate-on-select="true"
           ></item-search-select>
         </div>
       </div>
@@ -16,11 +16,9 @@
 import { defineComponent } from 'vue';
 import { useStore } from 'vuex';
 import { RootState } from 'src/store/RootState';
-import { Icon } from 'src/enums/icon';
 import { App } from 'src/enums/app';
 import { useMeta } from 'quasar';
 import ItemSearchSelect from 'src/components/_shared/ItemSearchSelect.vue';
-import Utils from 'src/functions/Utils';
 
 const metaData = {
   title: 'Items',

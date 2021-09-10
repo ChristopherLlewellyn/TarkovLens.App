@@ -1,6 +1,8 @@
 import { BaseItem } from './BaseItem'
-import { ArmorProperties } from './_shared'
+import { ArmorProperties, Penalties, StorageGrid } from './_shared'
 
 export class Tacticalrig extends BaseItem {
-  armor!: ArmorProperties;
+  armor = new ArmorProperties();
+  grids: StorageGrid[] = [];
+  penalties = new Penalties();
 }

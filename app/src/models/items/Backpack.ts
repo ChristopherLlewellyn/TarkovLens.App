@@ -1,17 +1,10 @@
 import { BaseItem } from './BaseItem'
-import { ArmorProperties, Penalties } from './_shared'
 
-export class Armor extends BaseItem {
-  type: ArmorType;
-  armor: ArmorProperties;
-  blocking: string[];
-  penalties: Penalties[] = [];
+export class Backpack extends BaseItem {
+  totalSlots = 0;
+  grids: BackpackGrid[] = [];
 
   constructor(
-    type = ArmorType.None,
-    armor = new ArmorProperties(),
-    blocking: string[] = [],
-
     id = '',
     blightbusterIcon = '',
     _id = '',
@@ -56,19 +49,20 @@ export class Armor extends BaseItem {
       wikiLink,
       img,
       imgBig
-    ) // skipped things we don't need access to yet
-    this.type = type
-    this.armor = armor
-    this.blocking = blocking
-    this.penalties = this.penalties
+    )
   }
 }
 
-export enum ArmorType {
-  Attachment = 'attachment',
-  Body = 'body',
-  Helmet = 'helmet',
-  Visor = 'visor',
-  FaceCover = 'faceCover',
-  None = ''
+export class BackpackGrid {
+  id = '';
+  height = 0;
+  width = 0;
+  maxWeight = 0;
+
+  constructor(id: string, height: number, width: number, maxWeight: number) {
+    this.id = id;
+    this.height = height;
+    this.width = width;
+    this.maxWeight = maxWeight;
+  }
 }
